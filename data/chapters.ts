@@ -71,10 +71,10 @@ export const chapters: ChapterItem[] = [
       '竞赛组队、项目合作或任何想法，欢迎联系。',
     ],
     contacts: [
-      { icon: 'wechat', label: '微信', value: 'WeChat', qr: 'wechat-qr' },
-      { icon: 'tencentqq', label: 'QQ', value: '2032212286' },
       { icon: 'github', label: 'GitHub', value: 'bluee-beep' },
       { icon: 'gmail', label: '邮箱', value: 'coldbluee@163.com' },
+      { icon: 'tencentqq', label: 'QQ', value: '2032212286' },
+      { icon: 'wechat', label: '微信', value: 'WeChat', qr: 'wechat-qr' },
     ],
   },
 ]
