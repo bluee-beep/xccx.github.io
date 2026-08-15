@@ -44,7 +44,7 @@ function flipQr(e: MouseEvent) {
 
 .cc__contact {
   position: relative;
-  min-width: 6rem;
+  min-width: 10rem; /* 加宽容纳网址信息 */
   height: 3.75rem;
   display: grid;
   place-items: center;
@@ -108,7 +108,8 @@ function flipQr(e: MouseEvent) {
   inset: 0;
   display: grid;
   place-items: center;
-  font-size: 0.95rem;
+  font-size: 0.85rem; /* 稍小适配网址 */
+  white-space: nowrap;
   color: var(--c-accent);
   opacity: 0;
   transition: opacity var(--dur-fast) var(--ease-out-expo);
