@@ -23,6 +23,8 @@ function onScroll() {
 }
 
 onMounted(() => {
+  // 禁用浏览器滚动位置恢复：进入页面从顶部开始，header 恒透明直到用户实际滚动
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
   onScroll()
   window.addEventListener('scroll', onScroll, { passive: true })
 })
