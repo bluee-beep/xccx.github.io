@@ -110,13 +110,14 @@ onBeforeUnmount(() => {
   background: var(--c-bg);
 }
 
-/* ---- 大 logo 拖尾层 ---- */
+/* ---- 大 logo 拖尾层（整体上移，三层初始完全重叠） ---- */
 .footer__trail {
   position: relative;
   height: clamp(10rem, 22vw, 18rem); /* 大尺寸展示区 */
   display: grid;
   place-items: center;
   pointer-events: none;
+  margin-top: -2.5rem; /* 整体上移 */
 }
 
 .footer__trail-layer {
