@@ -102,9 +102,9 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .ct {
-  height: 160vh; /* 滚动行程：覆盖动画在这段滚动中完成 */
+  height: 100vh; /* 滚动行程：一个视口内完成覆盖（缩短，避免纯灰停留像新页面） */
   position: relative;
-  margin-top: 20vh; /* 过渡延迟：Nº001 内容完整滚出后才开始（原先 -40vh 过早触发） */
+  margin-top: 20vh; /* 过渡延迟：Nº001 内容完整滚出后才开始 */
 }
 
 .ct__sticky {
