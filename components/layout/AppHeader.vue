@@ -18,8 +18,22 @@ const logoOpacity = computed(() =>
 // 滚动后 header 加毛玻璃背景（顶部透明让视频画面透出）
 const isScrolled = ref(false)
 
+// scroll-spy：滚动到哪一章，对应导航项显示荧光下横线
+const sectionIds = ['manifesto', 'capabilities', 'works', 'contact']
+const activeId = ref('')
+
 function onScroll() {
   isScrolled.value = window.scrollY > 16
+  // 当前章节：章节顶部越过视口中线即激活
+  let current = ''
+  for (const id of sectionIds) {
+    const el = document.getElementById(id)
+    if (!el) continue
+    if (el.getBoundingClientRect().top <= window.innerHeight * 0.5) {
+      current = id
+    }
+  }
+  activeId.value = current
 }
 
 onMounted(() => {
@@ -48,8 +62,7 @@ onBeforeUnmount(() => {
           :key="item.to"
           :to="item.to"
           class="header__link u-monolabel"
-          active-class="header__link--active"
-          exact-active-class="header__link--active"
+          :class="{ 'header__link--active': activeId === item.to.slice(1) }"
         >
           {{ item.label }}
         </NuxtLink>
