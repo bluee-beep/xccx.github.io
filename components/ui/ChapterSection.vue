@@ -53,30 +53,30 @@ defineProps<{ chapter: ChapterItem }>()
   border-top: 1px solid var(--c-line);
 }
 
-/* feature 变体（capabilities）：纯灰背景（无扫描线），文字转深色 */
+/* feature 变体（capabilities）：深色背景（用户选定），文字浅色 */
 .chapter--feature {
-  background: #b8b8ba;
-  border-top-color: #a3a3a6;
+  background: var(--c-bg);
+  border-top-color: var(--c-line);
 }
 
 .chapter--feature .chapter__title {
-  color: var(--c-bg);
+  color: var(--c-ink);
 }
 
 .chapter--feature .chapter__kicker {
-  color: var(--c-bg);
+  color: var(--c-ink);
 }
 
 .chapter--feature .chapter__no {
-  color: #3d6b14;
+  color: var(--c-accent);
 }
 
 .chapter--feature .chapter__stat-value {
-  color: #3d6b14;
+  color: var(--c-accent);
 }
 
 .chapter--feature .chapter__stat-label {
-  color: var(--c-bg);
+  color: var(--c-muted);
 }
 
 /* 滑动入场：feature 内容从右滑入（替换上移淡入） */
