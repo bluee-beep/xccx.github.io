@@ -97,35 +97,25 @@ function splitHighlight(text: string) {
   bottom: 0;
   width: 110px;
   height: 60vh;
-  animation: wave-rise 5s ease-in-out infinite;
+  /* 线静止：不再整体移动 */
 }
 
 .chapter__wave-line--1 { left: 16%; }
-.chapter__wave-line--2 { left: 30%; animation-delay: 2.5s; }
+.chapter__wave-line--2 { left: 30%; }
 
-/* 线整体：底部淡入 → 上升 → 顶部淡出 */
-@keyframes wave-rise {
-  0%   { transform: translateY(0);    opacity: 0; }
-  12%  { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { transform: translateY(-70vh); opacity: 0; }
-}
-
-/* 笔迹描画：stroke-dashoffset 1→0 从底部逐笔画出（pathLength=1 归一化） */
+/* 彗尾笔迹：可见窗口（22% 路径长）沿波浪前进——前头画出、后头消散 */
 .chapter__wave-line path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: wave-draw 5s ease-in-out infinite;
+  stroke-dasharray: 0.22 0.78;
+  animation: wave-trace 4s linear infinite;
 }
 
 .chapter__wave-line--2 path {
-  animation-delay: 2.5s; /* 与线整体交错同步 */
+  animation-delay: 2s; /* 交错半周期 */
 }
 
-@keyframes wave-draw {
-  0%   { stroke-dashoffset: 1; }
-  60%  { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 0; }
+@keyframes wave-trace {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; } /* 窗口循环，首尾相接无缝 */
 }
 
 /* feature 变体（capabilities）：深色背景，文字浅色（与 Nº001 区分） */
