@@ -35,10 +35,6 @@ onBeforeUnmount(() => {
 <template>
   <header class="header" :class="{ 'header--scrolled': isScrolled }">
     <div class="u-container header__inner">
-      <NuxtLink to="/" class="header__logo" aria-label="回到首页">
-        <img :src="logoSrc" alt="XCCX" class="header__logo-img" :style="{ opacity: logoOpacity }" />
-      </NuxtLink>
-
       <nav class="header__nav" aria-label="主导航">
         <NuxtLink
           v-for="item in site.nav"
@@ -51,6 +47,11 @@ onBeforeUnmount(() => {
           {{ item.label }}
         </NuxtLink>
       </nav>
+
+      <!-- 小 logo 右上：滚动中隐藏，Hero 大 logo 归位到位后显现（合体） -->
+      <NuxtLink to="/" class="header__logo" aria-label="回到首页">
+        <img :src="logoSrc" alt="XCCX" class="header__logo-img" :style="{ opacity: logoOpacity }" />
+      </NuxtLink>
     </div>
   </header>
 </template>
@@ -78,8 +79,8 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: space-between;
   height: var(--header-h);
-  /* B 档（对比选定）：logo 左侧边距 32px，右侧保持 gutter */
-  padding-left: 2rem;
+  /* 导航左、小 logo 右（右上角归位目标） */
+  padding-inline: 2rem;
 }
 
 .header__logo {

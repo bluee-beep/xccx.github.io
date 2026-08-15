@@ -16,6 +16,8 @@ const videoSrc = `${baseURL}${site.heroVideo.src}`
 const videoPoster = `${baseURL}videos/hero-poster.jpg`
 const logoSrc = `${baseURL}logo.svg`
 
+const blinds = ref<HTMLElement>()
+
 function onVideoError() {
   videoError.value = true
 }
@@ -25,6 +27,9 @@ usePanorama(videoWrap, video, { range: site.heroVideo.range })
 // 大 logo 归位：桌面 + 动效开启时启用；移动端保持居中
 const logoStatic = ref(isTouchDevice() || prefersReducedMotion())
 useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
+
+// 百叶窗帘幕 + 视频虚化（滚动联动）
+useBlinds(blinds, video)
 </script>
 
 <template>
@@ -48,6 +53,11 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
 
     <!-- 可读性遮罩 -->
     <div class="hero__shade" aria-hidden="true" />
+
+    <!-- 百叶窗帘幕层：滚动时错峰向上拉起 -->
+    <div ref="blinds" class="hero__blinds" aria-hidden="true">
+      <div v-for="i in 5" :key="i" class="hero__blinds-strip" />
+    </div>
 
     <!-- 视口 20% 处：滚动字幕（无缝循环） -->
     <div class="hero__marquee" aria-hidden="true">
@@ -112,6 +122,29 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   background:
     linear-gradient(to bottom, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.15) 40%, rgba(10, 10, 10, 0.35) 75%, rgba(10, 10, 10, 0.82) 100%);
 }
+
+/* ---- 百叶窗帘幕：5 条黑带，滚动时错峰拉起（transform 由 useBlinds 驱动） ---- */
+.hero__blinds {
+  position: absolute;
+  inset: 0;
+  z-index: 2; /* 盖住视频与遮罩，低于 logo（z-3） */
+  pointer-events: none;
+}
+
+.hero__blinds-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: var(--c-bg);
+  will-change: transform;
+}
+
+.hero__blinds-strip:nth-child(1) { top: 0; }
+.hero__blinds-strip:nth-child(2) { top: 20%; }
+.hero__blinds-strip:nth-child(3) { top: 40%; }
+.hero__blinds-strip:nth-child(4) { top: 60%; }
+.hero__blinds-strip:nth-child(5) { top: 80%; }
 
 /* ---- 滚动字幕：视口 20% 处，无缝循环 ---- */
 .hero__marquee {
