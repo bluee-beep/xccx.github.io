@@ -73,11 +73,16 @@ defineProps<{ chapter: ChapterItem }>()
   to { background-position: 0 4px; }
 }
 
-/* 眉题行：加大加粗 + 深色高对比（灰底上醒目）；下 margin 归零让字幕紧贴 */
+/* 眉题行：加大加粗 + 深色高对比；上方全宽结构线；下 margin 归零让字幕紧贴 */
 .chapter--intro .chapter__head {
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 0;
+  /* 第一条线：全宽贴边，位于眉题行上方 */
+  margin-inline: calc(-1 * var(--gutter));
+  padding-inline: var(--gutter);
+  border-top: 1px solid var(--c-ink);
+  padding-top: var(--space-3);
 }
 
 .chapter--intro .chapter__title {
@@ -129,12 +134,12 @@ defineProps<{ chapter: ChapterItem }>()
   margin-bottom: var(--space-6);
 }
 
-/* intro 章节：logo 字幕全宽贴边（负 margin 抵消容器 gutter），上下白色细线 */
+/* intro 章节：logo 字幕全宽贴边，只保留下边线（第二条线） */
 .chapter__logo-marquee {
   margin-inline: calc(-1 * var(--gutter));
-  margin-top: 0; /* 紧贴眉题行（眉题行下 margin 已归零） */
+  margin-top: 0; /* 紧贴眉题行 */
   margin-bottom: var(--space-6);
-  border-block: 1px solid var(--c-ink);
+  border-bottom: 1px solid var(--c-ink);
   padding-block: var(--space-2);
 }
 
