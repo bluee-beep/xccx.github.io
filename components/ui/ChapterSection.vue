@@ -93,15 +93,15 @@ function splitHighlight(text: string) {
   position: absolute;
   bottom: 0;
   width: 110px;
-  height: 85vh; /* 线加长 */
+  height: 85vh;
   /* 线静止：不再整体移动 */
 }
 
-/* 4 条线横向分布——全部在文案区（40vw 起）左侧，不穿过文字 */
-.chapter__wave-line--1 { left: 6vw; }
-.chapter__wave-line--2 { left: 13vw; }
-.chapter__wave-line--3 { left: 20vw; }
-.chapter__wave-line--4 { left: 27vw; }
+/* 4 条线横向分布——全部在文案区（40vw 起）左侧，不穿过文字；高度各异（最短 85vh） */
+.chapter__wave-line--1 { left: 6vw;  height: 85vh; }
+.chapter__wave-line--2 { left: 13vw; height: 94vh; }
+.chapter__wave-line--3 { left: 20vw; height: 103vh; }
+.chapter__wave-line--4 { left: 27vw; height: 112vh; }
 
 /* 彗尾笔迹：可见窗口（22% 路径长）沿波浪前进——前头画出、后头消散 */
 .chapter__wave-line path {
