@@ -106,19 +106,19 @@ onBeforeUnmount(() => {
 .footer {
   position: relative;
   z-index: 5; /* 覆盖上一页内容（拖尾 logo 压过 Nº004） */
+  margin-top: -12.5rem; /* 页脚整体上移（用户指定） */
   border-top: 1px solid var(--c-line);
   overflow: hidden;
   background: var(--c-bg);
 }
 
-/* ---- 大 logo 拖尾层（整体上移，三层初始完全重叠） ---- */
+/* ---- 大 logo 拖尾层（三层初始完全重叠） ---- */
 .footer__trail {
   position: relative;
   height: clamp(10rem, 22vw, 18rem); /* 大尺寸展示区 */
   display: grid;
   place-items: center;
   pointer-events: none;
-  margin-top: -12.5rem; /* 整体上移（用户指定） */
 }
 
 .footer__trail-layer {
