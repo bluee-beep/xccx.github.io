@@ -16,8 +16,8 @@ defineProps<{ chapter: ChapterItem }>()
         <span class="chapter__kicker u-monolabel">{{ chapter.kicker }}</span>
       </header>
 
-      <!-- 大标题：常规章节逐行拆字；intro 章节用 XCCX logo 滚动字幕 -->
-      <h2 v-if="chapter.variant !== 'intro'" class="chapter__title">
+      <!-- 大标题：常规章节逐行拆字；intro 用 xccx 字幕；feature 不渲染（文案上移） -->
+      <h2 v-if="chapter.variant !== 'intro' && chapter.variant !== 'feature'" class="chapter__title">
         <RevealText
           v-for="line in chapter.title"
           :key="line"
@@ -26,7 +26,7 @@ defineProps<{ chapter: ChapterItem }>()
           {{ line }}
         </RevealText>
       </h2>
-      <LogoMarquee v-else class="chapter__logo-marquee" />
+      <LogoMarquee v-else-if="chapter.variant === 'intro'" class="chapter__logo-marquee" />
 
       <!-- 正文：intro 变体整章连续逐字显现；其余逐段错峰入场 -->
       <IntroReveal v-if="chapter.variant === 'intro'" :paragraphs="chapter.paragraphs" />
