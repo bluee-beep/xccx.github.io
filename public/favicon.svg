@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- favicon：黑底 + 几何 X（保证任何主题标签页可见） -->
+<!-- favicon：透明底 + 黑色几何 X（浅色标签页可见） -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-  <rect width="400" height="400" fill="#0a0a0a"/>
-  <path d="M 50 90 L 310 350" stroke="#f4f4f2" stroke-width="80" stroke-linecap="round" fill="none"/>
-  <path d="M 350 90 L 90 350" stroke="#f4f4f2" stroke-width="80" stroke-linecap="round" fill="none"/>
+  <path d="M 50 90 L 310 350" stroke="#0a0a0a" stroke-width="80" stroke-linecap="round" fill="none"/>
+  <path d="M 350 90 L 90 350" stroke="#0a0a0a" stroke-width="80" stroke-linecap="round" fill="none"/>
 </svg>
