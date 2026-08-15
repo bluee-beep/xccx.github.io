@@ -12,13 +12,13 @@ const trailRefs = ref<HTMLElement[]>([])
 let rafId = 0
 let running = false
 
-// 5 层：按用户指定间隔（1↔2: 0.63H / 2↔3: 0.53H / 3↔4: 0.30H / 4↔5: 0.18H）反推速度
+// 5 层：按用户指定间隔反推速度；深层加 blur 虚化（越深越糊）
 const layers = [
-  { speed: 0.656, opacity: 1 }, // 顶层：最快、实心
-  { speed: 0.404, opacity: 0.6 },
-  { speed: 0.192, opacity: 0.35 },
-  { speed: 0.072, opacity: 0.2 },
-  { speed: 0, opacity: 0.1 }, // 底层：静止锚点
+  { speed: 0.656, opacity: 1, blur: 0 }, // 顶层：实心清晰
+  { speed: 0.404, opacity: 0.6, blur: 1 },
+  { speed: 0.192, opacity: 0.35, blur: 2 },
+  { speed: 0.072, opacity: 0.2, blur: 3 },
+  { speed: 0, opacity: 0.1, blur: 4 }, // 底层：静止 + 最糊
 ]
 
 function tick() {
@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
       :src="logoSrc"
       alt=""
       class="ft__layer"
-      :style="{ opacity: l.opacity, zIndex: 3 - i }"
+      :style="{ opacity: l.opacity, filter: `blur(${l.blur}px)`, zIndex: 5 - i }"
     />
   </div>
 </template>
