@@ -11,6 +11,8 @@ const props = defineProps<{
   fromColor?: string
   /** 上一章元素 id（做模糊处理） */
   prevId: string
+  /** 方向：up 圆弧从底部升起（默认）｜down 圆弧从顶部降下（反向） */
+  direction?: 'up' | 'down'
 }>()
 
 const root = ref<HTMLElement>()
@@ -35,9 +37,13 @@ function computeTarget() {
 
 function apply() {
   const p = smoothProgress
-  // 覆盖块：translateY(100% → -10%) 完全覆盖视口
+  // 覆盖块：up 从底部升起 / down 从顶部降下
   if (cover.value) {
-    cover.value.style.transform = `translateY(${(100 - p * 110).toFixed(2)}%)`
+    if (props.direction === 'down') {
+      cover.value.style.transform = `translateY(${(-110 + p * 110).toFixed(2)}%)`
+    } else {
+      cover.value.style.transform = `translateY(${(100 - p * 110).toFixed(2)}%)`
+    }
   }
   // 过渡舞台：blur 同步 + 变黑程度 D 档（brightness 终点 0.45，仅舞台）
   if (root.value) {
@@ -102,7 +108,7 @@ onBeforeUnmount(() => {
 <template>
   <div ref="root" class="ct" :style="{ '--ct-from': props.fromColor }" aria-hidden="true">
     <div class="ct__sticky">
-      <div ref="cover" class="ct__cover" :style="{ background: color }" />
+      <div ref="cover" class="ct__cover" :class="{ 'ct__cover--down': props.direction === 'down' }" :style="{ background: color }" />
     </div>
   </div>
 </template>
@@ -139,8 +145,16 @@ onBeforeUnmount(() => {
   width: 200%;
   bottom: 0;
   height: 130vh; /* 高于视口，保证完全覆盖 */
-  border-radius: 50% 50% 0 0 / 92% 92% 0 0; /* 陡圆弧 */
+  border-radius: 50% 50% 0 0 / 92% 92% 0 0; /* 陡圆弧（上） */
   transform: translateY(100%);
   will-change: transform;
+}
+
+/* 反向：圆弧在下端，从顶部降下 */
+.ct__cover--down {
+  bottom: auto;
+  top: 0;
+  border-radius: 0 0 50% 50% / 0 0 92% 92%;
+  transform: translateY(-110%);
 }
 </style>

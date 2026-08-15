@@ -20,6 +20,13 @@ const waveColorOf = (c: ChapterItem) =>
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
     />
-    <!-- 联系方式胶囊已移至章节内标题下方（ChapterSection 渲染） -->
+    <!-- 反向过渡：Nº003(works) → Nº004 之间（圆弧从顶部降下） -->
+    <ChapterTransition
+      v-if="chapter.id === 'works' && i < chapters.length - 1"
+      :color="waveColorOf(chapters[i + 1])"
+      :from-color="waveColorOf(chapter)"
+      :prev-id="chapter.id"
+      direction="down"
+    />
   </template>
 </template>
