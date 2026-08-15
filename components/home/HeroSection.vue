@@ -128,18 +128,18 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   }
 }
 
-/* ---- 滚动提示 ---- */
+/* ---- 滚动提示：上移避开底部强遮罩 + 提亮 ---- */
 .hero__scroll {
   position: absolute;
-  bottom: var(--space-5);
+  bottom: var(--space-7);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 4;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-1);
-  color: var(--c-muted);
+  color: rgba(244, 244, 242, 0.75);
   font-size: var(--fs-label);
 }
 
