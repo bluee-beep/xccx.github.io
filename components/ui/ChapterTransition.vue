@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .ct {
-  height: 10vh; /* 过渡区占位 10vh（快速扫过，无纯灰停留） */
+  height: 20vh; /* 过渡区占位 20vh */
   position: relative;
   margin-top: 10vh; /* 过渡延迟 */
 }
