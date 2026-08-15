@@ -124,7 +124,6 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   pointer-events: none;
   border-block: 1px solid var(--c-line);
   padding-block: var(--space-3);
-  background: linear-gradient(to right, transparent, rgba(10, 10, 10, 0.35), transparent);
 }
 
 .hero__marquee-track {
@@ -132,6 +131,14 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   width: max-content;
   white-space: nowrap;
   animation: hero-marquee 20s linear infinite;
+}
+
+/* 品牌滚动字幕为内容性动画，reduced-motion 时慢速而非停止（保持循环） */
+@media (prefers-reduced-motion: reduce) {
+  .hero__marquee-track {
+    animation-duration: 40s !important;
+    animation-iteration-count: infinite !important;
+  }
 }
 
 .hero__marquee-group {
@@ -149,12 +156,12 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   color: var(--c-ink);
 }
 
-/* 大圆点分隔符 */
+/* 圆点分隔符：白色，直径 = 字高一半 */
 .hero__marquee-dot {
-  width: 0.6em;
-  height: 0.6em;
+  width: 0.5em;
+  height: 0.5em;
   border-radius: 50%;
-  background: var(--c-accent);
+  background: var(--c-ink);
   flex-shrink: 0;
 }
 
