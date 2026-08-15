@@ -18,9 +18,10 @@ const logoSrc = `${baseURL}logo.svg`
 
 <style scoped>
 .lm {
-  --lm-logo-h: clamp(3rem, 5.5vw, 5rem); /* logo 高度基准 */
+  --lm-logo-h: clamp(4rem, 8vw, 7rem); /* logo 高度基准（放大） */
   overflow: hidden;
   pointer-events: none;
+  font-size: 0; /* 消除模板空白节点：保证循环无缝无跳变 */
 }
 
 .lm__track {
