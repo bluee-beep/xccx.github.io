@@ -1,0 +1,30 @@
+/* ==================== 布局工具类 ==================== */
+
+/* ---- 内容容器：max-width + 两侧 gutter ---- */
+.u-container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---- 无障碍隐藏 ---- */
+.u-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- mono 小标签（Nº 编号 / 眉题 / 页脚小字） ---- */
+.u-monolabel {
+  font-family: 'JetBrains Mono Variable', monospace;
+  font-size: var(--fs-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

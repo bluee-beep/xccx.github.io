@@ -15,6 +15,16 @@ export default defineNuxtConfig({
     },
   },
 
+  css: [
+    '~/assets/css/main.css',
+    '@fontsource-variable/space-grotesk',
+    '@fontsource-variable/jetbrains-mono',
+  ],
+
+  // 组件按文件名注册（去掉目录前缀）：AppHeader 而非 LayoutAppHeader
+  // 前提：全站文件名唯一（当前目录结构满足）
+  components: [{ path: '~/components', pathPrefix: false }],
+
   // SSG 输出：显式列出全部路由，保证 404.html 被生成（GH Pages 回退依赖它）
   nitro: {
     prerender: {

@@ -1,19 +1,17 @@
 <script setup lang="ts">
 // ==================== 全局壳层 ====================
-// Header/Footer 正式组件在 M2 接入，此处先留占位
+// Header/Footer 正式组件；Lenis 初始化在 M4 接入
 </script>
 
 <template>
   <div class="layout">
-    <header class="layout__header">
-      <NuxtLink to="/">XCCX</NuxtLink>
-    </header>
+    <AppHeader />
 
     <main class="layout__main">
       <slot />
     </main>
 
-    <footer class="layout__footer">© 2026 Xccx</footer>
+    <AppFooter />
   </div>
 </template>
 

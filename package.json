@@ -11,5 +11,9 @@
   },
   "devDependencies": {
     "nuxt": "^3.21.11"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0"
   }
 }
