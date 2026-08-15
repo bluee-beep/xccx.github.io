@@ -149,7 +149,7 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
 }
 
 .hero__marquee-text {
-  font-family: 'JetBrains Mono Variable', monospace;
+  font-family: 'Inter Variable', sans-serif;
   font-size: clamp(2.6rem, 5.2vw, 3.8rem);
   font-weight: 600;
   letter-spacing: 0.02em;
