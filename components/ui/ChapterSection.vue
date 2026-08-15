@@ -72,16 +72,22 @@ defineProps<{ chapter: ChapterItem }>()
   to { background-position: 0 4px; }
 }
 
+/* 眉题行：加大加粗 + 深色高对比（灰底上醒目） */
+.chapter--intro .chapter__head {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
 .chapter--intro .chapter__title {
   color: var(--c-bg);
 }
 
 .chapter--intro .chapter__kicker {
-  color: #6a6a66;
+  color: var(--c-bg); /* 深黑 */
 }
 
 .chapter--intro .chapter__no {
-  color: #4a7a1a; /* accent 深化，浅底可读 */
+  color: #3d6b14; /* 深绿，浅底可读 */
 }
 
 .chapter__head {
