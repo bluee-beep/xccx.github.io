@@ -74,8 +74,8 @@ function splitHighlight(text: string) {
         </div>
       </dl>
 
-      <!-- 章节底部斜体大字 -->
-      <p v-if="chapter.footer" v-reveal class="chapter__footer">{{ chapter.footer }}</p>
+      <!-- 章节中央斜体大字背景 -->
+      <p v-if="chapter.footer" class="chapter__footer" aria-hidden="true">{{ chapter.footer }}</p>
     </div>
   </section>
 </template>
@@ -299,15 +299,22 @@ function splitHighlight(text: string) {
   color: var(--c-muted);
 }
 
-/* 章节底部斜体大字 */
+/* 章节中央斜体大字背景：半透明、衬线体、像水印 */
 .chapter__footer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 0;
+  pointer-events: none;
+  font-family: 'Playfair Display Variable', serif;
   font-style: italic;
-  font-size: clamp(4rem, 10vw, 8rem);
+  font-size: clamp(5rem, 14vw, 12rem);
   font-weight: 600;
   letter-spacing: var(--ls-tight);
   line-height: 1;
-  text-align: center;
-  margin-top: var(--space-7);
   color: var(--c-ink);
+  opacity: 0.25; /* 半透明背景字 */
+  margin: 0;
 }
 </style>
