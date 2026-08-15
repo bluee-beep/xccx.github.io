@@ -1,25 +1,16 @@
 <script setup lang="ts">
-// ==================== 首页（M3 接入叙事章节） ====================
+// ==================== 首页 ====================
+// Hero 首屏 → 数据驱动章节序列 → 结尾 CTA
+// M4 接入动效（Lenis / v-reveal / RevealText）
+import { chapters } from '~/data/chapters'
+
 useSeo()
 </script>
 
 <template>
-  <section class="page">
-    <h1>XCCX</h1>
-    <p class="page__note">施工中 — 首页叙事章节将在 M3 接入</p>
-  </section>
+  <div>
+    <HeroSection />
+    <ChapterLoop :chapters="chapters" />
+    <ContactCta />
+  </div>
 </template>
-
-<style scoped>
-.page {
-  min-height: 60vh;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  gap: 1rem;
-}
-
-.page__note {
-  opacity: 0.6;
-}
-</style>
