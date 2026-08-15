@@ -16,8 +16,6 @@ const videoSrc = `${baseURL}${site.heroVideo.src}`
 const videoPoster = `${baseURL}videos/hero-poster.jpg`
 const logoSrc = `${baseURL}logo.svg`
 
-const blinds = ref<HTMLElement>()
-
 function onVideoError() {
   videoError.value = true
 }
@@ -27,9 +25,6 @@ usePanorama(videoWrap, video, { range: site.heroVideo.range })
 // 大 logo 归位：桌面 + 动效开启时启用；移动端保持居中
 const logoStatic = ref(isTouchDevice() || prefersReducedMotion())
 useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
-
-// 百叶窗帘幕 + 视频虚化（滚动联动）
-useBlinds(blinds, video)
 </script>
 
 <template>
@@ -53,11 +48,6 @@ useBlinds(blinds, video)
 
     <!-- 可读性遮罩 -->
     <div class="hero__shade" aria-hidden="true" />
-
-    <!-- 百叶窗帘幕层：4 条叶片，下翻时从上到下依次滑下遮住背景 -->
-    <div ref="blinds" class="hero__blinds" aria-hidden="true">
-      <div v-for="i in 4" :key="i" class="hero__blinds-strip" />
-    </div>
 
     <!-- 视口 20% 处：滚动字幕（无缝循环） -->
     <div class="hero__marquee" aria-hidden="true">
@@ -122,31 +112,6 @@ useBlinds(blinds, video)
   background:
     linear-gradient(to bottom, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.15) 40%, rgba(10, 10, 10, 0.35) 75%, rgba(10, 10, 10, 0.82) 100%);
 }
-
-/* ---- 百叶窗帘幕：4 条叶片，首屏为细线可见，下翻时依次向下展开遮住背景 ---- */
-.hero__blinds {
-  position: absolute;
-  inset: 0;
-  z-index: 2; /* 盖住视频与遮罩，低于 logo（z-3） */
-  pointer-events: none;
-}
-
-.hero__blinds-strip {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 25%;
-  background: var(--c-bg);
-  transform-origin: top;
-  transform: scaleY(0.08); /* 细线状态（首屏可见） */
-  will-change: transform;
-}
-
-/* 第一条线贴底部滚动提示，2/3/4 依次向上均匀分布 */
-.hero__blinds-strip:nth-child(1) { top: calc(75% - 60px); }
-.hero__blinds-strip:nth-child(2) { top: calc(50% - 40px); }
-.hero__blinds-strip:nth-child(3) { top: calc(25% - 20px); }
-.hero__blinds-strip:nth-child(4) { top: 0; }
 
 /* ---- 滚动字幕：视口 20% 处，无缝循环 ---- */
 .hero__marquee {
