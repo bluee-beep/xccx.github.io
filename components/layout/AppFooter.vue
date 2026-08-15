@@ -1,13 +1,78 @@
 <script setup lang="ts">
 // ==================== 页脚 ====================
-// 年份 + 社交链接 + mailto，全部来自 data/site.ts
+// 大 xccx 多层拖尾视差（学习参考站）：3 层重叠，滚动时不同速度偏移
+// 上层实心 → 下层透明度递减（残影拖尾感）
 import { site } from '~/data/site'
+import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
 
 const year = new Date().getFullYear()
+
+const root = ref<HTMLElement>()
+const trailRefs = ref<HTMLElement[]>([])
+
+let rafId = 0
+let running = false
+
+// 3 层：不同视差速度（越深越慢）+ 透明度递减
+const layers = [
+  { speed: 0.35, opacity: 1 }, // 顶层：最快、实心
+  { speed: 0.22, opacity: 0.45 }, // 中层
+  { speed: 0.12, opacity: 0.2 }, // 底层：最慢、最淡
+]
+
+function tick() {
+  if (!running) return
+  const el = root.value
+  if (el) {
+    const rect = el.getBoundingClientRect()
+    // 页脚进入视口的进度（0 = 刚露出，1 = 完全展开）
+    const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height * 0.5)))
+    trailRefs.value.forEach((layer, i) => {
+      if (!layer) return
+      const offset = progress * layers[i].speed * 100 // 每层偏移量不同
+      layer.style.transform = `translateY(${offset.toFixed(2)}px)`
+    })
+  }
+  rafId = requestAnimationFrame(tick)
+}
+
+function onScroll() {
+  if (!running) {
+    running = true
+    rafId = requestAnimationFrame(tick)
+  }
+}
+
+onMounted(() => {
+  // 触屏 / 减少动效：静态（无拖尾）
+  if (isTouchDevice() || prefersReducedMotion()) {
+    trailRefs.value.forEach((l) => l && (l.style.transform = ''))
+    return
+  }
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onScroll()
+})
+
+onBeforeUnmount(() => {
+  running = false
+  cancelAnimationFrame(rafId)
+  window.removeEventListener('scroll', onScroll)
+})
 </script>
 
 <template>
-  <footer class="footer">
+  <footer ref="root" class="footer">
+    <!-- 大 xccx 多层拖尾（参考站学习） -->
+    <div class="footer__trail" aria-hidden="true">
+      <span
+        v-for="(l, i) in layers"
+        :key="i"
+        ref="trailRefs"
+        class="footer__trail-layer"
+        :style="{ opacity: l.opacity, zIndex: 3 - i }"
+      >xccx</span>
+    </div>
+
     <div class="u-container footer__inner">
       <p class="footer__copy u-mono">© {{ year }} {{ site.name }}</p>
 
@@ -32,9 +97,30 @@ const year = new Date().getFullYear()
 
 <style scoped>
 .footer {
+  position: relative;
   border-top: 1px solid var(--c-line);
-  padding-block: var(--space-5);
-  margin-top: var(--space-8);
+  overflow: hidden;
+  background: var(--c-bg);
+}
+
+/* ---- 大 xccx 拖尾层 ---- */
+.footer__trail {
+  position: relative;
+  height: 14rem; /* 大字展示区 */
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.footer__trail-layer {
+  position: absolute;
+  font-family: 'Inter Variable', sans-serif;
+  font-size: clamp(7rem, 16vw, 13rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--c-ink);
+  will-change: transform;
 }
 
 .footer__inner {
@@ -43,6 +129,10 @@ const year = new Date().getFullYear()
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--c-line);
+  position: relative;
+  z-index: 4;
 }
 
 .footer__copy {
