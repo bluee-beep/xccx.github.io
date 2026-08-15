@@ -171,6 +171,12 @@ function splitHighlight(text: string) {
   transform: translateX(60px);
 }
 
+/* Nº003（works）：蓝黑背景（用户选定） */
+#works {
+  background: #141c28;
+  border-top-color: #1e2838;
+}
+
 /* Intro 变体：灰蓝底色（条纹由全站 CRT 罩统一提供），文字深色 */
 .chapter--intro {
   background: #969da4; /* 用户选定底色 */
