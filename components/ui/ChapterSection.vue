@@ -62,8 +62,8 @@ defineProps<{ chapter: ChapterItem }>()
 .chapter--intro {
   background:
     repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
-    #b8b8ba; /* 用户选定底色 */
-  border-top-color: #a3a3a6;
+    #9e9ea0; /* 用户选定底色 */
+  border-top-color: #8a8a8c;
   /* 扫描线下移（4px = 一个条纹周期，无缝循环）——B 档：细 2px + 中速 0.8s */
   animation: crt-scan 0.8s linear infinite;
 }
