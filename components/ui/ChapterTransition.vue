@@ -39,6 +39,10 @@ function apply() {
   if (cover.value) {
     cover.value.style.transform = `translateY(${(100 - p * 110).toFixed(2)}%)`
   }
+  // 过渡舞台：随进度虚化 + 变灰（与 Nº001 滑动效果一致）
+  if (root.value) {
+    root.value.style.filter = `blur(${(p * 10).toFixed(1)}px) grayscale(${p.toFixed(2)})`
+  }
   // 上一章模糊：blur 0 → 10px + 微暗
   const prev = document.getElementById(props.prevId)
   if (prev) {
@@ -88,7 +92,8 @@ onMounted(() => {
 onBeforeUnmount(() => {
   stop()
   window.removeEventListener('scroll', onScroll)
-  // 清理上一章滤镜
+  // 清理滤镜
+  if (root.value) root.value.style.filter = ''
   const prev = document.getElementById(props.prevId)
   if (prev) prev.style.filter = ''
 })
