@@ -34,14 +34,14 @@ function computeTarget() {
   if (!el) return
   const rect = el.getBoundingClientRect()
   const start = vh + rect.height * 0.2 // 容器底部刚进入视口
-  const end = vh * 0.9 // 提前完成：容器顶部到达视口 90% 即全部显示
+  const end = vh * 0.85 // 提前完成：容器顶部到达视口 85% 即全部显示
   targetProgress = Math.min(1, Math.max(0, (start - rect.bottom) / (start - end)))
 }
 
 function tick() {
   if (!running) return
-  // 0.7：字随滚动快速显现，略带柔和滞后
-  smoothProgress += (targetProgress - smoothProgress) * 0.7
+  // 0.66：字随滚动快速显现，略带柔和滞后
+  smoothProgress += (targetProgress - smoothProgress) * 0.66
   shownCount.value = Math.floor(smoothProgress * total.value)
   rafId = requestAnimationFrame(tick)
 }
