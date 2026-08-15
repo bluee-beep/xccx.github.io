@@ -10,14 +10,17 @@ const year = new Date().getFullYear()
 const root = ref<HTMLElement>()
 const trailRefs = ref<HTMLElement[]>([])
 
+const baseURL = useRuntimeConfig().app.baseURL
+const logoSrc = `${baseURL}logo.svg`
+
 let rafId = 0
 let running = false
 
-// 3 层：不同视差速度（越深越慢）+ 透明度递减
+// 3 层：不同视差速度（越深越慢）+ 透明度（整体更实）
 const layers = [
   { speed: 0.35, opacity: 1 }, // 顶层：最快、实心
-  { speed: 0.22, opacity: 0.45 }, // 中层
-  { speed: 0.12, opacity: 0.2 }, // 底层：最慢、最淡
+  { speed: 0.22, opacity: 0.6 }, // 中层
+  { speed: 0.12, opacity: 0.35 }, // 底层：最慢
 ]
 
 function tick() {
@@ -62,15 +65,17 @@ onBeforeUnmount(() => {
 
 <template>
   <footer ref="root" class="footer">
-    <!-- 大 xccx 多层拖尾（参考站学习） -->
+    <!-- 大 logo 手绘图多层拖尾（参考站学习） -->
     <div class="footer__trail" aria-hidden="true">
-      <span
+      <img
         v-for="(l, i) in layers"
         :key="i"
         ref="trailRefs"
+        :src="logoSrc"
+        alt=""
         class="footer__trail-layer"
         :style="{ opacity: l.opacity, zIndex: 3 - i }"
-      >xccx</span>
+      />
     </div>
 
     <div class="u-container footer__inner">
@@ -103,10 +108,10 @@ onBeforeUnmount(() => {
   background: var(--c-bg);
 }
 
-/* ---- 大 xccx 拖尾层 ---- */
+/* ---- 大 logo 拖尾层 ---- */
 .footer__trail {
   position: relative;
-  height: 14rem; /* 大字展示区 */
+  height: clamp(10rem, 22vw, 18rem); /* 大尺寸展示区 */
   display: grid;
   place-items: center;
   pointer-events: none;
@@ -114,12 +119,9 @@ onBeforeUnmount(() => {
 
 .footer__trail-layer {
   position: absolute;
-  font-family: 'Inter Variable', sans-serif;
-  font-size: clamp(7rem, 16vw, 13rem);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--c-ink);
+  width: min(88vw, 52rem); /* logo 手绘图大尺寸 */
+  height: auto;
+  display: block;
   will-change: transform;
 }
 
