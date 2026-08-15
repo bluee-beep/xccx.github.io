@@ -76,6 +76,14 @@ function splitHighlight(text: string) {
 
       <!-- 章节中央斜体大字背景 -->
       <p v-if="chapter.footer" class="chapter__footer" aria-hidden="true">{{ chapter.footer }}</p>
+
+      <!-- 联系方式图标胶囊：hover 显示对应信息 -->
+      <div v-if="chapter.contacts" v-reveal class="chapter__contacts">
+        <div v-for="c in chapter.contacts" :key="c.label" class="chapter__contact" :title="c.label">
+          <span class="chapter__contact-icon">{{ c.icon }}</span>
+          <span class="chapter__contact-value">{{ c.value }}</span>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -297,6 +305,62 @@ function splitHighlight(text: string) {
 .chapter__stat-label {
   margin-top: var(--space-1);
   color: var(--c-muted);
+}
+
+/* ---- 联系方式图标胶囊 ---- */
+.chapter__contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  justify-content: flex-end; /* 与段落右对齐一致 */
+}
+
+.chapter__contact {
+  position: relative;
+  min-width: 7.5rem;
+  height: 3.75rem;
+  border: 1px solid var(--c-line);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out-expo);
+}
+
+.chapter__contact:hover {
+  border-color: var(--c-accent);
+}
+
+.chapter__contact-icon {
+  font-family: 'JetBrains Mono Variable', monospace;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--c-ink);
+  transition: opacity var(--dur-fast) var(--ease-out-expo);
+}
+
+/* 信息层：默认隐藏，hover 时替换图标 */
+.chapter__contact-value {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  color: var(--c-accent);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out-expo);
+  padding-inline: var(--space-2);
+  text-align: center;
+}
+
+.chapter__contact:hover .chapter__contact-icon {
+  opacity: 0;
+}
+
+.chapter__contact:hover .chapter__contact-value {
+  opacity: 1;
 }
 
 /* 章节中央斜体大字背景：半透明、衬线体、像水印 */

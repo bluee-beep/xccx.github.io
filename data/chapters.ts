@@ -19,6 +19,8 @@ export interface ChapterItem {
   stats?: { label: string; value: string }[]
   /** 章节底部斜体大字（如 Wait Me） */
   footer?: string
+  /** 联系方式图标胶囊（hover 显示信息） */
+  contacts?: { icon: string; label: string; value: string }[]
 }
 
 export const chapters: ChapterItem[] = [
@@ -67,10 +69,12 @@ export const chapters: ChapterItem[] = [
     title: ['聊聊你的', '项目'],
     paragraphs: [
       '竞赛组队、项目合作或任何想法，欢迎联系。',
-      '微信：noxen22',
-      'QQ：2032212286',
-      'GitHub：bluee-beep',
-      '邮箱：coldbluee@163.com',
+    ],
+    contacts: [
+      { icon: 'WeChat', label: '微信', value: 'noxen22' },
+      { icon: 'QQ', label: 'QQ', value: '2032212286' },
+      { icon: 'GH', label: 'GitHub', value: 'bluee-beep' },
+      { icon: '@', label: '邮箱', value: 'coldbluee@163.com' },
     ],
   },
 ]
