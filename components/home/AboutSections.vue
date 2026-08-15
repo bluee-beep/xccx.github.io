@@ -103,27 +103,9 @@ const basicRows = [
 </template>
 
 <style scoped>
-/* 与 Intro 章节同款：灰蓝底 + 动态扫描线 */
-.about {
-  background:
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
-    #969da4;
-  animation: about-scan 0.8s linear infinite;
-  border-block: 1px solid #82898f;
-}
-
-@keyframes about-scan {
-  from { background-position: 0 0; }
-  to { background-position: 0 4px; }
-}
-
 .about__section {
   padding-block: var(--space-7);
-  border-top: 1px solid rgba(0, 0, 0, 0.2); /* 浅底分隔线 */
-}
-
-.about__section:first-child {
-  border-top: none;
+  border-top: 1px solid var(--c-line);
 }
 
 /* 右栏化（Intro 展示页文字样式） */
@@ -132,18 +114,18 @@ const basicRows = [
   margin-left: auto;
 }
 
-/* 段落：Intro 风格——大字号、左对齐、深色（灰蓝底上） */
+/* 段落：Intro 风格——大字号、左对齐、白色 */
 .about__para {
-  color: var(--c-bg);
+  color: var(--c-ink);
   font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   line-height: 1.6;
   text-align: left;
   margin-bottom: var(--space-4);
 }
 
-/* 标题：Intro 眉题风格——1.4rem 粗体深色 */
+/* 标题：Intro 眉题风格——1.4rem 粗体 */
 .about__heading {
-  color: var(--c-bg);
+  color: var(--c-ink);
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -173,7 +155,7 @@ const basicRows = [
 }
 
 .about__basic-value {
-  color: var(--c-bg);
+  color: var(--c-ink);
   font-size: 1.25rem;
 }
 
@@ -268,7 +250,7 @@ const basicRows = [
 }
 
 .about__empty-text {
-  color: var(--c-bg);
+  color: var(--c-ink);
   margin-bottom: var(--space-2);
 }
 
@@ -292,7 +274,6 @@ const basicRows = [
 }
 
 .about__interest-name {
-  color: var(--c-bg);
   font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   margin-bottom: var(--space-2);
 }
