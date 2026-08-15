@@ -153,6 +153,15 @@ defineProps<{ chapter: ChapterItem }>()
   color: var(--c-ink);
 }
 
+/* feature 变体（capabilities）：右栏左对齐 + 大一号 */
+.chapter--feature .chapter__para {
+  max-width: 60vw;
+  margin-left: auto; /* 右栏 */
+  text-align: left; /* 左对齐 */
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem); /* 大一号 */
+  line-height: 1.6;
+}
+
 .chapter__stats {
   display: flex;
   justify-content: flex-end; /* stats 靠右 */
