@@ -30,8 +30,9 @@ const baseURL = useRuntimeConfig().app.baseURL
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  justify-content: flex-end; /* 与章节标题右对齐一致 */
-  margin-bottom: var(--space-6);
+  justify-content: flex-start; /* 左对齐（与 Nº004 标题一致） */
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-4); /* 与段落间距收小 */
 }
 
 .cc__contact {

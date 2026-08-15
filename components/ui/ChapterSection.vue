@@ -244,6 +244,11 @@ function splitHighlight(text: string) {
   margin-bottom: var(--space-6);
 }
 
+/* Nº004 标题左对齐（与胶囊一致） */
+#contact .chapter__title {
+  align-items: flex-start;
+}
+
 /* intro 章节：logo 字幕全宽贴边，只保留下边线（第二条线） */
 .chapter__logo-marquee {
   margin-inline: calc(-1 * var(--gutter));
