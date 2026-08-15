@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
   position: relative;
   height: clamp(16rem, 30vw, 26rem); /* 大展示区 */
   display: grid;
-  place-items: center;
+  place-items: start center; /* logo 贴区块顶部 */
   overflow: hidden;
   border-top: 1px solid var(--c-line);
   pointer-events: none;
