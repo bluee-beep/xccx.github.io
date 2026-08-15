@@ -135,10 +135,10 @@ onBeforeUnmount(() => {
 /* 覆盖块：超大宽圆弧顶部（更陡的椭圆率），初始在视口下方 */
 .ct__cover {
   position: absolute;
-  left: -50%;
-  width: 200%;
+  left: -75%; /* 宽度放大 25%（200% → 250%） */
+  width: 250%;
   bottom: 0;
-  height: 130vh; /* 高于视口，保证完全覆盖 */
+  height: 165vh; /* 高度放大 25%（130vh → 165vh） */
   border-radius: 50% 50% 0 0 / 92% 92% 0 0; /* 陡圆弧 */
   transform: translateY(100%);
   will-change: transform;
