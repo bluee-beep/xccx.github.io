@@ -97,10 +97,11 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* Intro 段落：左对齐（+ 加大字号） */
+/* Intro 段落：整体靠右（右栏）+ 栏内文字左对齐 */
 .intro-reveal__para {
   max-width: 36rem;
-  text-align: left;
+  margin-left: auto; /* 右栏 */
+  text-align: left; /* 栏内左对齐 */
   color: var(--c-ink);
   font-size: clamp(1.2rem, 1.8vw, 1.5rem);
   line-height: 1.6;
