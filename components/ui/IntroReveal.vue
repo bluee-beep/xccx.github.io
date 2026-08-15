@@ -96,7 +96,14 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+/* 与 chapter__para 一致：靠右 + 右对齐 + intro 加大字号 */
 .intro-reveal__para {
+  max-width: 36rem;
+  margin-left: auto;
+  text-align: right;
+  color: var(--c-ink);
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  line-height: 1.6;
   margin-bottom: var(--space-3);
 }
 
