@@ -1,7 +1,6 @@
 <script setup lang="ts">
-// ==================== 首页 ====================
-// Hero 首屏 → 数据驱动章节序列 → 结尾 CTA
-// M4 接入动效（Lenis / v-reveal / RevealText）
+// ==================== 首页（单页整合版） ====================
+// Hero 视频取景 → 章节叙事 → 关于内容（原 /about 并入）→ 联系 CTA
 import { chapters } from '~/data/chapters'
 
 useSeo()
@@ -11,7 +10,7 @@ useSeo()
   <div>
     <HeroSection />
     <ChapterLoop :chapters="chapters" />
+    <AboutSections />
     <ContactCta />
-    <NextStation />
   </div>
 </template>
