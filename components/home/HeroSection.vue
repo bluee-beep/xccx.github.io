@@ -158,10 +158,10 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   color: var(--c-ink);
 }
 
-/* 圆形分隔符：白色，与字同大（1em） */
+/* 圆形分隔符：白色超大圆（2em = 两倍字高） */
 .hero__marquee-dot {
-  width: 1em;
-  height: 1em;
+  width: 2em;
+  height: 2em;
   border-radius: 50%;
   background: var(--c-ink);
   flex-shrink: 0;
