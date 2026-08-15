@@ -128,8 +128,9 @@ defineProps<{ chapter: ChapterItem }>()
   margin-bottom: var(--space-6);
 }
 
-/* intro 章节：logo 字幕填满标题区 */
+/* intro 章节：logo 字幕全宽贴边（负 margin 抵消容器 gutter） */
 .chapter__logo-marquee {
+  margin-inline: calc(-1 * var(--gutter));
   margin-bottom: var(--space-6);
   border-block: 1px solid var(--c-bg);
   padding-block: var(--space-2);
