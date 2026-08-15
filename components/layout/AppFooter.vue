@@ -10,22 +10,6 @@ const year = new Date().getFullYear()
   <footer class="footer">
     <div class="u-container footer__inner">
       <p class="footer__copy u-mono">© {{ year }} {{ site.name }}</p>
-
-      <nav class="footer__links" aria-label="社交链接">
-        <a
-          v-for="item in site.social"
-          :key="item.label"
-          :href="item.href"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="footer__link u-monolabel"
-        >
-          {{ item.label }}
-        </a>
-        <a :href="`mailto:${site.email}`" class="footer__link u-monolabel footer__link--mail">
-          {{ site.email }}
-        </a>
-      </nav>
     </div>
   </footer>
 </template>
@@ -46,24 +30,5 @@ const year = new Date().getFullYear()
 
 .footer__copy {
   color: var(--c-muted);
-}
-
-.footer__links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-.footer__link {
-  color: var(--c-muted);
-}
-
-.footer__link:hover {
-  color: var(--c-accent);
-}
-
-.footer__link--mail {
-  color: var(--c-ink);
 }
 </style>
