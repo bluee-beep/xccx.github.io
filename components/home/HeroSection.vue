@@ -116,7 +116,7 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
 /* ---- 滚动字幕：视口 20% 处，无缝循环 ---- */
 .hero__marquee {
   position: absolute;
-  top: 20vh;
+  top: 10vh;
   left: 0;
   right: 0;
   overflow: hidden;
@@ -149,9 +149,10 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
 }
 
 .hero__marquee-text {
-  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  font-family: 'JetBrains Mono Variable', monospace;
+  font-size: clamp(2.6rem, 5.2vw, 3.8rem);
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--c-ink);
 }
