@@ -244,9 +244,10 @@ function splitHighlight(text: string) {
   margin-bottom: var(--space-6);
 }
 
-/* Nº004 标题左对齐（与胶囊一致） */
+/* Nº004 标题左对齐 + 下边距归零（让胶囊真正紧贴） */
 #contact .chapter__title {
   align-items: flex-start;
+  margin-bottom: 0.5rem;
 }
 
 /* intro 章节：logo 字幕全宽贴边，只保留下边线（第二条线） */

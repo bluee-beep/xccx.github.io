@@ -38,7 +38,7 @@ function flipQr(e: MouseEvent) {
   flex-wrap: wrap;
   gap: var(--space-3);
   justify-content: flex-start; /* 左对齐（与 Nº004 标题一致） */
-  margin-top: var(--space-3); /* 紧贴标题 */
+  margin-top: 0; /* 紧贴标题（标题下边距已收小） */
   margin-bottom: var(--space-4);
 }
 
