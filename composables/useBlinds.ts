@@ -1,9 +1,9 @@
 // ==================== 首页滚动：百叶窗帘幕 + 视频虚化 ====================
-// 滚动时：5 条黑色横带错峰向上收起（百叶窗拉起），视频同步模糊
+// 滚动下翻时：4 条黑色叶片从上到下依次滑下（合拢遮住背景），视频同步模糊
 // 与 useHeroLogo 共用同一滚动进度（hero-logo-progress）
 
 interface BlindsOptions {
-  /** 条带数量 */
+  /** 叶片数量 */
   count?: number
   /** 视频最大模糊（px） */
   maxBlur?: number
@@ -14,7 +14,7 @@ export function useBlinds(
   videoEl: Ref<HTMLVideoElement | null | undefined>,
   options: BlindsOptions = {},
 ) {
-  const { count = 5, maxBlur = 10 } = options
+  const { count = 4, maxBlur = 10 } = options
 
   // 共用归位进度（useHeroLogo 维护）
   const progress = useState('hero-logo-progress', () => 0)
@@ -29,11 +29,11 @@ export function useBlinds(
   function apply() {
     const p = smooth
 
-    // 条带错峰收起：第 i 条在进度 (i / count) 后开始上移
+    // 叶片错峰下落合拢：第 i 条在进度 (i / count) 后从上方滑下覆盖
     strips.forEach((strip, i) => {
       const delay = i / count
       const local = Math.min(1, Math.max(0, (p - delay) / (1 - delay)))
-      strip.style.transform = `translateY(${(-local * 100).toFixed(2)}%)`
+      strip.style.transform = `translateY(${(-100 + local * 100).toFixed(2)}%)`
     })
 
     // 视频虚化
