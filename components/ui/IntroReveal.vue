@@ -97,9 +97,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* Intro 段落：整体靠右（右栏）+ 栏内文字左对齐 */
+/* Intro 段落：整体靠右（右栏）+ 栏内文字左对齐，宽 60vw（B 档选定） */
 .intro-reveal__para {
-  max-width: 36rem;
+  max-width: 60vw;
   margin-left: auto; /* 右栏 */
   text-align: left; /* 栏内左对齐 */
   color: var(--c-ink);
