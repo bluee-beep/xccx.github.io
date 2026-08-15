@@ -12,11 +12,13 @@ const trailRefs = ref<HTMLElement[]>([])
 let rafId = 0
 let running = false
 
-// 3 层：不同视差速度（越深越慢）+ 透明度
+// 5 层：不同视差速度（越深越慢）+ 透明度（最末两层最深最淡）
 const layers = [
   { speed: 0.6, opacity: 1 }, // 顶层：最快、实心
-  { speed: 0.35, opacity: 0.6 }, // 中层
-  { speed: 0.1, opacity: 0.35 }, // 底层：最慢
+  { speed: 0.35, opacity: 0.6 },
+  { speed: 0.1, opacity: 0.35 },
+  { speed: 0.06, opacity: 0.2 }, // 新增：更深
+  { speed: 0.03, opacity: 0.1 }, // 新增：最深最淡
 ]
 
 function tick() {
