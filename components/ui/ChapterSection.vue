@@ -79,13 +79,19 @@ function splitHighlight(text: string) {
       <!-- 章节中央斜体大字背景 -->
       <p v-if="chapter.footer" class="chapter__footer" aria-hidden="true">{{ chapter.footer }}</p>
 
-      <!-- 联系方式图标胶囊：hover 显示对应信息 -->
+      <!-- 联系方式图标胶囊：hover 显示对应信息（微信显示二维码浮层） -->
       <div v-if="chapter.contacts" v-reveal class="chapter__contacts">
         <div v-for="c in chapter.contacts" :key="c.label" class="chapter__contact" :title="c.label">
-          <span class="chapter__contact-icon">
+          <!-- 微信：纯文字标识（hover 浮出二维码）；其余：图标 -->
+          <span v-if="c.qr" class="chapter__contact-label">{{ c.value }}</span>
+          <span v-else class="chapter__contact-icon">
             <img :src="`${baseURL}icons/${c.icon}.svg`" :alt="c.label" />
           </span>
-          <span class="chapter__contact-value">{{ c.value }}</span>
+          <span v-if="!c.qr" class="chapter__contact-value">{{ c.value }}</span>
+          <!-- 微信：hover 浮出二维码卡片 -->
+          <span v-if="c.qr" class="chapter__contact-qr">
+            <img :src="`${baseURL}icons/${c.qr}.jpg`" :alt="`${c.label}二维码`" />
+          </span>
         </div>
       </div>
     </div>
@@ -337,11 +343,47 @@ function splitHighlight(text: string) {
   transition: opacity var(--dur-fast) var(--ease-out-expo);
 }
 
-/* 图标图片：微信横向 logo 更高；simple-icons 方形 */
+/* 图标图片：simple-icons 方形统一 1.9rem */
 .chapter__contact-icon img {
   height: 1.9rem;
   width: auto;
   display: block;
+}
+
+/* 微信气泡单独放大（裁切后视觉偏小） */
+.chapter__contact-icon img[alt="微信"] {
+  height: 2.6rem;
+}
+
+/* 微信纯文字标识 */
+.chapter__contact-label {
+  font-family: 'JetBrains Mono Variable', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--c-ink);
+}
+
+/* 微信二维码浮层：hover 时从胶囊上方浮出 */
+.chapter__contact-qr {
+  position: absolute;
+  bottom: calc(100% + 0.75rem);
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-out-expo);
+  z-index: 10;
+}
+
+.chapter__contact-qr img {
+  width: 10rem;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.chapter__contact:hover .chapter__contact-qr {
+  opacity: 1;
 }
 
 /* 信息层：默认隐藏，hover 时替换图标 */
