@@ -1,0 +1,10 @@
+# ==================== 统一 LF 换行 ====================
+# 防止 Windows CRLF 在 GitHub Actions 中造成 diff 抖动与脚本踩坑
+* text=auto eol=lf
+
+# 二进制文件不做换行转换
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
