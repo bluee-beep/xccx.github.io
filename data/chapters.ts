@@ -52,7 +52,8 @@ export const chapters: ChapterItem[] = [
     kicker: 'Selected works',
     title: ['作品', '在路上'],
     paragraphs: [
-      '正在积累竞赛与项目作品，稍后在此展出。',
+      '正在开发一款「坦克大战」小游戏——从零实现经典玩法。',
+      '开发完成后将在此展出，敬请期待。',
     ],
   },
   {
