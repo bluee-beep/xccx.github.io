@@ -67,23 +67,23 @@ onMounted(() => {
   padding-right: 8px;
 }
 
-/* 超大无衬线、紧字距、近黑（瑞士风格）——2A 字重 600 / 3A 字距 -0.04em */
+/* 超大无衬线、紧字距、统一白色（瑞士风格）——2A 字重 600 / 3A 字距 -0.04em */
 .lm__text {
   font-family: 'Inter Variable', sans-serif;
   font-size: var(--lm-font);
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 1;
-  color: var(--c-bg);
+  color: var(--c-ink); /* 统一白色 */
 }
 
-/* 白色实心大圆（0.4 倍字高）：50% 透明 + 垂直偏移 +0.5em（用户选定） */
+/* 白色实心大圆（0.4 倍字高）：25% 透明 + 垂直偏移 +0.5em */
 .lm__dot {
   width: calc(var(--lm-font) * 0.4);
   height: calc(var(--lm-font) * 0.4);
   border-radius: 50%;
   background: var(--c-ink);
-  opacity: 0.5;
+  opacity: 0.25; /* 透明度减半 */
   transform: translateY(0.5em);
   flex-shrink: 0;
 }
