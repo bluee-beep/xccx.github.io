@@ -97,11 +97,11 @@ function splitHighlight(text: string) {
   /* 线静止：不再整体移动 */
 }
 
-/* 4 条线横向分布（避开右侧文案区 60vw） */
-.chapter__wave-line--1 { left: 10%; }
-.chapter__wave-line--2 { left: 20%; }
-.chapter__wave-line--3 { left: 30%; }
-.chapter__wave-line--4 { left: 40%; }
+/* 4 条线横向分布——全部在文案区（40vw 起）左侧，不穿过文字 */
+.chapter__wave-line--1 { left: 6vw; }
+.chapter__wave-line--2 { left: 13vw; }
+.chapter__wave-line--3 { left: 20vw; }
+.chapter__wave-line--4 { left: 27vw; }
 
 /* 彗尾笔迹：可见窗口（22% 路径长）沿波浪前进——前头画出、后头消散 */
 .chapter__wave-line path {
