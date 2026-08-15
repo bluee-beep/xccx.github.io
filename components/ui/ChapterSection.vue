@@ -332,9 +332,8 @@ function splitHighlight(text: string) {
   height: 3.75rem;
   display: grid;
   place-items: center;
-  overflow: hidden;
   cursor: pointer;
-  /* 无外框：图标直接展示（待用户提供图标替换文字标识） */
+  /* 无外框、无 overflow 裁剪（二维码浮层在胶囊外） */
 }
 
 .chapter__contact-icon {
@@ -376,7 +375,7 @@ function splitHighlight(text: string) {
 }
 
 .chapter__contact-qr img {
-  width: 10rem;
+  width: 14rem; /* 二维码放大 */
   height: auto;
   display: block;
   border-radius: 8px;
