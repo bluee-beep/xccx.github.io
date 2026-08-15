@@ -3,6 +3,33 @@
 @import './base.css';
 @import './utilities.css';
 
+/* ==================== 全站 CRT 扫描线罩（与 Nº001 同款） ==================== */
+/* 固定屏幕层：细条纹覆盖所有区域（Hero/章节/页脚），0.8s 流动 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 2px,
+    rgba(0, 0, 0, 0.16) 2px 4px
+  );
+  animation: crt-global-scan 0.8s linear infinite;
+}
+
+@keyframes crt-global-scan {
+  from { background-position: 0 0; }
+  to { background-position: 0 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    animation: none;
+  }
+}
+
 /* ==================== 入场动画（v-reveal 指令） ==================== */
 /* 初始类由 JS 添加：无 JS 或 reduced-motion 时元素直接可见 */
 .v-reveal--hidden {

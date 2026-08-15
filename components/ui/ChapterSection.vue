@@ -171,21 +171,12 @@ function splitHighlight(text: string) {
   transform: translateX(60px);
 }
 
-/* Intro 变体：整章底色（用户选定）+ 动态 CRT 扫描线条纹，文字转深色 */
+/* Intro 变体：灰蓝底色（条纹由全站 CRT 罩统一提供），文字深色 */
 .chapter--intro {
-  background:
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
-    #969da4; /* 用户选定底色 */
+  background: #969da4; /* 用户选定底色 */
   border-top-color: #82898f;
-  /* 扫描线下移（4px = 一个条纹周期，无缝循环）——B 档：细 2px + 中速 0.8s */
-  animation: crt-scan 0.8s linear infinite;
   /* 多留空间：上下内边距加大 */
   padding-block: 12rem;
-}
-
-@keyframes crt-scan {
-  from { background-position: 0 0; }
-  to { background-position: 0 4px; }
 }
 
 /* 眉题行：加大加粗 + 深色高对比；无上线；下 margin 归零让字幕紧贴 */
