@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // ==================== 章节序列渲染器 ====================
-// v-for 章节；章节之间插入波浪边缘（WaveEdge，颜色 = 下一章节背景色）
+// v-for 章节；Nº001(Intro) → Nº002 之间插入滚动衔接过渡（圆弧覆盖 + 上一章模糊）
 import type { ChapterItem } from '~/data/chapters'
 
 defineProps<{ chapters: ChapterItem[] }>()
@@ -13,10 +13,11 @@ const waveColorOf = (c: ChapterItem) =>
 <template>
   <template v-for="(chapter, i) in chapters" :key="chapter.id">
     <ChapterSection :chapter="chapter" />
-    <!-- 波浪边缘：仅 Nº001(Intro) → Nº002 之间 -->
-    <WaveEdge
+    <!-- 衔接过渡：仅 Nº001(Intro) → Nº002 之间 -->
+    <ChapterTransition
       v-if="chapter.variant === 'intro' && i < chapters.length - 1"
       :color="waveColorOf(chapters[i + 1])"
+      :prev-id="chapter.id"
     />
   </template>
 </template>
