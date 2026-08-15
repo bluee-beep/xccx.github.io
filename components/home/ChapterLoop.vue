@@ -13,20 +13,19 @@ const waveColorOf = (c: ChapterItem) =>
 <template>
   <template v-for="(chapter, i) in chapters" :key="chapter.id">
     <ChapterSection :chapter="chapter" />
-    <!-- 衔接过渡：仅 Nº001(Intro) → Nº002 之间 -->
+    <!-- 衔接过渡：Nº001(Intro) → Nº002 之间 -->
     <ChapterTransition
       v-if="chapter.variant === 'intro' && i < chapters.length - 1"
       :color="waveColorOf(chapters[i + 1])"
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
     />
-    <!-- 反向过渡：Nº003(works) → Nº004 之间（圆弧从顶部降下） -->
+    <!-- 简单过渡：Nº002 → Nº003 之间 -->
     <ChapterTransition
-      v-if="chapter.id === 'works' && i < chapters.length - 1"
+      v-if="chapter.id === 'capabilities' && i < chapters.length - 1"
       :color="waveColorOf(chapters[i + 1])"
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
-      direction="down"
     />
   </template>
 </template>
