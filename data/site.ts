@@ -23,7 +23,10 @@ export const site = {
 
   nav: [
     { label: 'Index', to: '/' },
-    // TODO: Journal 博客上线后在此追加 { label: 'Journal', to: '/journal' }
+    { label: 'Nº001', to: '#manifesto' },
+    { label: 'Nº002', to: '#capabilities' },
+    { label: 'Nº003', to: '#works' },
+    { label: 'Nº004', to: '#contact' },
   ] as NavItem[],
 
   social: [
