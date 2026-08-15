@@ -16,11 +16,11 @@ const logoSrc = `${baseURL}logo.svg`
 let rafId = 0
 let running = false
 
-// 3 层：不同视差速度（越深越慢）+ 透明度（整体更实）
+// 3 层：不同视差速度（越深越慢）+ 透明度——C 档明显错位
 const layers = [
-  { speed: 0.35, opacity: 1 }, // 顶层：最快、实心
-  { speed: 0.22, opacity: 0.6 }, // 中层
-  { speed: 0.12, opacity: 0.35 }, // 底层：最慢
+  { speed: 0.5, opacity: 1 }, // 顶层：最快、实心
+  { speed: 0.3, opacity: 0.6 }, // 中层
+  { speed: 0.1, opacity: 0.35 }, // 底层：最慢
 ]
 
 function tick() {
