@@ -53,18 +53,10 @@ defineProps<{ chapter: ChapterItem }>()
   border-top: 1px solid var(--c-line);
 }
 
-/* feature 变体（capabilities）：灰色背景 + 动态扫描线，文字转深色 */
+/* feature 变体（capabilities）：纯灰背景（无扫描线），文字转深色 */
 .chapter--feature {
-  background:
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
-    #b8b8ba;
-  animation: chapter-feature-scan 0.8s linear infinite;
+  background: #b8b8ba;
   border-top-color: #a3a3a6;
-}
-
-@keyframes chapter-feature-scan {
-  from { background-position: 0 0; }
-  to { background-position: 0 4px; }
 }
 
 .chapter--feature .chapter__title {
