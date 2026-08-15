@@ -25,11 +25,11 @@ function tick() {
   if (el) {
     const rect = el.getBoundingClientRect()
     const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height * 0.5)))
-    // 错位基准：按 logo 实际高度 × 4，保证层间跨度 ≥ 2 个 logo 高
+    // 错位基准：按 logo 实际高度 × 3（层间跨度 1.5 logo 高，错位收敛）
     const logoH = trailRefs.value[0]?.offsetHeight || 280
     trailRefs.value.forEach((layer, i) => {
       if (!layer) return
-      const offset = progress * layers[i].speed * logoH * 4
+      const offset = progress * layers[i].speed * logoH * 3
       layer.style.transform = `translateY(${offset.toFixed(2)}px)`
     })
   }
