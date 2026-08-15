@@ -122,8 +122,8 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   overflow: hidden;
   z-index: 3;
   pointer-events: none;
-  border-block: 1px solid var(--c-line);
-  padding-block: var(--space-3);
+  border-block: 2px solid var(--c-line);
+  padding-block: var(--space-4);
 }
 
 .hero__marquee-track {
@@ -144,14 +144,14 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
 .hero__marquee-group {
   display: flex;
   align-items: center;
-  gap: var(--space-6);
-  padding-right: var(--space-6);
+  gap: var(--space-7);
+  padding-right: var(--space-7);
 }
 
 .hero__marquee-text {
-  font-size: clamp(1.15rem, 2.2vw, 1.7rem);
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--c-ink);
 }
