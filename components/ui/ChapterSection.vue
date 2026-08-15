@@ -45,8 +45,8 @@ function splitHighlight(text: string) {
         <span class="chapter__kicker u-monolabel">{{ chapter.kicker }}</span>
       </header>
 
-      <!-- 大标题：常规章节逐行拆字；intro 用 xccx 字幕；feature 不渲染（文案上移） -->
-      <h2 v-if="chapter.variant !== 'intro' && chapter.variant !== 'feature'" class="chapter__title">
+      <!-- 大标题：常规章节逐行拆字；intro 用 xccx 字幕；feature/无标题不渲染 -->
+      <h2 v-if="chapter.title.length && chapter.variant !== 'intro' && chapter.variant !== 'feature'" class="chapter__title">
         <RevealText
           v-for="line in chapter.title"
           :key="line"

@@ -66,7 +66,7 @@ export const chapters: ChapterItem[] = [
     id: 'contact',
     no: 'Nº004',
     kicker: "Let's talk",
-    title: ['聊聊你的', '项目'],
+    title: [], // 标题已删除（胶囊直接跟在眉题下）
     paragraphs: [
       '竞赛组队、项目合作或任何想法，欢迎联系。',
     ],
