@@ -34,7 +34,7 @@ function computeTarget() {
   if (!el) return
   const rect = el.getBoundingClientRect()
   const start = vh + rect.height * 0.2 // 容器底部刚进入视口
-  const end = vh * 0.3 // 容器顶部到达视口 30%
+  const end = vh * 0.66 // 提前完成：容器顶部到达视口 66% 即全部显示
   targetProgress = Math.min(1, Math.max(0, (start - rect.bottom) / (start - end)))
 }
 
