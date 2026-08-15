@@ -23,14 +23,17 @@ const sectionIds = ['manifesto', 'capabilities', 'works', 'contact']
 const activeId = ref('')
 
 // 滑动横线：位置/宽度随激活项过渡（CSS transition 丝滑滑动）
-const navRefs = ref<HTMLElement[]>([])
+const navEl = ref<HTMLElement>()
 const lineStyle = reactive({ left: '0px', width: '0px', opacity: 0 })
 
 watch(activeId, (id) => {
+  const nav = navEl.value
+  if (!nav) return
   const idx = site.nav.findIndex((n) => n.to.slice(1) === id)
-  const el = navRefs.value[idx]
+  const links = nav.querySelectorAll<HTMLElement>('.header__link')
+  const el = links[idx]
   if (idx >= 0 && el) {
-    const navRect = el.parentElement!.getBoundingClientRect()
+    const navRect = nav.getBoundingClientRect()
     const rect = el.getBoundingClientRect()
     lineStyle.left = `${rect.left - navRect.left}px`
     lineStyle.width = `${rect.width}px`
@@ -74,11 +77,10 @@ onBeforeUnmount(() => {
         <img :src="logoSrc" alt="XCCX" class="header__logo-img" :style="{ opacity: logoOpacity }" />
       </NuxtLink>
 
-      <nav class="header__nav" aria-label="主导航">
+      <nav ref="navEl" class="header__nav" aria-label="主导航">
         <NuxtLink
           v-for="item in site.nav"
           :key="item.to"
-          ref="navRefs"
           :to="item.to"
           class="header__link u-monolabel"
         >
