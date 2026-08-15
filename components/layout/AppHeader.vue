@@ -3,10 +3,17 @@
 // 固定顶部 + 毛玻璃；导航项来自 data/site.ts
 // TODO: M4 后接入滚动进度条 / 汉堡菜单
 import { site } from '~/data/site'
+import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
 
 // public 静态资源需手动拼接 baseURL（Nuxt 不会自动加前缀）
 const baseURL = useRuntimeConfig().app.baseURL
 const logoSrc = `${baseURL}logo.svg`
+
+// ---- 与 Hero 大 logo 合体：滚动归位完成后才显示（避免双 logo） ----
+const heroProgress = useState('hero-logo-progress', () => 0)
+const logoOpacity = computed(() =>
+  isTouchDevice() || prefersReducedMotion() ? 1 : Math.min(1, heroProgress.value),
+)
 
 // 滚动后 header 加毛玻璃背景（顶部透明让视频画面透出）
 const isScrolled = ref(false)
@@ -29,7 +36,7 @@ onBeforeUnmount(() => {
   <header class="header" :class="{ 'header--scrolled': isScrolled }">
     <div class="u-container header__inner">
       <NuxtLink to="/" class="header__logo" aria-label="回到首页">
-        <img :src="logoSrc" alt="XCCX" class="header__logo-img" />
+        <img :src="logoSrc" alt="XCCX" class="header__logo-img" :style="{ opacity: logoOpacity }" />
       </NuxtLink>
 
       <nav class="header__nav" aria-label="主导航">
@@ -84,7 +91,9 @@ onBeforeUnmount(() => {
   height: 2.75rem; /* 44px：B 档（六档对比中选定） */
   width: auto;
   display: block;
-  transition: opacity var(--dur-fast) var(--ease-out-expo);
+  /* 与 Hero 大 logo 合体：归位进度驱动显隐 */
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out-expo);
 }
 
 .header__logo:hover .header__logo-img {

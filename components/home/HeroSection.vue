@@ -1,28 +1,35 @@
 <script setup lang="ts">
-// ==================== 首屏 Hero：视频视差取景 ====================
-// 大画布无缝循环视频 + 鼠标驱动取景平移（usePanorama）
-// 文字层为占位形式（P3 定稿）；视频加载失败回退纯色静态视觉
+// ==================== 首屏 Hero：视频取景 + 大 Logo 滚动归位 ====================
+// 视频层：太空背景 + 鼠标取景（usePanorama）
+// Logo 层：中央大 XCCX，滚动时平滑缩小归位至 header（useHeroLogo）
 import { site } from '~/data/site'
+import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
 
 const baseURL = useRuntimeConfig().app.baseURL
 
 const videoWrap = ref<HTMLElement>()
 const video = ref<HTMLVideoElement>()
 const videoError = ref(false)
+const heroLogo = ref<HTMLElement>()
 
 const videoSrc = `${baseURL}${site.heroVideo.src}`
 const videoPoster = `${baseURL}videos/hero-poster.jpg`
+const logoSrc = `${baseURL}logo.svg`
 
 function onVideoError() {
   videoError.value = true
 }
 
 usePanorama(videoWrap, video, { range: site.heroVideo.range })
+
+// 大 logo 归位：桌面 + 动效开启时启用；移动端保持居中
+const logoStatic = ref(isTouchDevice() || prefersReducedMotion())
+useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
 </script>
 
 <template>
   <section class="hero">
-    <!-- 视频取景层（大画布，比视口大 30%） -->
+    <!-- 视频取景层（大画布，比视口大 20%） -->
     <div ref="videoWrap" class="hero__video-wrap" aria-hidden="true">
       <video
         v-if="!videoError"
@@ -39,18 +46,12 @@ usePanorama(videoWrap, video, { range: site.heroVideo.range })
       />
     </div>
 
-    <!-- 可读性遮罩（视频上叠文字用） -->
+    <!-- 可读性遮罩 -->
     <div class="hero__shade" aria-hidden="true" />
 
-    <!-- 文字层（P3 呈现形式待定，当前占位） -->
-    <div class="u-container hero__inner">
-      <p v-reveal class="hero__eyebrow u-monolabel">{{ site.tagline }}</p>
-      <h1 class="hero__name">
-        <RevealText>{{ site.name }}</RevealText>
-      </h1>
-      <p v-reveal="{ delay: 200 }" class="hero__sub">
-        欢迎来到我的站点 — 这里记录思考、作品与成长。
-      </p>
+    <!-- 大 Logo（滚动归位至 header） -->
+    <div ref="heroLogo" class="hero__logo" :class="{ 'hero__logo--static': logoStatic }" aria-hidden="true">
+      <img :src="logoSrc" alt="" class="hero__logo-img" />
     </div>
 
     <!-- 滚动提示 -->
@@ -67,7 +68,7 @@ usePanorama(videoWrap, video, { range: site.heroVideo.range })
   /* 上移 header 高度：视频从页面最顶端开始（header 区域也显示画面） */
   margin-top: calc(-1 * var(--header-h));
   min-height: calc(100svh + var(--header-h));
-  padding-top: var(--header-h); /* 文字避开透明 header 区域 */
+  padding-top: var(--header-h);
   display: flex;
   align-items: center;
   overflow: hidden; /* 视频取景：超出部分裁剪 */
@@ -99,28 +100,32 @@ usePanorama(videoWrap, video, { range: site.heroVideo.range })
     linear-gradient(to bottom, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.15) 40%, rgba(10, 10, 10, 0.35) 75%, rgba(10, 10, 10, 0.82) 100%);
 }
 
-/* ---- 文字层（P3 定稿占位） ---- */
-.hero__inner {
-  position: relative;
-  z-index: 2;
-  padding-block: var(--space-8);
+/* ---- 大 Logo：fixed 居中，transform 由 useHeroLogo 驱动 ---- */
+.hero__logo {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: transform;
 }
 
-.hero__eyebrow {
-  color: var(--c-accent);
-  margin-bottom: var(--space-4);
+.hero__logo-img {
+  height: 220px;
+  width: auto;
+  display: block;
 }
 
-.hero__name {
-  font-size: var(--fs-display);
-  letter-spacing: var(--ls-display);
-  line-height: var(--lh-display);
+/* 移动端：居中展示不归位，尺寸收小 */
+.hero__logo--static .hero__logo-img {
+  height: 120px;
 }
 
-.hero__sub {
-  margin-top: var(--space-5);
-  max-width: 30rem;
-  color: var(--c-muted);
+@media (max-width: 640px) {
+  .hero__logo-img {
+    height: 120px;
+  }
 }
 
 /* ---- 滚动提示 ---- */

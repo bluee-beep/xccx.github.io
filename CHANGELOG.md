@@ -55,6 +55,16 @@
 - **og-image.svg**：黑底 + X 字标 + tagline 标语
 - 资源路径手动拼接 baseURL（`useRuntimeConfig().app.baseURL`）
 
+## v1.3.0-H1 — 2026-08-15
+
+### 首页大 Logo 滚动归位（PPT 平滑感）
+
+- Hero 文字层移除（无中文），替换为**中央大 XCCX**（220px）
+- `useHeroLogo`：滚动进度 → lerp 插值 → scale(1→0.2) + translate（归位至 header logo）
+- **与 header logo 合体**：归位进度驱动 header logo 显隐（useState 跨组件共享）
+- `useDevice` 统一设备判定（触屏/减少动效 → 不归位，居中展示）
+- 修复：useState 模块顶层调用报错（移入 setup 上下文）
+
 ## v1.2.5 — 2026-08-15
 
 ### 内容填充 Step 5：Bio 自我介绍（热情版，竞赛视角）
