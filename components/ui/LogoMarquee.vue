@@ -77,14 +77,14 @@ onMounted(() => {
   color: var(--c-bg);
 }
 
-/* 白色实心大圆（0.4 倍字高）：50% 透明 + 与字体视觉中心对齐（微调上移） */
+/* 白色实心大圆（0.4 倍字高）：50% 透明 + 垂直偏移 +0.5em（用户选定） */
 .lm__dot {
   width: calc(var(--lm-font) * 0.4);
   height: calc(var(--lm-font) * 0.4);
   border-radius: 50%;
   background: var(--c-ink);
   opacity: 0.5;
-  transform: translateY(-0.06em);
+  transform: translateY(0.5em);
   flex-shrink: 0;
 }
 
