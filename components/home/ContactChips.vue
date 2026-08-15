@@ -6,11 +6,18 @@ defineProps<{
 }>()
 
 const baseURL = useRuntimeConfig().app.baseURL
+
+// 智能翻转：胶囊靠近视口顶部时二维码向下浮出
+function flipQr(e: MouseEvent) {
+  const el = e.currentTarget as HTMLElement
+  const rect = el.getBoundingClientRect()
+  el.classList.toggle('cc__contact--down', rect.top < 400)
+}
 </script>
 
 <template>
   <div class="cc" v-reveal>
-    <div v-for="c in contacts" :key="c.label" class="cc__contact" :title="c.label">
+    <div v-for="c in contacts" :key="c.label" class="cc__contact" :title="c.label" @mouseenter="flipQr">
       <!-- 微信：纯文字标识（hover 浮出二维码）；其余：图标 -->
       <span v-if="c.qr" class="cc__label">{{ c.value }}</span>
       <span v-else class="cc__icon">
@@ -31,8 +38,8 @@ const baseURL = useRuntimeConfig().app.baseURL
   flex-wrap: wrap;
   gap: var(--space-3);
   justify-content: flex-start; /* 左对齐（与 Nº004 标题一致） */
-  margin-top: var(--space-5);
-  margin-bottom: var(--space-4); /* 与段落间距收小 */
+  margin-top: var(--space-3); /* 紧贴标题 */
+  margin-bottom: var(--space-4);
 }
 
 .cc__contact {
@@ -87,6 +94,12 @@ const baseURL = useRuntimeConfig().app.baseURL
 
 .cc__contact:hover .cc__qr {
   opacity: 1;
+}
+
+/* 智能翻转：胶囊靠近视口顶部 → 二维码向下浮出 */
+.cc__contact--down .cc__qr {
+  bottom: auto;
+  top: calc(100% + 0.75rem);
 }
 
 /* 信息层：默认隐藏，hover 时替换图标 */
