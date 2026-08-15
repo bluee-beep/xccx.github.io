@@ -55,6 +55,14 @@
 - **og-image.svg**：黑底 + X 字标 + tagline 标语
 - 资源路径手动拼接 baseURL（`useRuntimeConfig().app.baseURL`）
 
+## v1.1.0-P3 — 2026-08-15
+
+### 视频无缝循环处理（xfade 2 秒交叉渐变）
+
+- 30s 素材：主体 28s + 开头 2s 尾部渐入（`xfade duration=2 offset=28`）
+- 循环点（30s→0s）画面平滑过渡，无跳变
+- 最终规格：1080p / 30fps / 21.3MB / 无音频
+
 ## v1.1.0-P2 — 2026-08-15
 
 ### Hero 视频素材定稿 + 取景调优
