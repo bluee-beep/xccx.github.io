@@ -16,8 +16,8 @@ defineProps<{ chapter: ChapterItem }>()
         <span class="chapter__kicker u-monolabel">{{ chapter.kicker }}</span>
       </header>
 
-      <!-- 大标题：常规章节逐行拆字；intro 章节用 XCCX logo 滚动字幕 -->
-      <h2 v-if="chapter.variant !== 'intro'" class="chapter__title">
+      <!-- 大标题：常规章节逐行拆字；intro/feature 章节用 xccx 滚动字幕 -->
+      <h2 v-if="chapter.variant !== 'intro' && chapter.variant !== 'feature'" class="chapter__title">
         <RevealText
           v-for="line in chapter.title"
           :key="line"
@@ -28,8 +28,11 @@ defineProps<{ chapter: ChapterItem }>()
       </h2>
       <LogoMarquee v-else class="chapter__logo-marquee" />
 
-      <!-- 正文：intro 变体整章连续逐字显现；其余逐段错峰入场 -->
-      <IntroReveal v-if="chapter.variant === 'intro'" :paragraphs="chapter.paragraphs" />
+      <!-- 正文：intro/feature 变体整章连续逐字显现；其余逐段错峰入场 -->
+      <IntroReveal
+        v-if="chapter.variant === 'intro' || chapter.variant === 'feature'"
+        :paragraphs="chapter.paragraphs"
+      />
       <template v-else>
         <p v-for="(para, i) in chapter.paragraphs" :key="para" v-reveal="{ delay: i * 120 }" class="chapter__para">
           {{ para }}
@@ -87,10 +90,7 @@ defineProps<{ chapter: ChapterItem }>()
   color: var(--c-bg);
 }
 
-/* 滑动入场：feature 内容从右滑入（替换上移淡入） */
-.chapter--feature .v-reveal--hidden {
-  transform: translateX(60px);
-}
+/* feature 段落样式由 IntroReveal 提供（右栏 60vw / 左对齐 / 大字号 / 逐字显现） */
 
 /* Intro 变体：整章底色（用户选定）+ 动态 CRT 扫描线条纹，文字转深色 */
 .chapter--intro {
@@ -185,15 +185,6 @@ defineProps<{ chapter: ChapterItem }>()
   font-size: clamp(1.2rem, 1.8vw, 1.5rem);
   line-height: 1.6;
   color: var(--c-ink);
-}
-
-/* feature 变体（capabilities）：右栏左对齐 + 大一号 */
-.chapter--feature .chapter__para {
-  max-width: 60vw;
-  margin-left: auto; /* 右栏 */
-  text-align: left; /* 左对齐 */
-  font-size: clamp(1.2rem, 1.8vw, 1.5rem); /* 大一号 */
-  line-height: 1.6;
 }
 
 .chapter__stats {
