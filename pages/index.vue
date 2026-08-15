@@ -10,5 +10,6 @@ useSeo()
   <div>
     <HeroSection />
     <ChapterLoop :chapters="chapters" />
+    <FooterTrail />
   </div>
 </template>
