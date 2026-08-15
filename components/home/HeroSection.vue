@@ -11,6 +11,7 @@ const video = ref<HTMLVideoElement>()
 const videoError = ref(false)
 
 const videoSrc = `${baseURL}${site.heroVideo.src}`
+const videoPoster = `${baseURL}videos/hero-poster.jpg`
 
 function onVideoError() {
   videoError.value = true
@@ -28,6 +29,7 @@ usePanorama(videoWrap, video, { range: site.heroVideo.range })
         ref="video"
         class="hero__video"
         :src="videoSrc"
+        :poster="videoPoster"
         muted
         autoplay
         loop
