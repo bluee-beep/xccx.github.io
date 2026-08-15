@@ -39,9 +39,9 @@ function apply() {
   if (cover.value) {
     cover.value.style.transform = `translateY(${(100 - p * 110).toFixed(2)}%)`
   }
-  // 过渡舞台：随进度虚化 + 变灰（与 Nº001 滑动效果一致）
+  // 过渡舞台：与 Nº001 完全相同的滤镜（blur + brightness），保证无有色差
   if (root.value) {
-    root.value.style.filter = `blur(${(p * 10).toFixed(1)}px) grayscale(${p.toFixed(2)})`
+    root.value.style.filter = `blur(${(p * 10).toFixed(1)}px) brightness(${(1 - p * 0.25).toFixed(2)})`
   }
   // 上一章模糊：blur 0 → 10px + 微暗
   const prev = document.getElementById(props.prevId)
