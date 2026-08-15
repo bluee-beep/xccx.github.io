@@ -117,7 +117,7 @@ onBeforeUnmount(() => {
   display: grid;
   place-items: center;
   pointer-events: none;
-  margin-top: -2.5rem; /* 整体上移 */
+  margin-top: -12.5rem; /* 整体上移（用户指定） */
 }
 
 .footer__trail-layer {
