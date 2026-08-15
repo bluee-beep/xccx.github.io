@@ -13,7 +13,10 @@ const waveColorOf = (c: ChapterItem) =>
 <template>
   <template v-for="(chapter, i) in chapters" :key="chapter.id">
     <ChapterSection :chapter="chapter" />
-    <!-- 章节间波浪边缘：下一章节的波浪形顶部（最后一章不加） -->
-    <WaveEdge v-if="i < chapters.length - 1" :color="waveColorOf(chapters[i + 1])" />
+    <!-- 波浪边缘：仅 Nº001(Intro) → Nº002 之间 -->
+    <WaveEdge
+      v-if="chapter.variant === 'intro' && i < chapters.length - 1"
+      :color="waveColorOf(chapters[i + 1])"
+    />
   </template>
 </template>
