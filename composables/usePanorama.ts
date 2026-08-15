@@ -28,8 +28,11 @@ export function usePanorama(
   let observer: IntersectionObserver | null = null
 
   // ---- 环境判定：触屏 / 减少动效 → 居中静态取景 ----
+  // 只用 pointer: coarse 判定（手机/平板主指针为触摸）；
+  // 触屏笔记本主指针是 fine（鼠标），必须启用平移
   const isTouch = () =>
-    'ontouchstart' in window || navigator.maxTouchPoints > 0
+    window.matchMedia('(pointer: coarse)').matches &&
+    !window.matchMedia('(any-pointer: fine)').matches
   const prefersReducedMotion = () =>
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -80,19 +83,23 @@ export function usePanorama(
   }
 
   // ---- 鼠标：归一化坐标 → 目标偏移（鼠标在右 → 视频左移露出右侧画面） ----
+  // window 级监听（视频元素覆盖视口，事件冒泡不稳），坐标在视口内才生效
   function onMouseMove(e: MouseEvent) {
     const vp = viewportEl.value
     if (!vp) return
     const rect = vp.getBoundingClientRect()
-    const mx = (e.clientX - rect.left) / rect.width
-    const my = (e.clientY - rect.top) / rect.height
+    const x = e.clientX
+    const y = e.clientY
+    // 鼠标移出视口 → 回中
+    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+      targetX = 0
+      targetY = 0
+      return
+    }
+    const mx = (x - rect.left) / rect.width
+    const my = (y - rect.top) / rect.height
     targetX = (0.5 - mx) * 2 * maxTx
     targetY = (0.5 - my) * 2 * maxTy
-  }
-
-  function onMouseLeave() {
-    targetX = 0
-    targetY = 0 // 移出 → 缓慢回中
   }
 
   onMounted(() => {
@@ -110,13 +117,13 @@ export function usePanorama(
       return
     }
 
-    // 媒体元数据就绪后计算尺寸（videoWidth 才有值）
+    // 媒体元数据就绪后计算尺寸（videoWidth 才有值）；canplay 兜底
     media.addEventListener('loadedmetadata', computeSize)
+    media.addEventListener('canplay', computeSize)
     if (media.videoWidth) computeSize()
 
     window.addEventListener('resize', computeSize)
-    vp.addEventListener('mousemove', onMouseMove)
-    vp.addEventListener('mouseleave', onMouseLeave)
+    window.addEventListener('mousemove', onMouseMove)
 
     // 进出视口启停 rAF（性能：滚出首屏即停）
     observer = new IntersectionObserver((entries) => {
@@ -132,13 +139,12 @@ export function usePanorama(
   onBeforeUnmount(() => {
     stop()
     observer?.disconnect()
-    const vp = viewportEl.value
     const media = mediaEl.value
-    if (vp) {
-      vp.removeEventListener('mousemove', onMouseMove)
-      vp.removeEventListener('mouseleave', onMouseLeave)
+    if (media) {
+      media.removeEventListener('loadedmetadata', computeSize)
+      media.removeEventListener('canplay', computeSize)
     }
-    if (media) media.removeEventListener('loadedmetadata', computeSize)
     window.removeEventListener('resize', computeSize)
+    window.removeEventListener('mousemove', onMouseMove)
   })
 }

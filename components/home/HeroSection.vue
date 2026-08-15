@@ -62,7 +62,10 @@ usePanorama(videoWrap, video, { range: site.heroVideo.range })
 <style scoped>
 .hero {
   position: relative;
-  min-height: 100svh;
+  /* 上移 header 高度：视频从页面最顶端开始（header 区域也显示画面） */
+  margin-top: calc(-1 * var(--header-h));
+  min-height: calc(100svh + var(--header-h));
+  padding-top: var(--header-h); /* 文字避开透明 header 区域 */
   display: flex;
   align-items: center;
   overflow: hidden; /* 视频取景：超出部分裁剪 */

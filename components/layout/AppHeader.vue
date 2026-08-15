@@ -7,10 +7,26 @@ import { site } from '~/data/site'
 // public 静态资源需手动拼接 baseURL（Nuxt 不会自动加前缀）
 const baseURL = useRuntimeConfig().app.baseURL
 const logoSrc = `${baseURL}logo.svg`
+
+// 滚动后 header 加毛玻璃背景（顶部透明让视频画面透出）
+const isScrolled = ref(false)
+
+function onScroll() {
+  isScrolled.value = window.scrollY > 16
+}
+
+onMounted(() => {
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll)
+})
 </script>
 
 <template>
-  <header class="header">
+  <header class="header" :class="{ 'header--scrolled': isScrolled }">
     <div class="u-container header__inner">
       <NuxtLink to="/" class="header__logo" aria-label="回到首页">
         <img :src="logoSrc" alt="XCCX" class="header__logo-img" />
@@ -37,6 +53,13 @@ const logoSrc = `${baseURL}logo.svg`
   position: sticky;
   top: 0;
   z-index: var(--z-header);
+  /* 初始透明：让 Hero 视频画面从页面最顶端透出 */
+  background: transparent;
+  transition: background var(--dur-base) var(--ease-out-expo);
+}
+
+/* 滚动后：毛玻璃背景保证导航可读 */
+.header--scrolled {
   background: color-mix(in srgb, var(--c-bg) 82%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);

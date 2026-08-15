@@ -18,7 +18,7 @@ export const site = {
   // Hero 视频取景：素材需无缝循环（首尾衔接），放 public/videos/
   heroVideo: {
     src: '/videos/hero.mp4',
-    range: 0.3, // 视频比视口大 30%，支持 ±15% 鼠标取景平移
+    range: 0.2, // 视频比视口大 20%，支持 ±10% 鼠标取景平移
   },
 
   nav: [
