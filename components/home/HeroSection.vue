@@ -153,15 +153,15 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   font-size: clamp(3.4rem, 7vw, 5.8rem);
   font-weight: 600;
   line-height: 1.1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0; /* 字距几乎贴住 */
   text-transform: capitalize;
   color: var(--c-ink);
 }
 
-/* 圆点分隔符：白色大圆点 */
+/* 圆形分隔符：白色，与字同大（1em） */
 .hero__marquee-dot {
-  width: 0.8em;
-  height: 0.8em;
+  width: 1em;
+  height: 1em;
   border-radius: 50%;
   background: var(--c-ink);
   flex-shrink: 0;
