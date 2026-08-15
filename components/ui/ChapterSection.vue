@@ -375,7 +375,7 @@ function splitHighlight(text: string) {
 }
 
 .chapter__contact-qr img {
-  width: 448px; /* 固定像素，绕过全局 max-width 干扰 */
+  width: 320px; /* 20rem = 320px */
   max-width: none;
   height: auto;
   display: block;
