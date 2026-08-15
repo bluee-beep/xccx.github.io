@@ -5,13 +5,14 @@
 
 const root = ref<HTMLElement>()
 const track = ref<HTMLElement>()
-const groupEl = ref<HTMLElement>()
+// v-for 内的 ref 收集为数组
+const groupEls = ref<HTMLElement[]>([])
 const repeatCount = ref(4)
 
 onMounted(() => {
   const rootEl = root.value
   const trackEl = track.value
-  const gEl = groupEl.value
+  const gEl = groupEls.value[0]
   if (!rootEl || !trackEl || !gEl) return
 
   const groupW = gEl.getBoundingClientRect().width
@@ -28,7 +29,7 @@ onMounted(() => {
 <template>
   <div ref="root" class="lm" aria-hidden="true">
     <div ref="track" class="lm__track">
-      <span v-for="n in repeatCount" :key="n" ref="groupEl" class="lm__group">
+      <span v-for="n in repeatCount" :key="n" ref="groupEls" class="lm__group">
         <span class="lm__text">xccx</span>
         <span class="lm__dot" />
       </span>
