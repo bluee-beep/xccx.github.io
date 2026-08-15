@@ -37,10 +37,10 @@ function computeTarget() {
 
 function apply() {
   const p = smoothProgress
-  // 覆盖块：up 从底部升起 / down 从顶部降下
+  // 覆盖块：up 从底部升起 / down 向下撤走（露出下一章）
   if (cover.value) {
     if (props.direction === 'down') {
-      cover.value.style.transform = `translateY(${(-110 + p * 110).toFixed(2)}%)`
+      cover.value.style.transform = `translateY(${(p * 110).toFixed(2)}%)`
     } else {
       cover.value.style.transform = `translateY(${(100 - p * 110).toFixed(2)}%)`
     }
@@ -106,9 +106,20 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="root" class="ct" :style="{ '--ct-from': props.fromColor }" aria-hidden="true">
+  <div
+    ref="root"
+    class="ct"
+    :style="{ '--ct-from': props.direction === 'down' ? props.color : props.fromColor }"
+    aria-hidden="true"
+  >
     <div class="ct__sticky">
-      <div ref="cover" class="ct__cover" :class="{ 'ct__cover--down': props.direction === 'down' }" :style="{ background: color }" />
+      <!-- down：椭圆为上一章颜色，向下撤走露出下一章 -->
+      <div
+        ref="cover"
+        class="ct__cover"
+        :class="{ 'ct__cover--down': props.direction === 'down' }"
+        :style="{ background: props.direction === 'down' ? props.fromColor : color }"
+      />
     </div>
   </div>
 </template>
@@ -150,11 +161,11 @@ onBeforeUnmount(() => {
   will-change: transform;
 }
 
-/* 反向：圆弧在下端，从顶部降下 */
+/* 反向：椭圆为上一章色，初始完全覆盖，滚动向下撤走（圆弧在下端） */
 .ct__cover--down {
   bottom: auto;
   top: 0;
   border-radius: 0 0 50% 50% / 0 0 92% 92%;
-  transform: translateY(-110%);
+  transform: translateY(0); /* 初始覆盖 */
 }
 </style>
