@@ -104,6 +104,13 @@ defineProps<{ chapter: ChapterItem }>()
   margin-bottom: var(--space-3);
 }
 
+/* 引言变体：intro 段落加大字号 */
+.chapter--intro .chapter__para {
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  line-height: 1.6;
+  color: var(--c-ink);
+}
+
 .chapter__stats {
   display: flex;
   justify-content: flex-end; /* stats 靠右 */
