@@ -62,8 +62,8 @@ defineProps<{ chapter: ChapterItem }>()
 .chapter--intro {
   background:
     repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
-    #9e9ea0; /* 用户选定底色 */
-  border-top-color: #8a8a8c;
+    #969da4; /* 用户选定底色 */
+  border-top-color: #82898f;
   /* 扫描线下移（4px = 一个条纹周期，无缝循环）——B 档：细 2px + 中速 0.8s */
   animation: crt-scan 0.8s linear infinite;
 }
@@ -128,11 +128,11 @@ defineProps<{ chapter: ChapterItem }>()
   margin-bottom: var(--space-6);
 }
 
-/* intro 章节：logo 字幕全宽贴边（负 margin 抵消容器 gutter） */
+/* intro 章节：logo 字幕全宽贴边（负 margin 抵消容器 gutter），上下白色细线 */
 .chapter__logo-marquee {
   margin-inline: calc(-1 * var(--gutter));
   margin-bottom: var(--space-6);
-  border-block: 1px solid var(--c-bg);
+  border-block: 1px solid var(--c-ink);
   padding-block: var(--space-2);
 }
 

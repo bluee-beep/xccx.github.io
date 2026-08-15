@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .lm {
-  --lm-logo-h: clamp(4rem, 8vw, 7rem); /* logo 高度基准 */
+  --lm-logo-h: clamp(5rem, 10vw, 8.5rem); /* logo 高度基准（再放大） */
   overflow: hidden;
   pointer-events: none;
 }
