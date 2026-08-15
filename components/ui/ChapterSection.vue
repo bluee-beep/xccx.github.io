@@ -171,10 +171,52 @@ function splitHighlight(text: string) {
   transform: translateX(60px);
 }
 
-/* Nº003（works）：蓝黑背景（用户选定） */
+/* Nº003（works）：蓝黑背景（用户选定）+ 上下喷漆渐变（黑 ↔ 蓝黑） */
 #works {
   background: #141c28;
   border-top-color: #1e2838;
+}
+
+/* 顶部喷漆带：黑色喷溅点向蓝黑过渡 */
+#works::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 7rem;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle 14px at 8% 30%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 22px at 22% 58%, #141c28 55%, transparent 56%),
+    radial-gradient(circle 10px at 35% 22%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 18px at 48% 62%, #141c28 55%, transparent 56%),
+    radial-gradient(circle 12px at 61% 28%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 24px at 75% 60%, #141c28 55%, transparent 56%),
+    radial-gradient(circle 9px at 90% 32%, #141c28 60%, transparent 61%),
+    linear-gradient(to bottom, #0a0a0a 0%, #0a0a0a 40%, transparent 100%);
+}
+
+/* 底部喷漆带：喷溅点向上过渡到黑 */
+#works::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 7rem;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle 16px at 12% 70%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 20px at 28% 42%, #141c28 55%, transparent 56%),
+    radial-gradient(circle 11px at 44% 74%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 23px at 58% 40%, #141c28 55%, transparent 56%),
+    radial-gradient(circle 13px at 72% 70%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 19px at 86% 44%, #141c28 55%, transparent 56%),
+    radial-gradient(circle 10px at 95% 66%, #141c28 60%, transparent 61%),
+    linear-gradient(to top, #0a0a0a 0%, #0a0a0a 40%, transparent 100%);
 }
 
 /* Intro 变体：灰蓝底色（条纹由全站 CRT 罩统一提供），文字深色 */
