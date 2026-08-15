@@ -62,6 +62,7 @@ defineProps<{ chapter: ChapterItem }>()
 .chapter__head {
   display: flex;
   align-items: center;
+  justify-content: flex-end; /* 右对齐：眉题行靠右 */
   gap: var(--space-3);
   margin-bottom: var(--space-5);
 }
@@ -74,13 +75,13 @@ defineProps<{ chapter: ChapterItem }>()
   color: var(--c-muted);
 }
 
-/* 眉题行右侧延伸的分隔线 */
-.chapter__kicker::after {
+/* 眉题行左侧延伸的分隔线（右对齐排版） */
+.chapter__kicker::before {
   content: '';
   display: inline-block;
   width: clamp(2rem, 10vw, 8rem);
   height: 1px;
-  margin-left: var(--space-3);
+  margin-right: var(--space-3);
   background: var(--c-line);
   vertical-align: middle;
 }
@@ -88,6 +89,7 @@ defineProps<{ chapter: ChapterItem }>()
 .chapter__title {
   display: flex;
   flex-direction: column;
+  align-items: flex-end; /* 标题行靠右 */
   font-size: var(--fs-display);
   letter-spacing: var(--ls-display);
   margin-bottom: var(--space-6);
@@ -95,13 +97,16 @@ defineProps<{ chapter: ChapterItem }>()
 
 .chapter__para {
   max-width: 36rem;
+  margin-left: auto; /* 段落靠右 */
+  text-align: right;
   color: var(--c-muted);
   margin-bottom: var(--space-3);
 }
 
 .chapter__stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  display: flex;
+  justify-content: flex-end; /* stats 靠右 */
+  flex-wrap: wrap;
   gap: var(--space-5);
   margin-top: var(--space-7);
   padding-top: var(--space-5);
