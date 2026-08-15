@@ -10,6 +10,5 @@ useSeo()
   <div>
     <HeroSection />
     <ChapterLoop :chapters="chapters" />
-    <ContactCta />
   </div>
 </template>
