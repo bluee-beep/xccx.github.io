@@ -20,5 +20,7 @@ const waveColorOf = (c: ChapterItem) =>
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
     />
+    <!-- 联系方式胶囊：Nº004 章节下方独立区块 -->
+    <ContactChips v-if="chapter.contacts" :contacts="chapter.contacts" />
   </template>
 </template>
