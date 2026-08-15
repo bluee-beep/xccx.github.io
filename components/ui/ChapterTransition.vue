@@ -7,6 +7,8 @@ import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
 const props = defineProps<{
   /** 下一章颜色（覆盖块颜色） */
   color: string
+  /** 上一章颜色（过渡画面底色，与 Nº001 同色） */
+  fromColor?: string
   /** 上一章元素 id（做模糊处理） */
   prevId: string
 }>()
@@ -94,7 +96,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div ref="root" class="ct" aria-hidden="true">
-    <div class="ct__sticky">
+    <div class="ct__sticky" :style="{ background: props.fromColor }">
       <div ref="cover" class="ct__cover" :style="{ background: color }" />
     </div>
   </div>

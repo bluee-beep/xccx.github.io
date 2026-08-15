@@ -53,33 +53,30 @@ defineProps<{ chapter: ChapterItem }>()
   border-top: 1px solid var(--c-line);
 }
 
-/* feature 变体（capabilities）：与 Nº001 同款灰蓝底 + 动态扫描线，文字深色 */
+/* feature 变体（capabilities）：深色背景，文字浅色（与 Nº001 区分） */
 .chapter--feature {
-  background:
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
-    #969da4;
-  border-top-color: #82898f;
-  animation: crt-scan 0.8s linear infinite;
+  background: var(--c-bg);
+  border-top-color: var(--c-line);
 }
 
 .chapter--feature .chapter__title {
-  color: var(--c-bg);
+  color: var(--c-ink);
 }
 
 .chapter--feature .chapter__kicker {
-  color: var(--c-bg);
+  color: var(--c-ink);
 }
 
 .chapter--feature .chapter__no {
-  color: #3d6b14;
+  color: var(--c-accent);
 }
 
 .chapter--feature .chapter__stat-value {
-  color: #3d6b14;
+  color: var(--c-accent);
 }
 
 .chapter--feature .chapter__stat-label {
-  color: var(--c-bg);
+  color: var(--c-muted);
 }
 
 /* 滑动入场：feature 内容从右滑入（替换上移淡入） */

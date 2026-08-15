@@ -7,7 +7,7 @@ defineProps<{ chapters: ChapterItem[] }>()
 
 // 章节背景色映射（与 ChapterSection 的变体样式一致）
 const waveColorOf = (c: ChapterItem) =>
-  c.variant === 'intro' ? '#969da4' : c.variant === 'feature' ? '#969da4' : '#0a0a0a'
+  c.variant === 'intro' ? '#969da4' : c.variant === 'feature' ? '#0a0a0a' : '#0a0a0a'
 </script>
 
 <template>
@@ -17,6 +17,7 @@ const waveColorOf = (c: ChapterItem) =>
     <ChapterTransition
       v-if="chapter.variant === 'intro' && i < chapters.length - 1"
       :color="waveColorOf(chapters[i + 1])"
+      :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
     />
   </template>
