@@ -16,10 +16,10 @@ const logoSrc = `${baseURL}logo.svg`
 let rafId = 0
 let running = false
 
-// 3 层：不同视差速度（越深越慢）+ 透明度——C 档明显错位
+// 3 层：不同视差速度（越深越慢）+ 透明度——C 档基础上再错开
 const layers = [
-  { speed: 0.5, opacity: 1 }, // 顶层：最快、实心
-  { speed: 0.3, opacity: 0.6 }, // 中层
+  { speed: 0.6, opacity: 1 }, // 顶层：最快、实心
+  { speed: 0.35, opacity: 0.6 }, // 中层
   { speed: 0.1, opacity: 0.35 }, // 底层：最慢
 ]
 
