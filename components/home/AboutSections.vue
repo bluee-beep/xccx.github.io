@@ -104,18 +104,31 @@ const basicRows = [
 
 <style scoped>
 .about__section {
-  padding-block: var(--space-6);
+  padding-block: var(--space-7);
   border-top: 1px solid var(--c-line);
 }
 
-.about__para {
-  max-width: 36rem;
-  color: var(--c-muted);
-  margin-bottom: var(--space-3);
+/* 右栏化（Intro 展示页文字样式） */
+.about__section :deep(.u-container) {
+  max-width: 60vw;
+  margin-left: auto;
 }
 
+/* 段落：Intro 风格——大字号、左对齐、白色 */
+.about__para {
+  color: var(--c-ink);
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  line-height: 1.6;
+  text-align: left;
+  margin-bottom: var(--space-4);
+}
+
+/* 标题：Intro 眉题风格——1.4rem 粗体 */
 .about__heading {
-  color: var(--c-muted);
+  color: var(--c-ink);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   margin-bottom: var(--space-5);
 }
 
@@ -143,6 +156,7 @@ const basicRows = [
 
 .about__basic-value {
   color: var(--c-ink);
+  font-size: 1.25rem;
 }
 
 .about__social {
@@ -187,13 +201,13 @@ const basicRows = [
 }
 
 .about__timeline-title {
-  font-size: var(--fs-h3);
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   margin-bottom: var(--space-1);
 }
 
 .about__timeline-desc {
   color: var(--c-muted);
-  font-size: 0.95em;
+  font-size: 1.1rem;
 }
 
 /* ---- 技能 ---- */
@@ -218,8 +232,8 @@ const basicRows = [
 .about__skill-chip {
   border: 1px solid var(--c-line);
   border-radius: 999px;
-  padding: 0.35rem 0.9rem;
-  font-size: 0.9em;
+  padding: 0.5rem 1.2rem;
+  font-size: 1.15rem;
 }
 
 .about__skill-chip:hover {
@@ -260,12 +274,12 @@ const basicRows = [
 }
 
 .about__interest-name {
-  font-size: var(--fs-h3);
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   margin-bottom: var(--space-2);
 }
 
 .about__interest-desc {
   color: var(--c-muted);
-  font-size: 0.95em;
+  font-size: 1.15rem;
 }
 </style>
