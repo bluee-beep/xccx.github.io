@@ -104,7 +104,7 @@ onBeforeUnmount(() => {
 .ct {
   height: 160vh; /* 滚动行程：覆盖动画在这段滚动中完成 */
   position: relative;
-  margin-top: -40vh; /* 与上一章底部重叠 */
+  margin-top: 20vh; /* 过渡延迟：Nº001 内容完整滚出后才开始（原先 -40vh 过早触发） */
 }
 
 .ct__sticky {
