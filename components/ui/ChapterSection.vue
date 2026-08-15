@@ -131,6 +131,7 @@ defineProps<{ chapter: ChapterItem }>()
 /* intro 章节：logo 字幕全宽贴边（负 margin 抵消容器 gutter），上下白色细线 */
 .chapter__logo-marquee {
   margin-inline: calc(-1 * var(--gutter));
+  margin-top: -1rem; /* 上移：呼吸感 */
   margin-bottom: var(--space-6);
   border-block: 1px solid var(--c-ink);
   padding-block: var(--space-2);
