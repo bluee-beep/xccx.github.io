@@ -14,15 +14,6 @@ const basicRows = [
 
 <template>
   <div class="about">
-    <!-- Bio -->
-    <section class="about__section">
-      <div class="u-container about__bio">
-        <p v-for="(para, i) in profile.bio" :key="para" v-reveal="{ delay: i * 120 }" class="about__para">
-          {{ para }}
-        </p>
-      </div>
-    </section>
-
     <!-- 基本信息 -->
     <section class="about__section">
       <div class="u-container">
