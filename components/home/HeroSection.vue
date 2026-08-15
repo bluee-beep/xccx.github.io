@@ -144,8 +144,8 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
 .hero__marquee-group {
   display: flex;
   align-items: center;
-  gap: var(--space-7);
-  padding-right: var(--space-7);
+  gap: 2.5rem; /* 40px：词与圆间距 */
+  padding-right: 2.5rem;
 }
 
 .hero__marquee-text {
