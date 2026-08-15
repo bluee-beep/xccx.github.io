@@ -22,7 +22,9 @@ function splitHighlight(text: string) {
     <!-- 动画背景：4 条交错荧光淡色波浪线，彗尾笔迹（feature 变体） -->
     <div v-if="chapter.variant === 'feature'" class="chapter__waves" aria-hidden="true">
       <svg v-for="i in 4" :key="i" class="chapter__wave-line" :class="`chapter__wave-line--${i}`" viewBox="0 0 100 500" preserveAspectRatio="none">
-        <path pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
+        <!-- 2 号线：更扭曲（更多 S 弯） -->
+        <path v-if="i === 2" pathLength="1" d="M50,500 C20,460 80,420 50,380 C20,340 80,300 50,260 C20,220 80,180 50,140 C20,100 80,60 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
+        <path v-else pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
       </svg>
     </div>
 
@@ -109,9 +111,9 @@ function splitHighlight(text: string) {
   animation: wave-trace 4s linear infinite;
 }
 
-/* 4 条交错：每条延迟 1s */
+/* 4 条交错：每条延迟 1s；2 号线慢速（8s） */
 .chapter__wave-line--1 path { animation-delay: 0s; }
-.chapter__wave-line--2 path { animation-delay: 1s; }
+.chapter__wave-line--2 path { animation-delay: 1s; animation-duration: 8s; }
 .chapter__wave-line--3 path { animation-delay: 2s; }
 .chapter__wave-line--4 path { animation-delay: 3s; }
 
