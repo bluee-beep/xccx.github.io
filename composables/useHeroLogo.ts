@@ -50,6 +50,8 @@ export function useHeroLogo(
     const dy = (targetY - centerY) * progress
     const s = 1 + (scaleFinal - 1) * progress
     el.style.transform = `translate(calc(-50% + ${dx.toFixed(1)}px), calc(-50% + ${dy.toFixed(1)}px)) scale(${s.toFixed(4)})`
+    // 归位过程渐隐：progress 1 时完全隐藏（交接给 header 小 logo，避免双 logo）
+    el.style.opacity = `${(1 - progress).toFixed(3)}`
     progressState.value = progress
   }
 
