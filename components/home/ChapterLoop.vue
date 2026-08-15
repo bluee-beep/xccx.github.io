@@ -7,7 +7,10 @@ defineProps<{ chapters: ChapterItem[] }>()
 
 // 章节背景色映射（与 ChapterSection 的变体样式一致）
 const waveColorOf = (c: ChapterItem) =>
-  c.variant === 'intro' ? '#969da4' : c.variant === 'feature' ? '#0a0a0a' : '#0a0a0a'
+  c.variant === 'intro' ? '#969da4'
+  : c.variant === 'feature' ? '#0a0a0a'
+  : c.id === 'works' ? '#141c28'
+  : '#0a0a0a'
 </script>
 
 <template>
