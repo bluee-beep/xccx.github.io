@@ -95,8 +95,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="root" class="ct" aria-hidden="true">
-    <div class="ct__sticky" :style="{ background: props.fromColor }">
+  <div ref="root" class="ct" :style="{ background: props.fromColor }" aria-hidden="true">
+    <div class="ct__sticky">
       <div ref="cover" class="ct__cover" :style="{ background: color }" />
     </div>
   </div>
@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
 .ct {
   height: 23vh; /* 过渡区占位 23vh */
   position: relative;
-  margin-top: 10vh; /* 过渡延迟 */
+  padding-top: 10vh; /* 过渡延迟（padding 区域被 fromColor 背景覆盖，不露黑底） */
 }
 
 .ct__sticky {
