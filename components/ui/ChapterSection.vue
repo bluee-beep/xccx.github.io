@@ -31,8 +31,8 @@ function splitHighlight(text: string) {
           </linearGradient>
         </defs>
         <!-- 2 号线：更扭曲（更多 S 弯） -->
-        <path v-if="i === 2" pathLength="1" d="M50,500 C20,460 80,420 50,380 C20,340 80,300 50,260 C20,220 80,180 50,140 C20,100 80,60 50,20" :stroke="`url(#waveGrad${i})`" stroke-width="8" fill="none" />
-        <path v-else pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" :stroke="`url(#waveGrad${i})`" stroke-width="8" fill="none" />
+        <path v-if="i === 2" pathLength="1" d="M50,500 C20,460 80,420 50,380 C20,340 80,300 50,260 C20,220 80,180 50,140 C20,100 80,60 50,20" :stroke="`url(#waveGrad${i})`" stroke-width="10" fill="none" />
+        <path v-else pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" :stroke="`url(#waveGrad${i})`" stroke-width="10" fill="none" />
       </svg>
     </div>
 
@@ -107,11 +107,11 @@ function splitHighlight(text: string) {
   /* 线静止：不再整体移动 */
 }
 
-/* 4 条线横向分布——全部在文案区（40vw 起）左侧；高度按用户指定 */
-.chapter__wave-line--1 { left: 6vw;  height: 85vh; }
-.chapter__wave-line--2 { left: 13vw; height: 200vh; }
-.chapter__wave-line--3 { left: 20vw; height: 110vh; }
-.chapter__wave-line--4 { left: 27vw; height: 91vh; }
+/* 4 条线横向分布——全部在文案区（40vw 起）左侧；高度 ×1.5 */
+.chapter__wave-line--1 { left: 6vw;  height: 128vh; }
+.chapter__wave-line--2 { left: 13vw; height: 300vh; }
+.chapter__wave-line--3 { left: 20vw; height: 165vh; }
+.chapter__wave-line--4 { left: 27vw; height: 137vh; }
 
 /* 彗尾笔迹：可见窗口（22% 路径长）沿波浪前进——前头画出、后头消散 */
 .chapter__wave-line path {
