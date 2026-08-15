@@ -14,4 +14,13 @@
 - **构建**：`scripts/fix-404.mjs` 解决 Nuxt 官方 404.html SPA 模板问题；favicon + OG 图
 - **部署**：GitHub Pages 项目站点上线 `https://bluee-beep.github.io/xccx.github.io/`
 
+## v1.0.1 — 2026-08-15
+
+### Logo 接入（用户原创矢量作品）
+
+- **logo.svg**：用户手绘矢量 X 字标（单字母 X，透明底白字，2172×724）接入 Header，替换原文字 logo
+- **favicon.svg**：裁切 X 交叉中心 + 黑底（64px 下可辨识）
+- **og-image.svg**：黑底 + X 字标 + tagline 标语
+- 资源路径手动拼接 baseURL（`useRuntimeConfig().app.baseURL`）
+
 ## 开始填充内容

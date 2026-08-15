@@ -3,14 +3,17 @@
 // 固定顶部 + 毛玻璃；导航项来自 data/site.ts
 // TODO: M4 后接入滚动进度条 / 汉堡菜单
 import { site } from '~/data/site'
+
+// public 静态资源需手动拼接 baseURL（Nuxt 不会自动加前缀）
+const baseURL = useRuntimeConfig().app.baseURL
+const logoSrc = `${baseURL}logo.svg`
 </script>
 
 <template>
   <header class="header">
     <div class="u-container header__inner">
       <NuxtLink to="/" class="header__logo" aria-label="回到首页">
-        <span class="header__logo-mark" aria-hidden="true" />
-        <span class="u-mono">{{ site.name }}</span>
+        <img :src="logoSrc" alt="XCCX" class="header__logo-img" />
       </NuxtLink>
 
       <nav class="header__nav" aria-label="主导航">
@@ -50,14 +53,17 @@ import { site } from '~/data/site'
 .header__logo {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
 }
 
-.header__logo-mark {
-  width: 0.625rem;
-  height: 0.625rem;
-  background: var(--c-accent);
-  border-radius: 2px;
+.header__logo-img {
+  height: 1.6rem;
+  width: auto;
+  display: block;
+  transition: opacity var(--dur-fast) var(--ease-out-expo);
+}
+
+.header__logo:hover .header__logo-img {
+  opacity: 0.7;
 }
 
 .header__nav {
