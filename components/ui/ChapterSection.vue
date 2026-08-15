@@ -57,12 +57,19 @@ defineProps<{ chapter: ChapterItem }>()
   background: var(--c-bg-raised);
 }
 
-/* Intro 变体：整章灰白底 + CRT 扫描线条纹（老电视特效质感），文字转深色 */
+/* Intro 变体：整章底色（用户选定）+ 动态 CRT 扫描线条纹，文字转深色 */
 .chapter--intro {
   background:
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.07) 2px 4px),
-    #e9e8e4;
+    repeating-linear-gradient(to bottom, transparent 0 4px, rgba(0, 0, 0, 0.16) 4px 8px),
+    #e9e8e4; /* TODO: 底色待用户选定 */
   border-top-color: #d5d4cf;
+  /* 扫描线缓慢下移（8px = 一个条纹周期，无缝循环） */
+  animation: crt-scan 1.4s linear infinite;
+}
+
+@keyframes crt-scan {
+  from { background-position: 0 0; }
+  to { background-position: 0 8px; }
 }
 
 .chapter--intro .chapter__title {
