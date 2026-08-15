@@ -97,6 +97,11 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+/* 段落区上移（视觉重心提升） */
+.intro-reveal {
+  margin-top: -2rem;
+}
+
 /* Intro 段落：整体靠右（右栏）+ 栏内文字左对齐，宽 60vw（B 档），字号 A 档 */
 .intro-reveal__para {
   max-width: 60vw;
