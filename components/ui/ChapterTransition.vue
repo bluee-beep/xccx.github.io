@@ -109,7 +109,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .ct {
-  height: 23vh; /* 过渡区占位 23vh */
+  height: 25vh; /* 过渡区占位 25vh（用户设定） */
   position: relative;
   padding-top: 10vh; /* 过渡延迟（padding 区域被背景覆盖，不露黑底） */
   /* 与 Nº001 同款：灰蓝底 + 动态扫描线条纹 */
@@ -135,10 +135,10 @@ onBeforeUnmount(() => {
 /* 覆盖块：超大宽圆弧顶部（更陡的椭圆率），初始在视口下方 */
 .ct__cover {
   position: absolute;
-  left: -75%; /* 宽度放大 25%（200% → 250%） */
-  width: 250%;
+  left: -50%;
+  width: 200%;
   bottom: 0;
-  height: 165vh; /* 高度放大 25%（130vh → 165vh） */
+  height: 130vh; /* 高于视口，保证完全覆盖 */
   border-radius: 50% 50% 0 0 / 92% 92% 0 0; /* 陡圆弧 */
   transform: translateY(100%);
   will-change: transform;
