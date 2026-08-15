@@ -17,6 +17,8 @@ export interface ChapterItem {
   variant?: 'default' | 'feature'
   /** 数字条目 */
   stats?: { label: string; value: string }[]
+  /** 章节底部斜体大字（如 Wait Me） */
+  footer?: string
 }
 
 export const chapters: ChapterItem[] = [
@@ -56,6 +58,7 @@ export const chapters: ChapterItem[] = [
       '浪尖等我呐，不是说又要半个月吗，怎么一天就搞完了 (╥﹏╥)',
       '开发完成后将在此展出，敬请期待。',
     ],
+    footer: 'Wait Me',
   },
   {
     id: 'contact',

@@ -73,6 +73,9 @@ function splitHighlight(text: string) {
           <dd class="chapter__stat-label u-monolabel">{{ stat.label }}</dd>
         </div>
       </dl>
+
+      <!-- 章节底部斜体大字 -->
+      <p v-if="chapter.footer" v-reveal class="chapter__footer">{{ chapter.footer }}</p>
     </div>
   </section>
 </template>
@@ -294,5 +297,17 @@ function splitHighlight(text: string) {
 .chapter__stat-label {
   margin-top: var(--space-1);
   color: var(--c-muted);
+}
+
+/* 章节底部斜体大字 */
+.chapter__footer {
+  font-style: italic;
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 600;
+  letter-spacing: var(--ls-tight);
+  line-height: 1;
+  text-align: center;
+  margin-top: var(--space-7);
+  color: var(--c-ink);
 }
 </style>
