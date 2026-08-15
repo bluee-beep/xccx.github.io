@@ -90,7 +90,7 @@ onBeforeUnmount(() => {
         v-for="(ch, ci) in para.split('')"
         :key="ci"
         class="intro-reveal__char"
-        :class="{ 'intro-reveal__char--hidden': globalIndex(pi, ci) >= shownCount }"
+        :class="{ 'intro-reveal__char--hidden': globalIndex(pi, ci) < total - shownCount }"
       >{{ ch }}</span>
     </p>
   </div>
