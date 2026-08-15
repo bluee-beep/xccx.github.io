@@ -123,7 +123,7 @@ useBlinds(blinds, video)
     linear-gradient(to bottom, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.15) 40%, rgba(10, 10, 10, 0.35) 75%, rgba(10, 10, 10, 0.82) 100%);
 }
 
-/* ---- 百叶窗帘幕：4 条叶片，下翻时从上到下依次滑下遮住背景 ---- */
+/* ---- 百叶窗帘幕：4 条叶片，首屏为细线可见，下翻时依次向下展开遮住背景 ---- */
 .hero__blinds {
   position: absolute;
   inset: 0;
@@ -137,6 +137,8 @@ useBlinds(blinds, video)
   right: 0;
   height: 25%;
   background: var(--c-bg);
+  transform-origin: top;
+  transform: scaleY(0.08); /* 细线状态（首屏可见） */
   will-change: transform;
 }
 

@@ -29,11 +29,11 @@ export function useBlinds(
   function apply() {
     const p = smooth
 
-    // 叶片错峰下落合拢：第 i 条在进度 (i / count) 后从上方滑下覆盖
+    // 叶片错峰向下展开：首屏为细线（scaleY 0.08），滚动时第 i 条依次展开遮住背景
     strips.forEach((strip, i) => {
       const delay = i / count
       const local = Math.min(1, Math.max(0, (p - delay) / (1 - delay)))
-      strip.style.transform = `translateY(${(-100 + local * 100).toFixed(2)}%)`
+      strip.style.transform = `scaleY(${(0.08 + local * 0.92).toFixed(3)})`
     })
 
     // 视频虚化
