@@ -14,6 +14,15 @@
 - **构建**：`scripts/fix-404.mjs` 解决 Nuxt 官方 404.html SPA 模板问题；favicon + OG 图
 - **部署**：GitHub Pages 项目站点上线 `https://bluee-beep.github.io/xccx.github.io/`
 
+## v1.0.5 — 2026-08-15
+
+### Logo 重设计：几何 X（C 变体）
+
+- 放弃 AI 生成字形，改为**代码几何构造**：两条圆角粗线错位交叉（编织感）
+- logo.svg：透明底 400×400（header 用，44px 显示）
+- favicon.svg：黑底 + 几何 X（任何主题可见）
+- og-image.svg：黑底 + 几何 X + tagline
+
 ## v1.0.4 — 2026-08-15
 
 ### Logo 位置定稿
