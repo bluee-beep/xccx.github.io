@@ -49,14 +49,14 @@ export const profile = {
       year: '2026—2030',
       school: '燕山大学',
       degree: '本科',
-      desc: '在读 · 电子科学与技术（国家级一流本科专业建设点），以电子学与光电子学技术结合为特色。',
+      desc: '在读 · 电子科学与技术',
     },
   ] as EducationItem[],
 
+  // TODO: 技能持续补充（按实际更新分类）
   skills: [
-    { category: '设计', skills: ['界面设计', '品牌视觉', '设计系统'] },
-    { category: '工程', skills: ['TypeScript', 'Vue / Nuxt', 'CSS 工程化'] },
-    { category: '产品', skills: ['需求分析', '原型', '项目管理'] },
+    { category: 'AI', skills: ['AI 工具使用'] },
+    { category: '编程', skills: ['C 语言（入门）'] },
   ] as SkillGroup[],
 
   // ---- 板块三：项目经历（先空着） ----
