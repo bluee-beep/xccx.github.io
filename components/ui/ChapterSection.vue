@@ -19,12 +19,9 @@ function splitHighlight(text: string) {
 
 <template>
   <section :id="chapter.id" class="chapter" :class="`chapter--${chapter.variant ?? 'default'}`">
-    <!-- 动画背景：两条交错荧光淡色波浪线，笔迹描画（feature 变体） -->
+    <!-- 动画背景：4 条交错荧光淡色波浪线，彗尾笔迹（feature 变体） -->
     <div v-if="chapter.variant === 'feature'" class="chapter__waves" aria-hidden="true">
-      <svg class="chapter__wave-line chapter__wave-line--1" viewBox="0 0 100 500" preserveAspectRatio="none">
-        <path pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
-      </svg>
-      <svg class="chapter__wave-line chapter__wave-line--2" viewBox="0 0 100 500" preserveAspectRatio="none">
+      <svg v-for="i in 4" :key="i" class="chapter__wave-line" :class="`chapter__wave-line--${i}`" viewBox="0 0 100 500" preserveAspectRatio="none">
         <path pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
       </svg>
     </div>
@@ -100,8 +97,11 @@ function splitHighlight(text: string) {
   /* 线静止：不再整体移动 */
 }
 
-.chapter__wave-line--1 { left: 16%; }
-.chapter__wave-line--2 { left: 30%; }
+/* 4 条线横向分布（避开右侧文案区 60vw） */
+.chapter__wave-line--1 { left: 10%; }
+.chapter__wave-line--2 { left: 20%; }
+.chapter__wave-line--3 { left: 30%; }
+.chapter__wave-line--4 { left: 40%; }
 
 /* 彗尾笔迹：可见窗口（22% 路径长）沿波浪前进——前头画出、后头消散 */
 .chapter__wave-line path {
@@ -109,9 +109,11 @@ function splitHighlight(text: string) {
   animation: wave-trace 4s linear infinite;
 }
 
-.chapter__wave-line--2 path {
-  animation-delay: 2s; /* 交错半周期 */
-}
+/* 4 条交错：每条延迟 1s */
+.chapter__wave-line--1 path { animation-delay: 0s; }
+.chapter__wave-line--2 path { animation-delay: 1s; }
+.chapter__wave-line--3 path { animation-delay: 2s; }
+.chapter__wave-line--4 path { animation-delay: 3s; }
 
 @keyframes wave-trace {
   from { stroke-dashoffset: 1; }
