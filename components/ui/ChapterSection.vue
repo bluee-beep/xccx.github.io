@@ -57,6 +57,9 @@ function splitHighlight(text: string) {
       </h2>
       <LogoMarquee v-else-if="chapter.variant === 'intro'" class="chapter__logo-marquee" />
 
+      <!-- 联系方式胶囊：标题正下方 -->
+      <ContactChips v-if="chapter.contacts" :contacts="chapter.contacts" />
+
       <!-- 正文：intro 变体整章连续逐字显现；其余逐段错峰入场（「」标记重点词高亮） -->
       <IntroReveal v-if="chapter.variant === 'intro'" :paragraphs="chapter.paragraphs" />
       <template v-else>
