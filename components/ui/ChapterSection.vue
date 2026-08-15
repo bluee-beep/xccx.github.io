@@ -19,6 +19,16 @@ function splitHighlight(text: string) {
 
 <template>
   <section :id="chapter.id" class="chapter" :class="`chapter--${chapter.variant ?? 'default'}`">
+    <!-- 动画背景：两条交错荧光淡色波浪线（feature 变体） -->
+    <div v-if="chapter.variant === 'feature'" class="chapter__waves" aria-hidden="true">
+      <svg class="chapter__wave-line chapter__wave-line--1" viewBox="0 0 100 500" preserveAspectRatio="none">
+        <path d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.4)" stroke-width="2.5" fill="none" />
+      </svg>
+      <svg class="chapter__wave-line chapter__wave-line--2" viewBox="0 0 100 500" preserveAspectRatio="none">
+        <path d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.4)" stroke-width="2.5" fill="none" />
+      </svg>
+    </div>
+
     <div class="u-container">
       <!-- 章节眉题行 -->
       <header v-reveal class="chapter__head">
@@ -62,8 +72,43 @@ function splitHighlight(text: string) {
 
 <style scoped>
 .chapter {
+  position: relative;
   padding-block: var(--space-8);
   border-top: 1px solid var(--c-line);
+}
+
+/* ---- 动画背景：交错荧光波浪线 ---- */
+.chapter__waves {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 内容层在动画线上方 */
+.chapter > .u-container {
+  position: relative;
+  z-index: 1;
+}
+
+.chapter__wave-line {
+  position: absolute;
+  bottom: 0;
+  width: 110px;
+  height: 60vh;
+  animation: wave-rise 5s ease-in-out infinite;
+}
+
+.chapter__wave-line--1 { left: 16%; }
+.chapter__wave-line--2 { left: 30%; animation-delay: 2.5s; }
+
+/* 隐显上升：底部淡入 → 竖直向上（线本身波浪形 = 波动感）→ 顶部淡出 */
+@keyframes wave-rise {
+  0%   { transform: translateY(0);    opacity: 0; }
+  12%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateY(-70vh); opacity: 0; }
 }
 
 /* feature 变体（capabilities）：深色背景，文字浅色（与 Nº001 区分） */
