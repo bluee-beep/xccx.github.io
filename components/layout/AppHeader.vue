@@ -18,9 +18,27 @@ const logoOpacity = computed(() =>
 // 滚动后 header 加毛玻璃背景（顶部透明让视频画面透出）
 const isScrolled = ref(false)
 
-// scroll-spy：滚动到哪一章，对应导航项显示荧光下横线
+// scroll-spy：滚动到哪一章，荧光横线平滑滑到对应导航项
 const sectionIds = ['manifesto', 'capabilities', 'works', 'contact']
 const activeId = ref('')
+
+// 滑动横线：位置/宽度随激活项过渡（CSS transition 丝滑滑动）
+const navRefs = ref<HTMLElement[]>([])
+const lineStyle = reactive({ left: '0px', width: '0px', opacity: 0 })
+
+watch(activeId, (id) => {
+  const idx = site.nav.findIndex((n) => n.to.slice(1) === id)
+  const el = navRefs.value[idx]
+  if (idx >= 0 && el) {
+    const navRect = el.parentElement!.getBoundingClientRect()
+    const rect = el.getBoundingClientRect()
+    lineStyle.left = `${rect.left - navRect.left}px`
+    lineStyle.width = `${rect.width}px`
+    lineStyle.opacity = 1
+  } else {
+    lineStyle.opacity = 0
+  }
+})
 
 function onScroll() {
   isScrolled.value = window.scrollY > 16
@@ -60,12 +78,15 @@ onBeforeUnmount(() => {
         <NuxtLink
           v-for="item in site.nav"
           :key="item.to"
+          ref="navRefs"
           :to="item.to"
           class="header__link u-monolabel"
-          :class="{ 'header__link--active': activeId === item.to.slice(1) }"
         >
           {{ item.label }}
         </NuxtLink>
+        <!-- 滑动荧光横线：随激活项平滑移动 -->
+        <span class="header__active-line" :style="lineStyle" aria-hidden="true" />
+      </nav>
       </nav>
     </div>
   </header>
@@ -109,6 +130,7 @@ onBeforeUnmount(() => {
 }
 
 .header__nav {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--space-5);
@@ -124,18 +146,17 @@ onBeforeUnmount(() => {
   color: var(--c-ink);
 }
 
-.header__link--active {
-  color: var(--c-ink);
-}
-
-.header__link--active::after {
-  content: '';
+/* 滑动荧光横线：位置/宽度过渡动画（丝滑滑动） */
+.header__active-line {
   position: absolute;
-  left: 0;
-  right: 0;
   bottom: -2px;
   height: 1px;
   background: var(--c-accent);
+  transition:
+    left var(--dur-base) var(--ease-out-expo),
+    width var(--dur-base) var(--ease-out-expo),
+    opacity var(--dur-fast) var(--ease-out-expo);
+  pointer-events: none;
 }
 
 /* ---- 移动端：隐藏导航（汉堡菜单后续迭代） ---- */
