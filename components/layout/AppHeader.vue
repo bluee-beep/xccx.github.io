@@ -56,7 +56,7 @@ const logoSrc = `${baseURL}logo.svg`
 }
 
 .header__logo-img {
-  height: 1.6rem;
+  height: 3.625rem; /* 58px：XXL~XXXL 之间 */
   width: auto;
   display: block;
   transition: opacity var(--dur-fast) var(--ease-out-expo);

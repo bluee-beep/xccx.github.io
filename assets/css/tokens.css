@@ -35,7 +35,7 @@
   /* ---- 版式 ---- */
   --container: 1440px;
   --gutter: clamp(1.25rem, 4vw, 4rem);
-  --header-h: 4.5rem;
+  --header-h: 5.5rem;
 
   /* ---- 动效：expo-out 招牌曲线 ---- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
