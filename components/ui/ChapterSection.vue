@@ -111,24 +111,11 @@ function splitHighlight(text: string) {
   animation: wave-trace 4s linear infinite;
 }
 
-/* 4 条交错：每条延迟 1s；2 号线慢速（8s） */
+/* 4 条交错：每条延迟 1s；2 号线生成间隔更慢（12s），相位错开不重叠 */
 .chapter__wave-line--1 path { animation-delay: 0s; }
-.chapter__wave-line--2 path { animation-delay: 1s; animation-duration: 8s; }
-.chapter__wave-line--3 path { animation-delay: 2s; }
-.chapter__wave-line--4 path { animation-delay: 3s; }
-
-/* 2 号线间歇出现：8s 周期内滑过（前 50%）后隐去，下个周期再出现 */
-.chapter__wave-line--2 {
-  animation: wave-appear 8s linear infinite;
-}
-
-@keyframes wave-appear {
-  0%   { opacity: 0; }
-  8%   { opacity: 1; }
-  45%  { opacity: 1; }
-  50%  { opacity: 0; }
-  100% { opacity: 0; }
-}
+.chapter__wave-line--2 path { animation-delay: 3s; animation-duration: 12s; }
+.chapter__wave-line--3 path { animation-delay: 1s; }
+.chapter__wave-line--4 path { animation-delay: 2s; }
 
 @keyframes wave-trace {
   from { stroke-dashoffset: 1; }
