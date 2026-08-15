@@ -11,7 +11,13 @@ export default defineNuxtConfig({
       title: 'Xccx — Personal Brand',
       meta: [
         { name: 'description', content: 'Xccx 的个人品牌网站：设计 × 工程 × 产品。' },
+        { property: 'og:title', content: 'Xccx — Personal Brand' },
+        { property: 'og:description', content: 'Xccx 的个人品牌网站：设计 × 工程 × 产品。' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: '/og-image.svg' },
+        { name: 'twitter:card', content: 'summary_large_image' },
       ],
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
     },
   },
 
@@ -31,4 +37,7 @@ export default defineNuxtConfig({
       routes: ['/', '/about', '/404'],
     },
   },
+
+  // 注：404.html 以 SPA 模式输出是 Nuxt 官方设计（PRERENDER_NO_SSR_ROUTES），
+  // 客户端挂载后渲染蓝屏页，无需覆盖。
 })

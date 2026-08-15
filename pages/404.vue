@@ -5,6 +5,10 @@ definePageMeta({ layout: 'blank' })
 
 useSeo({ title: '404 — 页面不存在' })
 
+// 说明：Nuxt 官方设计——prerender 的 /404.html 以 SPA 模式输出
+// （PRERENDER_NO_SSR_ROUTES 硬编码），客户端 JS 挂载后渲染蓝屏。
+// 蓝屏交互（点击/按键返回首页）本身依赖 JS，此设计完全够用。
+
 const goHome = () => navigateTo('/')
 
 let keyHandler: ((e: KeyboardEvent) => void) | null = null
