@@ -25,6 +25,13 @@ usePanorama(videoWrap, video, { range: site.heroVideo.range })
 // 大 logo 归位：桌面 + 动效开启时启用；移动端保持居中
 const logoStatic = ref(isTouchDevice() || prefersReducedMotion())
 useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
+
+// 滚动模糊过渡：复用归位进度（lerp 已平滑），视频随滚动渐模糊
+const heroProgress = useState('hero-logo-progress', () => 0)
+watch(heroProgress, (p) => {
+  const v = video.value
+  if (v) v.style.filter = `blur(${(p * 10).toFixed(1)}px)`
+})
 </script>
 
 <template>
