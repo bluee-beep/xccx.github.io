@@ -30,7 +30,7 @@ jobs:
       - run: npm ci
       - run: npm run generate
         env:
-          BASE_URL: '/' # 用户站点路径；若改项目站点需改为 /repo/
+          BASE_URL: '/xccx.github.io/' # 项目站点路径
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .output/public

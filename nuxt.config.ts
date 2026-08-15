@@ -1,11 +1,15 @@
 // ==================== XCCX 个人站 — Nuxt 配置 ====================
-// baseURL 走环境变量注入（GitHub Pages 用户站点为 '/'，项目站点为 '/repo/'）
+// baseURL 走环境变量注入（项目站点 /xccx.github.io/，用户站点则为 '/'）
+// 注意：head 中静态资源路径（favicon/og-image）需手动拼接 baseURL，
+// Nuxt 不会自动为 head 的 link/meta 加前缀
+const baseURL = process.env.BASE_URL ?? '/xccx.github.io/'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
   app: {
-    baseURL: process.env.BASE_URL ?? '/',
+    baseURL,
     head: {
       htmlAttrs: { lang: 'zh-CN' },
       title: 'Xccx — Personal Brand',
@@ -14,10 +18,10 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Xccx — Personal Brand' },
         { property: 'og:description', content: 'Xccx 的个人品牌网站：设计 × 工程 × 产品。' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:image', content: '/og-image.svg' },
+        { property: 'og:image', content: `${baseURL}og-image.svg` },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
-      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: `${baseURL}favicon.svg` }],
     },
   },
 
