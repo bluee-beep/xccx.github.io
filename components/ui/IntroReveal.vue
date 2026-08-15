@@ -97,23 +97,17 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* 老电视机段落区：灰白底 + CRT 扫描线条纹 */
+/* 段落区：上移 + 右栏宽度（背景由章节级 .chapter--intro 提供） */
 .intro-reveal {
-  margin-top: -2rem; /* 上移（视觉重心提升） */
-  max-width: 60vw; /* 右栏宽度 */
-  margin-left: auto; /* 右栏 */
-  padding: var(--space-4) var(--space-5);
-  border-radius: 4px;
-  /* 扫描线条纹 + 灰白底色 */
-  background:
-    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.07) 2px 4px),
-    #e9e8e4;
+  margin-top: -2rem;
+  max-width: 60vw;
+  margin-left: auto;
 }
 
-/* Intro 段落：栏内文字左对齐，深色文字（适配浅底） */
+/* Intro 段落：栏内左对齐，深色文字（适配章节浅底） */
 .intro-reveal__para {
   text-align: left;
-  color: var(--c-bg); /* 深色字 */
+  color: var(--c-bg);
   font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   line-height: 1.6;
   margin-bottom: var(--space-3);

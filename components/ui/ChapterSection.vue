@@ -57,6 +57,26 @@ defineProps<{ chapter: ChapterItem }>()
   background: var(--c-bg-raised);
 }
 
+/* Intro 变体：整章灰白底 + CRT 扫描线条纹（老电视特效质感），文字转深色 */
+.chapter--intro {
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.07) 2px 4px),
+    #e9e8e4;
+  border-top-color: #d5d4cf;
+}
+
+.chapter--intro .chapter__title {
+  color: var(--c-bg);
+}
+
+.chapter--intro .chapter__kicker {
+  color: #6a6a66;
+}
+
+.chapter--intro .chapter__no {
+  color: #4a7a1a; /* accent 深化，浅底可读 */
+}
+
 .chapter__head {
   display: flex;
   align-items: center;
