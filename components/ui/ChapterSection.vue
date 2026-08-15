@@ -27,11 +27,13 @@ defineProps<{ chapter: ChapterItem }>()
         </RevealText>
       </h2>
 
-      <!-- 正文：intro 变体随滚轮逐字显现；其余逐段错峰入场 -->
-      <p v-for="(para, i) in chapter.paragraphs" :key="para" class="chapter__para">
-        <ScrollRevealText v-if="chapter.variant === 'intro'" :text="para" :delay="i" />
-        <span v-else v-reveal="{ delay: i * 120 }">{{ para }}</span>
-      </p>
+      <!-- 正文：intro 变体整章连续逐字显现；其余逐段错峰入场 -->
+      <IntroReveal v-if="chapter.variant === 'intro'" :paragraphs="chapter.paragraphs" />
+      <template v-else>
+        <p v-for="(para, i) in chapter.paragraphs" :key="para" v-reveal="{ delay: i * 120 }" class="chapter__para">
+          {{ para }}
+        </p>
+      </template>
 
       <!-- 数字条目 -->
       <dl v-if="chapter.stats" v-reveal class="chapter__stats">
