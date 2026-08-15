@@ -23,10 +23,10 @@ const waveColorOf = (c: ChapterItem) =>
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
     />
-    <!-- 简单过渡：Nº002 → Nº003 之间 -->
+    <!-- 简单过渡：Nº002 → Nº003 之间（椭圆黑色） -->
     <ChapterTransition
       v-if="chapter.id === 'capabilities' && i < chapters.length - 1"
-      :color="waveColorOf(chapters[i + 1])"
+      color="#0a0a0a"
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
     />
