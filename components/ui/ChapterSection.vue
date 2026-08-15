@@ -318,19 +318,13 @@ function splitHighlight(text: string) {
 
 .chapter__contact {
   position: relative;
-  min-width: 7.5rem;
+  min-width: 6rem;
   height: 3.75rem;
-  border: 1px solid var(--c-line);
-  border-radius: 8px;
   display: grid;
   place-items: center;
   overflow: hidden;
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease-out-expo);
-}
-
-.chapter__contact:hover {
-  border-color: var(--c-accent);
+  /* 无外框：图标直接展示（待用户提供图标替换文字标识） */
 }
 
 .chapter__contact-icon {
