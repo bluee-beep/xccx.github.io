@@ -36,10 +36,10 @@ function flipQr(e: MouseEvent) {
 .cc {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
-  justify-content: flex-start; /* 左对齐（与 Nº004 标题一致） */
-  margin-top: 0; /* 紧贴标题（标题下边距已收小） */
-  margin-bottom: var(--space-4);
+  gap: var(--space-5); /* 胶囊间隔加大 */
+  justify-content: flex-start; /* 左对齐 */
+  margin-top: 0;
+  margin-bottom: var(--space-6); /* 与下方段落拉开，文字完整可见 */
 }
 
 .cc__contact {
