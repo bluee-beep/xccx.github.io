@@ -45,12 +45,6 @@ export const chapters: ChapterItem[] = [
       '「把知识变成能力，把想法变成实物」——这是不变的目标，下一步就是走进竞赛的赛场。',
     ],
     variant: 'feature',
-    // 真实数字：可随成长更新
-    stats: [
-      { value: '1', label: '亲手搭建的网站' },
-      { value: '2', label: '技能方向' },
-      { value: '∞', label: '好奇心' },
-    ],
   },
   {
     id: 'works',
