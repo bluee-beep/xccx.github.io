@@ -67,14 +67,15 @@ onMounted(() => {
   padding-right: 8px;
 }
 
-/* 超大无衬线、紧字距、统一白色（瑞士风格）——2A 字重 600 / 3A 字距 -0.04em */
+/* 超大无衬线、紧字距、统一白色 25% 透明（与圆一致）——2A 字重 600 / 3A 字距 -0.04em */
 .lm__text {
   font-family: 'Inter Variable', sans-serif;
   font-size: var(--lm-font);
   font-weight: 600;
   letter-spacing: -0.04em;
   line-height: 1;
-  color: var(--c-ink); /* 统一白色 */
+  color: var(--c-ink);
+  opacity: 0.25; /* 与圆透明度一致 */
 }
 
 /* 白色实心大圆（0.4 倍字高）：25% 透明 + 垂直偏移 +0.5em */
