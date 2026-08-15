@@ -5,6 +5,16 @@
 import type { ChapterItem } from '~/data/chapters'
 
 defineProps<{ chapter: ChapterItem }>()
+
+// 解析「」标记：重点词高亮
+function splitHighlight(text: string) {
+  return text.split(/(「[^」]*」)/g).map((part) => {
+    if (part.startsWith('「') && part.endsWith('」')) {
+      return { text: part.slice(1, -1), hl: true }
+    }
+    return { text: part, hl: false }
+  })
+}
 </script>
 
 <template>
@@ -28,11 +38,14 @@ defineProps<{ chapter: ChapterItem }>()
       </h2>
       <LogoMarquee v-else-if="chapter.variant === 'intro'" class="chapter__logo-marquee" />
 
-      <!-- 正文：intro 变体整章连续逐字显现；其余逐段错峰入场 -->
+      <!-- 正文：intro 变体整章连续逐字显现；其余逐段错峰入场（「」标记重点词高亮） -->
       <IntroReveal v-if="chapter.variant === 'intro'" :paragraphs="chapter.paragraphs" />
       <template v-else>
         <p v-for="(para, i) in chapter.paragraphs" :key="para" v-reveal="{ delay: i * 120 }" class="chapter__para">
-          {{ para }}
+          <template v-for="(part, j) in splitHighlight(para)" :key="j">
+            <span v-if="part.hl" class="chapter__hl">{{ part.text }}</span>
+            <template v-else>{{ part.text }}</template>
+          </template>
         </p>
       </template>
 
@@ -181,13 +194,19 @@ defineProps<{ chapter: ChapterItem }>()
   color: var(--c-ink);
 }
 
-/* feature 变体（capabilities）：右栏左对齐 + 大一号 */
+/* feature 变体（capabilities）：右栏左对齐 + 大一号；正文调淡衬托高亮 */
 .chapter--feature .chapter__para {
   max-width: 60vw;
   margin-left: auto; /* 右栏 */
   text-align: left; /* 左对齐 */
   font-size: clamp(1.2rem, 1.8vw, 1.5rem); /* 大一号 */
   line-height: 1.6;
+  color: var(--c-muted); /* 淡灰正文 */
+}
+
+/* 重点词高亮：荧光绿（深色底上清晰） */
+.chapter__hl {
+  color: var(--c-accent);
 }
 
 .chapter__stats {
