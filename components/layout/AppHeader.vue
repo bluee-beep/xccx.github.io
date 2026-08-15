@@ -48,6 +48,8 @@ const logoSrc = `${baseURL}logo.svg`
   align-items: center;
   justify-content: space-between;
   height: var(--header-h);
+  /* B 档（对比选定）：logo 左侧边距 32px，右侧保持 gutter */
+  padding-left: 2rem;
 }
 
 .header__logo {

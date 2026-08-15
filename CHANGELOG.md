@@ -14,6 +14,12 @@
 - **构建**：`scripts/fix-404.mjs` 解决 Nuxt 官方 404.html SPA 模板问题；favicon + OG 图
 - **部署**：GitHub Pages 项目站点上线 `https://bluee-beep.github.io/xccx.github.io/`
 
+## v1.0.4 — 2026-08-15
+
+### Logo 位置定稿
+
+- Header logo 左侧边距 **32px**（四档对比 B 档，A=58/D=8px 中选定），右侧保持 gutter
+
 ## v1.0.3 — 2026-08-15
 
 ### Logo 尺寸定稿
