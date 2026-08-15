@@ -105,6 +105,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .footer {
   position: relative;
+  z-index: 5; /* 覆盖上一页内容（拖尾 logo 压过 Nº004） */
   border-top: 1px solid var(--c-line);
   overflow: hidden;
   background: var(--c-bg);
