@@ -2,3 +2,39 @@
 @import './tokens.css';
 @import './base.css';
 @import './utilities.css';
+
+/* ==================== 入场动画（v-reveal 指令） ==================== */
+/* 初始类由 JS 添加：无 JS 或 reduced-motion 时元素直接可见 */
+.v-reveal--hidden {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.v-reveal--shown {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-base) var(--ease-out-expo) var(--reveal-delay, 0ms),
+    transform var(--dur-base) var(--ease-out-expo) var(--reveal-delay, 0ms);
+}
+
+/* ==================== 逐字动画（RevealText 组件） ==================== */
+/* Splitting 注入 --char-index，逐字 stagger 入场 */
+.reveal-text .char {
+  opacity: 0;
+  transform: translateY(1.1em);
+  transition:
+    opacity var(--dur-base) var(--ease-out-expo),
+    transform var(--dur-base) var(--ease-out-expo);
+  transition-delay: calc(var(--char-index) * 22ms);
+}
+
+/* 中文拆字后空格节点带 .whitespace：不占位不显示 */
+.reveal-text .whitespace {
+  opacity: 0 !important;
+}
+
+.reveal-text.is-inview .char {
+  opacity: 1;
+  transform: none;
+}

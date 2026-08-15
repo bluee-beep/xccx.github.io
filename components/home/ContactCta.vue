@@ -7,17 +7,17 @@ import { site } from '~/data/site'
 <template>
   <section class="cta">
     <div class="u-container cta__inner">
-      <h2 class="cta__title">
+      <h2 v-reveal class="cta__title">
         有想法？
         <br />
         写信给我
       </h2>
 
-      <a :href="`mailto:${site.email}`" class="cta__mail">
+      <a v-reveal="{ delay: 150 }" :href="`mailto:${site.email}`" class="cta__mail">
         {{ site.email }}
       </a>
 
-      <nav class="cta__social" aria-label="社交链接">
+      <nav v-reveal="{ delay: 300 }" class="cta__social" aria-label="社交链接">
         <a
           v-for="item in site.social"
           :key="item.label"

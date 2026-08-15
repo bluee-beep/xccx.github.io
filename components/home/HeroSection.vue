@@ -1,23 +1,23 @@
 <script setup lang="ts">
 // ==================== 首屏 Hero ====================
-// 全屏居中：名字 + 定位 + 滚动提示（M4 接逐字动画）
+// 全屏居中：名字逐字入场 + 定位 + 滚动提示
 import { site } from '~/data/site'
 </script>
 
 <template>
   <section class="hero">
     <div class="u-container hero__inner">
-      <p class="hero__eyebrow u-monolabel">{{ site.tagline }}</p>
+      <p v-reveal class="hero__eyebrow u-monolabel">{{ site.tagline }}</p>
       <h1 class="hero__name">
-        {{ site.name }}
+        <RevealText>{{ site.name }}</RevealText>
       </h1>
-      <p class="hero__sub">
+      <p v-reveal="{ delay: 200 }" class="hero__sub">
         欢迎来到我的站点 — 这里记录思考、作品与成长。
       </p>
     </div>
 
     <!-- 滚动提示 -->
-    <div class="hero__scroll u-monolabel" aria-hidden="true">
+    <div v-reveal="{ delay: 400 }" class="hero__scroll u-monolabel" aria-hidden="true">
       Scroll to enter
       <span class="hero__scroll-arrow">↓</span>
     </div>

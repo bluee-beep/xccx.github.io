@@ -11,25 +11,34 @@ defineProps<{ chapter: ChapterItem }>()
   <section :id="chapter.id" class="chapter" :class="`chapter--${chapter.variant ?? 'default'}`">
     <div class="u-container">
       <!-- 章节眉题行 -->
-      <header class="chapter__head">
+      <header v-reveal class="chapter__head">
         <span class="chapter__no u-monolabel">{{ chapter.no }}</span>
         <span class="chapter__kicker u-monolabel">{{ chapter.kicker }}</span>
       </header>
 
-      <!-- 大标题：逐行渲染 -->
+      <!-- 大标题：逐行拆字入场 -->
       <h2 class="chapter__title">
-        <span v-for="line in chapter.title" :key="line" class="chapter__title-line">
+        <RevealText
+          v-for="line in chapter.title"
+          :key="line"
+          class="chapter__title-line"
+        >
           {{ line }}
-        </span>
+        </RevealText>
       </h2>
 
-      <!-- 正文 -->
-      <p v-for="para in chapter.paragraphs" :key="para" class="chapter__para">
+      <!-- 正文：逐段错峰入场 -->
+      <p
+        v-for="(para, i) in chapter.paragraphs"
+        :key="para"
+        v-reveal="{ delay: i * 120 }"
+        class="chapter__para"
+      >
         {{ para }}
       </p>
 
       <!-- 数字条目 -->
-      <dl v-if="chapter.stats" class="chapter__stats">
+      <dl v-if="chapter.stats" v-reveal class="chapter__stats">
         <div v-for="stat in chapter.stats" :key="stat.label" class="chapter__stat">
           <dt class="chapter__stat-value">{{ stat.value }}</dt>
           <dd class="chapter__stat-label u-monolabel">{{ stat.label }}</dd>

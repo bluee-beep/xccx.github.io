@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // ==================== 全局壳层 ====================
-// Header/Footer 正式组件；Lenis 初始化在 M4 接入
+// Header/Footer 正式组件；Lenis 平滑滚动在此初始化
+useLenis()
 </script>
 
 <template>
