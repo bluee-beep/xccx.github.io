@@ -39,7 +39,7 @@ const basicRows = [
     <!-- ============ 板块一：基本信息 ============ -->
     <section class="about__section">
       <div class="u-container">
-        <h2 v-reveal class="about__heading u-monolabel">— Nº01 基本信息</h2>
+        <h2 v-reveal class="about__heading u-monolabel">基本信息</h2>
         <dl class="about__basic">
           <div v-for="row in basicRows" :key="row.label" v-reveal class="about__basic-row">
             <dt class="about__basic-label u-monolabel">{{ row.label }}</dt>
@@ -70,7 +70,7 @@ const basicRows = [
     <!-- ============ 板块二：教育背景与技能 ============ -->
     <section class="about__section">
       <div class="u-container">
-        <h2 v-reveal class="about__heading u-monolabel">— Nº02 教育背景与技能</h2>
+        <h2 v-reveal class="about__heading u-monolabel">教育背景与技能</h2>
 
         <!-- 教育时间线 -->
         <ol class="about__timeline">
@@ -100,7 +100,7 @@ const basicRows = [
     <!-- ============ 板块三：项目经历（先空着） ============ -->
     <section class="about__section">
       <div class="u-container">
-        <h2 v-reveal class="about__heading u-monolabel">— Nº03 项目经历</h2>
+        <h2 v-reveal class="about__heading u-monolabel">项目经历</h2>
 
         <div v-if="profile.projects.length" class="about__projects">
           <article v-for="p in profile.projects" :key="p.title" v-reveal class="about__project">
@@ -119,7 +119,7 @@ const basicRows = [
     <!-- ============ 板块四：个人特长、兴趣爱好 ============ -->
     <section class="about__section">
       <div class="u-container">
-        <h2 v-reveal class="about__heading u-monolabel">— Nº04 特长与兴趣</h2>
+        <h2 v-reveal class="about__heading u-monolabel">特长与兴趣</h2>
 
         <ul class="about__interests">
           <li v-for="item in profile.interests" :key="item.name" v-reveal class="about__interest">
@@ -156,8 +156,8 @@ const basicRows = [
 }
 
 .about__section {
-  border-bottom: 1px solid var(--c-line);
-  padding-block: var(--space-7);
+  /* 整合页面：无边框分隔，统一留白 */
+  padding-block: var(--space-6);
 }
 
 .about__para {
