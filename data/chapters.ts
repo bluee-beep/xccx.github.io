@@ -66,8 +66,11 @@ export const chapters: ChapterItem[] = [
     kicker: "Let's talk",
     title: ['聊聊你的', '项目'],
     paragraphs: [
-      '竞赛组队、项目合作或任何想法，欢迎来信。',
-      '我会尽快回复。',
+      '竞赛组队、项目合作或任何想法，欢迎联系。',
+      '微信：noxen22',
+      'QQ：2032212286',
+      'GitHub：bluee-beep',
+      '邮箱：coldbluee@163.com',
     ],
   },
 ]
