@@ -87,7 +87,6 @@ onBeforeUnmount(() => {
         <!-- 滑动荧光横线：随激活项平滑移动 -->
         <span class="header__active-line" :style="lineStyle" aria-hidden="true" />
       </nav>
-      </nav>
     </div>
   </header>
 </template>
