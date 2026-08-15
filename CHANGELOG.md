@@ -55,6 +55,14 @@
 - **og-image.svg**：黑底 + X 字标 + tagline 标语
 - 资源路径手动拼接 baseURL（`useRuntimeConfig().app.baseURL`）
 
+## v1.3.0-H3 — 2026-08-15
+
+### 首页 → 关于页 过渡衔接
+
+- 新增 NextStation 过渡区（首页底部）：「Next Station · 下一站 · 关于我」
+- hover 标题变荧光 + 箭头滑出，点击进入 /about
+- 首页全站完成：Hero 视频取景 / 大 logo 归位 / 滚动字幕 / 四章节 / CTA / 过渡区
+
 ## v1.3.0-H2 — 2026-08-15
 
 ### 首页四章节文案拟稿（竞赛视角，用户审后可改）
