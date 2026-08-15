@@ -39,11 +39,11 @@ function apply() {
   if (cover.value) {
     cover.value.style.transform = `translateY(${(100 - p * 110).toFixed(2)}%)`
   }
-  // 过渡舞台：与 Nº001 完全相同的滤镜（blur + brightness），保证无有色差
+  // 过渡舞台：blur 同步 + 变黑程度 D 档（brightness 终点 0.45，仅舞台）
   if (root.value) {
-    root.value.style.filter = `blur(${(p * 10).toFixed(1)}px) brightness(${(1 - p * 0.25).toFixed(2)})`
+    root.value.style.filter = `blur(${(p * 10).toFixed(1)}px) brightness(${(1 - p * 0.55).toFixed(2)})`
   }
-  // 上一章模糊：blur 0 → 10px + 微暗
+  // 上一章模糊：blur 0 → 10px + 微暗（保持原样 0.75）
   const prev = document.getElementById(props.prevId)
   if (prev) {
     prev.style.filter = `blur(${(p * 10).toFixed(1)}px) brightness(${(1 - p * 0.25).toFixed(2)})`
