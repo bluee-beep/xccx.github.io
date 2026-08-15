@@ -55,4 +55,14 @@
 - **og-image.svg**：黑底 + X 字标 + tagline 标语
 - 资源路径手动拼接 baseURL（`useRuntimeConfig().app.baseURL`）
 
+## v1.1.0-P1 — 2026-08-15
+
+### 首页视频视差取景背景（框架）
+
+- `usePanorama` composable：cover 放大 + 30% 余量 → mousemove 归一化 → lerp 插值平滑跟随（±15% 平移）
+- HeroSection 重构：视频取景层 + 渐变遮罩 + 文字占位层（P3 定稿）
+- 容错：触屏/reduced-motion 居中静态取景、视频加载失败回退纯色、滚出首屏停止 rAF
+- `data/site.ts` 新增 heroVideo 配置（src/range）
+- 待 P0：用户提供无缝循环素材 → `public/videos/hero.mp4`
+
 ## 开始填充内容

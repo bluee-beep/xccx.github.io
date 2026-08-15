@@ -15,6 +15,12 @@ export const site = {
   name: 'Xccx',
   tagline: '设计 × 工程 × 产品',
 
+  // Hero 视频取景：素材需无缝循环（首尾衔接），放 public/videos/
+  heroVideo: {
+    src: '/videos/hero.mp4',
+    range: 0.3, // 视频比视口大 30%，支持 ±15% 鼠标取景平移
+  },
+
   nav: [
     { label: 'Index', to: '/' },
     { label: 'About', to: '/about' },
