@@ -145,15 +145,15 @@ onBeforeUnmount(() => {
   color: var(--c-ink);
 }
 
-/* 滑动荧光横线：位置/宽度过渡动画（丝滑滑动） */
+/* 滑动荧光横线：果冻回弹曲线（过冲回摆） */
 .header__active-line {
   position: absolute;
   bottom: -2px;
   height: 1px;
   background: var(--c-accent);
   transition:
-    left var(--dur-base) var(--ease-out-expo),
-    width var(--dur-base) var(--ease-out-expo),
+    left 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity var(--dur-fast) var(--ease-out-expo);
   pointer-events: none;
 }
