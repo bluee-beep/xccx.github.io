@@ -117,6 +117,19 @@ function splitHighlight(text: string) {
 .chapter__wave-line--3 path { animation-delay: 2s; }
 .chapter__wave-line--4 path { animation-delay: 3s; }
 
+/* 2 号线间歇出现：8s 周期内滑过（前 50%）后隐去，下个周期再出现 */
+.chapter__wave-line--2 {
+  animation: wave-appear 8s linear infinite;
+}
+
+@keyframes wave-appear {
+  0%   { opacity: 0; }
+  8%   { opacity: 1; }
+  45%  { opacity: 1; }
+  50%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
 @keyframes wave-trace {
   from { stroke-dashoffset: 1; }
   to   { stroke-dashoffset: 0; } /* 窗口循环，首尾相接无缝 */
