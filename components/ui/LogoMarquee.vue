@@ -63,24 +63,24 @@ onMounted(() => {
 .lm__group {
   display: flex;
   align-items: center;
-  gap: 17px;
-  padding-right: 17px;
+  gap: 8px; /* 4A：圆距 8px */
+  padding-right: 8px;
 }
 
-/* 超大粗体无衬线、紧字距、近黑（瑞士风格） */
+/* 超大无衬线、紧字距、近黑（瑞士风格）——2A 字重 600 / 3A 字距 -0.04em */
 .lm__text {
   font-family: 'Inter Variable', sans-serif;
   font-size: var(--lm-font);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.04em;
   line-height: 1;
   color: var(--c-bg);
 }
 
-/* 白色实心大圆（0.6 倍字高） */
+/* 白色实心大圆（4A：0.4 倍字高） */
 .lm__dot {
-  width: calc(var(--lm-font) * 0.6);
-  height: calc(var(--lm-font) * 0.6);
+  width: calc(var(--lm-font) * 0.4);
+  height: calc(var(--lm-font) * 0.4);
   border-radius: 50%;
   background: var(--c-ink);
   flex-shrink: 0;

@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     '@fontsource-variable/space-grotesk',
     '@fontsource-variable/jetbrains-mono',
     '@fontsource-variable/inter',
+    '@fontsource-variable/playfair-display',
   ],
 
   // 组件按文件名注册（去掉目录前缀）：AppHeader 而非 LayoutAppHeader
