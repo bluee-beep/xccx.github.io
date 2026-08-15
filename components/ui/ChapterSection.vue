@@ -177,7 +177,7 @@ function splitHighlight(text: string) {
   border-top-color: #1e2838;
 }
 
-/* 顶部喷漆带：黑色喷溅点向蓝黑过渡 */
+/* 顶部喷漆带：密集喷溅点向蓝黑过渡 */
 #works::before {
   content: '';
   position: absolute;
@@ -195,10 +195,28 @@ function splitHighlight(text: string) {
     radial-gradient(circle 12px at 61% 28%, #141c28 60%, transparent 61%),
     radial-gradient(circle 24px at 75% 60%, #141c28 55%, transparent 56%),
     radial-gradient(circle 9px at 90% 32%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 5px at 83% 29%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 8px at 96% 50%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 6px at 30% 32%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 14px at 88% 26%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 5px at 56% 19%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 8px at 13% 42%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 13px at 66% 18%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 8px at 27% 68%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 5px at 59% 50%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 10px at 22% 69%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 8px at 37% 34%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 6px at 45% 28%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 10px at 50% 27%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 5px at 46% 48%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 13px at 95% 73%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 6px at 17% 63%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 14px at 72% 52%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 6px at 48% 39%, #141c28 60%, transparent 61%),
     linear-gradient(to bottom, #0a0a0a 0%, #0a0a0a 40%, transparent 100%);
 }
 
-/* 底部喷漆带：喷溅点向上过渡到黑 */
+/* 底部喷漆带：密集喷溅点向上过渡到黑 */
 #works::after {
   content: '';
   position: absolute;
@@ -216,6 +234,24 @@ function splitHighlight(text: string) {
     radial-gradient(circle 13px at 72% 70%, #141c28 60%, transparent 61%),
     radial-gradient(circle 19px at 86% 44%, #141c28 55%, transparent 56%),
     radial-gradient(circle 10px at 95% 66%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 7px at 6% 38%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 9px at 19% 58%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 6px at 33% 30%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 12px at 47% 66%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 8px at 55% 34%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 15px at 67% 60%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 6px at 79% 36%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 10px at 91% 55%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 7px at 41% 22%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 13px at 63% 78%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 5px at 84% 70%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 9px at 15% 25%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 11px at 38% 52%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 6px at 52% 62%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 14px at 70% 24%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 8px at 88% 34%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 12px at 25% 78%, #141c28 60%, transparent 61%),
+    radial-gradient(circle 7px at 60% 44%, #141c28 60%, transparent 61%),
     linear-gradient(to top, #0a0a0a 0%, #0a0a0a 40%, transparent 100%);
 }
 
