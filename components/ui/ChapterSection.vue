@@ -375,7 +375,8 @@ function splitHighlight(text: string) {
 }
 
 .chapter__contact-qr img {
-  width: 28rem; /* 二维码再大一倍 */
+  width: 448px; /* 固定像素，绕过全局 max-width 干扰 */
+  max-width: none;
   height: auto;
   display: block;
   border-radius: 8px;
