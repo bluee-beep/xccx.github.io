@@ -142,11 +142,11 @@ useBlinds(blinds, video)
   will-change: transform;
 }
 
-/* 4 条线整体下移：最下线贴近底部滚动提示（bottom 80px 区域），向上均匀分布 */
-.hero__blinds-strip:nth-child(1) { top: 0; }
-.hero__blinds-strip:nth-child(2) { top: calc(25% - 20px); }
-.hero__blinds-strip:nth-child(3) { top: calc(50% - 40px); }
-.hero__blinds-strip:nth-child(4) { top: calc(75% - 60px); }
+/* 第一条线贴底部滚动提示，2/3/4 依次向上均匀分布 */
+.hero__blinds-strip:nth-child(1) { top: calc(75% - 60px); }
+.hero__blinds-strip:nth-child(2) { top: calc(50% - 40px); }
+.hero__blinds-strip:nth-child(3) { top: calc(25% - 20px); }
+.hero__blinds-strip:nth-child(4) { top: 0; }
 
 /* ---- 滚动字幕：视口 20% 处，无缝循环 ---- */
 .hero__marquee {

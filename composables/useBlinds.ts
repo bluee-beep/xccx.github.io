@@ -29,9 +29,10 @@ export function useBlinds(
   function apply() {
     const p = smooth
 
-    // 叶片错峰向下展开：首屏为细线（scaleY 0.08），滚动时第 i 条依次展开遮住背景
+    // 叶片错峰向下展开：首屏为细线（scaleY 0.08），滚动时从上到下依次展开遮住背景
+    // 视觉最上 = DOM 最后一条（i = count-1）先展开，视觉最下（i=0，贴滚动提示）最后展开
     strips.forEach((strip, i) => {
-      const delay = i / count
+      const delay = (count - 1 - i) / count
       const local = Math.min(1, Math.max(0, (p - delay) / (1 - delay)))
       strip.style.transform = `scaleY(${(0.08 + local * 0.92).toFixed(3)})`
     })
