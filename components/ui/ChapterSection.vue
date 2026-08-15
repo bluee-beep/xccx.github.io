@@ -62,9 +62,10 @@ defineProps<{ chapter: ChapterItem }>()
 .chapter__head {
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* 右对齐：眉题行靠右 */
+  justify-content: flex-start; /* 眉题行在左（放大版） */
   gap: var(--space-3);
   margin-bottom: var(--space-5);
+  font-size: 1.1rem; /* 放大（覆盖 u-monolabel 的 0.75rem） */
 }
 
 .chapter__no {
@@ -75,13 +76,13 @@ defineProps<{ chapter: ChapterItem }>()
   color: var(--c-muted);
 }
 
-/* 眉题行左侧延伸的分隔线（右对齐排版） */
-.chapter__kicker::before {
+/* 眉题行右侧延伸的分隔线 */
+.chapter__kicker::after {
   content: '';
   display: inline-block;
   width: clamp(2rem, 10vw, 8rem);
   height: 1px;
-  margin-right: var(--space-3);
+  margin-left: var(--space-3);
   background: var(--c-line);
   vertical-align: middle;
 }
