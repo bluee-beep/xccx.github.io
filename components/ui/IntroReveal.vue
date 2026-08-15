@@ -40,8 +40,8 @@ function computeTarget() {
 
 function tick() {
   if (!running) return
-  // 0.6：与滚动高度同步（约 2 帧追上），字随滚动即时显现
-  smoothProgress += (targetProgress - smoothProgress) * 0.6
+  // 完全同步：字随滚动即时显现，零延迟
+  smoothProgress = targetProgress
   shownCount.value = Math.floor(smoothProgress * total.value)
   rafId = requestAnimationFrame(tick)
 }
