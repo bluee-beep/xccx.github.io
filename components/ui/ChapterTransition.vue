@@ -95,7 +95,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="root" class="ct" :style="{ background: props.fromColor }" aria-hidden="true">
+  <div ref="root" class="ct" :style="{ '--ct-from': props.fromColor }" aria-hidden="true">
     <div class="ct__sticky">
       <div ref="cover" class="ct__cover" :style="{ background: color }" />
     </div>
@@ -106,7 +106,17 @@ onBeforeUnmount(() => {
 .ct {
   height: 23vh; /* 过渡区占位 23vh */
   position: relative;
-  padding-top: 10vh; /* 过渡延迟（padding 区域被 fromColor 背景覆盖，不露黑底） */
+  padding-top: 10vh; /* 过渡延迟（padding 区域被背景覆盖，不露黑底） */
+  /* 与 Nº001 同款：灰蓝底 + 动态扫描线条纹 */
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
+    var(--ct-from, #969da4);
+  animation: ct-scan 0.8s linear infinite;
+}
+
+@keyframes ct-scan {
+  from { background-position: 0 0; }
+  to { background-position: 0 4px; }
 }
 
 .ct__sticky {
