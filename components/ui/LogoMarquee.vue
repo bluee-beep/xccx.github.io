@@ -1,14 +1,15 @@
 <script setup lang="ts">
 // ==================== XCCX Logo 滚动字幕（实心大圆分隔） ====================
-// 复用首页滚动字幕的视觉语言：Inter 粗体大字 + 2em 实心大圆 + 无缝循环
-// 深色文字（适配灰白底章节）
+// 滚动内容：用户手绘 X 字标图片（logo.svg）+ 白色实心大圆 + 无缝循环
+const baseURL = useRuntimeConfig().app.baseURL
+const logoSrc = `${baseURL}logo.svg`
 </script>
 
 <template>
   <div class="lm" aria-hidden="true">
     <div class="lm__track">
       <span v-for="n in 2" :key="n" class="lm__group">
-        <span class="lm__text">XCCX</span>
+        <img :src="logoSrc" alt="" class="lm__logo" />
         <span class="lm__dot" />
       </span>
     </div>
@@ -17,6 +18,7 @@
 
 <style scoped>
 .lm {
+  --lm-logo-h: clamp(3rem, 5.5vw, 5rem); /* logo 高度基准 */
   overflow: hidden;
   pointer-events: none;
 }
@@ -43,22 +45,18 @@
   padding-right: 17px;
 }
 
-.lm__text {
-  font-family: 'Inter Variable', sans-serif;
-  font-size: clamp(3.4rem, 7vw, 5.8rem);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: var(--c-bg); /* 深色，适配灰底 */
+.lm__logo {
+  height: var(--lm-logo-h);
+  width: auto;
+  display: block;
 }
 
-/* 实心大圆（2em = 两倍字高） */
+/* 实心大圆：白色，尺寸随 logo 高度（0.6 倍） */
 .lm__dot {
-  width: 2em;
-  height: 2em;
+  width: calc(var(--lm-logo-h) * 0.6);
+  height: calc(var(--lm-logo-h) * 0.6);
   border-radius: 50%;
-  background: var(--c-bg);
+  background: var(--c-ink);
   flex-shrink: 0;
 }
 
