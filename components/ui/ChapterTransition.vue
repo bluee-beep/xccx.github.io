@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .ct {
-  height: 20vh; /* 过渡区占位 20vh */
+  height: 23vh; /* 过渡区占位 23vh */
   position: relative;
   margin-top: 10vh; /* 过渡延迟 */
 }
