@@ -22,9 +22,17 @@ function splitHighlight(text: string) {
     <!-- 动画背景：4 条交错荧光淡色波浪线，彗尾笔迹（feature 变体） -->
     <div v-if="chapter.variant === 'feature'" class="chapter__waves" aria-hidden="true">
       <svg v-for="i in 4" :key="i" class="chapter__wave-line" :class="`chapter__wave-line--${i}`" viewBox="0 0 100 500" preserveAspectRatio="none">
+        <defs>
+          <!-- 沿路径渐变：尾部（底部）透明 → 前端（顶部）实心，尾部慢慢隐去 -->
+          <linearGradient :id="`waveGrad${i}`" gradientUnits="userSpaceOnUse" x1="0" y1="500" x2="0" y2="20">
+            <stop offset="0" stop-color="#d8ff3e" stop-opacity="0" />
+            <stop offset="0.35" stop-color="#d8ff3e" stop-opacity="0.12" />
+            <stop offset="1" stop-color="#d8ff3e" stop-opacity="0.45" />
+          </linearGradient>
+        </defs>
         <!-- 2 号线：更扭曲（更多 S 弯） -->
-        <path v-if="i === 2" pathLength="1" d="M50,500 C20,460 80,420 50,380 C20,340 80,300 50,260 C20,220 80,180 50,140 C20,100 80,60 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
-        <path v-else pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
+        <path v-if="i === 2" pathLength="1" d="M50,500 C20,460 80,420 50,380 C20,340 80,300 50,260 C20,220 80,180 50,140 C20,100 80,60 50,20" :stroke="`url(#waveGrad${i})`" stroke-width="4" fill="none" />
+        <path v-else pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" :stroke="`url(#waveGrad${i})`" stroke-width="4" fill="none" />
       </svg>
     </div>
 
