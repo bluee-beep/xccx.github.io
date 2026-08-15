@@ -38,9 +38,10 @@ export default defineNuxtConfig({
   components: [{ path: '~/components', pathPrefix: false }],
 
   // SSG 输出：显式列出全部路由，保证 404.html 被生成（GH Pages 回退依赖它）
+  // 单页化后只有 / 与 /404（about 已并入首页）
   nitro: {
     prerender: {
-      routes: ['/', '/about', '/404'],
+      routes: ['/', '/404'],
     },
   },
 
