@@ -41,8 +41,8 @@ export function useHeroLogo(
   function apply() {
     const el = logoEl.value
     if (!el) return
-    // 目标：header logo 中心（右上角：右距 32px，header 高一半 40px）
-    const targetX = vw - 32 - (finalHeight * 3) / 2
+    // 目标：header logo 中心（左上：左距 32px + 半宽 66px，header 高一半 40px）
+    const targetX = 32 + (finalHeight * 3) / 2
     const targetY = 40
     const centerX = vw / 2
     const centerY = vh / 2
