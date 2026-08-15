@@ -63,16 +63,8 @@ onBeforeUnmount(() => {
   position: sticky;
   top: 0;
   z-index: var(--z-header);
-  /* 初始透明：让 Hero 视频画面从页面最顶端透出 */
+  /* 恒透明：导航始终无底色（全站 CRT 罩透出） */
   background: transparent;
-  transition: background var(--dur-base) var(--ease-out-expo);
-}
-
-/* 滚动后：毛玻璃背景保证导航可读 */
-.header--scrolled {
-  background: color-mix(in srgb, var(--c-bg) 82%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--c-line);
 }
 
