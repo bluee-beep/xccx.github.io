@@ -22,10 +22,10 @@ function splitHighlight(text: string) {
     <!-- 动画背景：两条交错荧光淡色波浪线，笔迹描画（feature 变体） -->
     <div v-if="chapter.variant === 'feature'" class="chapter__waves" aria-hidden="true">
       <svg class="chapter__wave-line chapter__wave-line--1" viewBox="0 0 100 500" preserveAspectRatio="none">
-        <path pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="2.5" fill="none" />
+        <path pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
       </svg>
       <svg class="chapter__wave-line chapter__wave-line--2" viewBox="0 0 100 500" preserveAspectRatio="none">
-        <path pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="2.5" fill="none" />
+        <path pathLength="1" d="M50,500 C20,420 80,340 50,260 C20,180 80,100 50,20" stroke="rgba(216, 255, 62, 0.45)" stroke-width="4" fill="none" />
       </svg>
     </div>
 
@@ -96,7 +96,7 @@ function splitHighlight(text: string) {
   position: absolute;
   bottom: 0;
   width: 110px;
-  height: 60vh;
+  height: 85vh; /* 线加长 */
   /* 线静止：不再整体移动 */
 }
 
