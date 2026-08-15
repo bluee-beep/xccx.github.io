@@ -27,13 +27,13 @@ export interface InterestItem {
 }
 
 export const profile = {
-  name: 'Xccx',
-  role: '设计 × 工程 × 产品',
+  name: '徐晨轩',
+  role: '设计 × 工程 × 产品', // TODO: 待用户确认定位描述
 
   // ---- 板块一：基本信息 ----
   basic: {
-    school: '待填写', // TODO: 学校
-    major: '待填写', // TODO: 专业
+    school: '燕山大学',
+    major: '电子科学与技术',
     // 联系方式复用 data/site.ts（email + social）
   },
 

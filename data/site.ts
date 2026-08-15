@@ -34,5 +34,5 @@ export const site = {
     { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
   ] as SocialItem[],
 
-  email: 'hello@xccx.dev', // TODO: 填写真实邮箱
+  email: 'coldbluee@163.com',
 }
