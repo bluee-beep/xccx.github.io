@@ -55,6 +55,15 @@
 - **og-image.svg**：黑底 + X 字标 + tagline 标语
 - 资源路径手动拼接 baseURL（`useRuntimeConfig().app.baseURL`）
 
+## v1.3.0-H2 — 2026-08-15
+
+### 首页四章节文案拟稿（竞赛视角，用户审后可改）
+
+- Nº001 Manifesto：「先跑通，再深究」宣言
+- Nº002 What I do：「电子 × AI × 工程」+ stats 真实化（1 个亲手网站 / 2 个技能方向 / ∞ 好奇心）
+- Nº003 Selected works：「作品在路上」（等竞赛项目）
+- Nº004 Let's talk：联系 CTA（真实邮箱已在 site.ts）
+
 ## v1.3.0-H1 — 2026-08-15
 
 ### 首页大 Logo 滚动归位（PPT 平滑感）

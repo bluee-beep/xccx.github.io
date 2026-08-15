@@ -1,6 +1,6 @@
 // ==================== 首页叙事章节（核心扩展点） ====================
 // 「章节是数据，不是组件」——新增模块只需在数组中追加条目
-// 当前为占位文案，TODO: 替换为真实个人内容
+// 定位：竞赛人员选拔展示（评委视角）
 
 export interface ChapterItem {
   /** 锚点 id，同时驱动 Header 导航 */
@@ -15,7 +15,7 @@ export interface ChapterItem {
   paragraphs: string[]
   /** 深浅变体：feature 用强调背景 */
   variant?: 'default' | 'feature'
-  /** 数字条目（如 5年经验 / 30+ 项目） */
+  /** 数字条目 */
   stats?: { label: string; value: string }[]
 }
 
@@ -24,26 +24,26 @@ export const chapters: ChapterItem[] = [
     id: 'manifesto',
     no: 'Nº001',
     kicker: 'Manifesto',
-    title: ['做一个', '长期主义者'],
+    title: ['先跑通', '再深究'],
     paragraphs: [
-      '你好，我是 Xccx。设计、工程与产品的交叉点是我最感兴趣的地方——既看得懂像素，也写得动代码。',
-      '这个网站是我给自己造的一间工作室：记录思考、展示作品、连接同路人。',
+      '拿到新东西先拆开看它怎么运转，学到新知识就立刻用起来——这是我的学习方式。',
+      '这个网站从零搭起：设计、动效、部署全链路亲力亲为。做过的每一步，都算数。',
     ],
   },
   {
     id: 'capabilities',
     no: 'Nº002',
     kicker: 'What I do',
-    title: ['设计 × 工程', '× 产品'],
+    title: ['电子 × AI', '× 工程'],
     paragraphs: [
-      '从界面设计到前端实现，从产品构思到落地交付，我习惯把一件事从想法推到现实。',
-      'TODO: 在此补充你的技能栈与经历描述。',
+      '燕山大学电子科学与技术在读，正在系统补齐 C 语言与硬件基础，用 AI 工具链把学习效率拉满。',
+      '把知识变成能力，把想法变成实物——目标是走进电子类竞赛的赛场。',
     ],
     variant: 'feature',
-    // TODO: 替换为真实数字
+    // 真实数字：可随成长更新
     stats: [
-      { value: '12+', label: '完成项目' },
-      { value: '3', label: '领域探索' },
+      { value: '1', label: '亲手搭建的网站' },
+      { value: '2', label: '技能方向' },
       { value: '∞', label: '好奇心' },
     ],
   },
@@ -53,7 +53,7 @@ export const chapters: ChapterItem[] = [
     kicker: 'Selected works',
     title: ['作品', '在路上'],
     paragraphs: [
-      '正在整理过往项目，稍后在这里展出。TODO: 替换为真实作品条目（或新建 pages/works 独立路由）。',
+      '正在积累竞赛与项目作品，稍后在此展出。',
     ],
   },
   {
@@ -62,7 +62,8 @@ export const chapters: ChapterItem[] = [
     kicker: "Let's talk",
     title: ['聊聊你的', '项目'],
     paragraphs: [
-      '如果你有想法、合作或只是好奇，欢迎来信。我会尽量在 48 小时内回复。',
+      '竞赛组队、项目合作或任何想法，欢迎来信。',
+      '我会尽快回复。',
     ],
   },
 ]
