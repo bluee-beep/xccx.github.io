@@ -49,6 +49,19 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
     <!-- 可读性遮罩 -->
     <div class="hero__shade" aria-hidden="true" />
 
+    <!-- 视口 20% 处：滚动字幕（无缝循环） -->
+    <div class="hero__marquee" aria-hidden="true">
+      <div class="hero__marquee-track">
+        <!-- 两组相同内容：-50% 平移实现无缝循环 -->
+        <span v-for="n in 2" :key="n" class="hero__marquee-group">
+          <span class="hero__marquee-text">XCCX Design</span>
+          <span class="hero__marquee-dot" />
+          <span class="hero__marquee-text">WavePeak Elite Member</span>
+          <span class="hero__marquee-dot" />
+        </span>
+      </div>
+    </div>
+
     <!-- 大 Logo（滚动归位至 header） -->
     <div ref="heroLogo" class="hero__logo" :class="{ 'hero__logo--static': logoStatic }" aria-hidden="true">
       <img :src="logoSrc" alt="" class="hero__logo-img" />
@@ -98,6 +111,56 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   inset: 0;
   background:
     linear-gradient(to bottom, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.15) 40%, rgba(10, 10, 10, 0.35) 75%, rgba(10, 10, 10, 0.82) 100%);
+}
+
+/* ---- 滚动字幕：视口 20% 处，无缝循环 ---- */
+.hero__marquee {
+  position: absolute;
+  top: 20vh;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 3;
+  pointer-events: none;
+  border-block: 1px solid var(--c-line);
+  padding-block: var(--space-3);
+  background: linear-gradient(to right, transparent, rgba(10, 10, 10, 0.35), transparent);
+}
+
+.hero__marquee-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: hero-marquee 20s linear infinite;
+}
+
+.hero__marquee-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding-right: var(--space-6);
+}
+
+.hero__marquee-text {
+  font-size: clamp(1.15rem, 2.2vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+}
+
+/* 大圆点分隔符 */
+.hero__marquee-dot {
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background: var(--c-accent);
+  flex-shrink: 0;
+}
+
+@keyframes hero-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 /* ---- 大 Logo：fixed 居中，transform 由 useHeroLogo 驱动 ---- */
