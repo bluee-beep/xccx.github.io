@@ -54,7 +54,7 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
       <div class="hero__marquee-track">
         <!-- 两组相同内容：-50% 平移实现无缝循环 -->
         <span v-for="n in 2" :key="n" class="hero__marquee-group">
-          <span class="hero__marquee-text">XCCX Design</span>
+          <span class="hero__marquee-text">Xccx Design</span>
           <span class="hero__marquee-dot" />
           <span class="hero__marquee-text">WavePeak Elite Member</span>
           <span class="hero__marquee-dot" />
@@ -153,7 +153,7 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   font-size: clamp(2.6rem, 5.2vw, 3.8rem);
   font-weight: 600;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
+  text-transform: capitalize;
   color: var(--c-ink);
 }
 
