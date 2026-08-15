@@ -92,6 +92,8 @@ defineProps<{ chapter: ChapterItem }>()
   border-top-color: #82898f;
   /* 扫描线下移（4px = 一个条纹周期，无缝循环）——B 档：细 2px + 中速 0.8s */
   animation: crt-scan 0.8s linear infinite;
+  /* 多留空间：上下内边距加大 */
+  padding-block: 12rem;
 }
 
 @keyframes crt-scan {
