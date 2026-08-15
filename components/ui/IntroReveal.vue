@@ -90,18 +90,17 @@ onBeforeUnmount(() => {
         v-for="(ch, ci) in para.split('')"
         :key="ci"
         class="intro-reveal__char"
-        :class="{ 'intro-reveal__char--hidden': globalIndex(pi, ci) < total - shownCount }"
+        :class="{ 'intro-reveal__char--hidden': globalIndex(pi, ci) >= shownCount }"
       >{{ ch }}</span>
     </p>
   </div>
 </template>
 
 <style scoped>
-/* 与 chapter__para 一致：靠右 + 右对齐 + intro 加大字号 */
+/* Intro 段落：左对齐（+ 加大字号） */
 .intro-reveal__para {
   max-width: 36rem;
-  margin-left: auto;
-  text-align: right;
+  text-align: left;
   color: var(--c-ink);
   font-size: clamp(1.2rem, 1.8vw, 1.5rem);
   line-height: 1.6;
