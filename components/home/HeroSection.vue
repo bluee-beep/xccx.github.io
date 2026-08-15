@@ -123,7 +123,7 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
   z-index: 3;
   pointer-events: none;
   border-block: 2px solid var(--c-line);
-  padding-block: var(--space-4);
+  padding-block: 0.1rem; /* 文字贴近上下线 */
 }
 
 .hero__marquee-track {
@@ -150,8 +150,9 @@ useHeroLogo(heroLogo, { initialHeight: 220, finalHeight: 44 })
 
 .hero__marquee-text {
   font-family: 'Inter Variable', sans-serif;
-  font-size: clamp(2.6rem, 5.2vw, 3.8rem);
+  font-size: clamp(3.4rem, 7vw, 5.8rem);
   font-weight: 600;
+  line-height: 1.1;
   letter-spacing: 0.02em;
   text-transform: capitalize;
   color: var(--c-ink);
