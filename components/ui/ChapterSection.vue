@@ -6,6 +6,8 @@ import type { ChapterItem } from '~/data/chapters'
 
 defineProps<{ chapter: ChapterItem }>()
 
+const baseURL = useRuntimeConfig().app.baseURL
+
 // 解析「」标记：重点词高亮
 function splitHighlight(text: string) {
   return text.split(/(「[^」]*」)/g).map((part) => {
@@ -80,7 +82,9 @@ function splitHighlight(text: string) {
       <!-- 联系方式图标胶囊：hover 显示对应信息 -->
       <div v-if="chapter.contacts" v-reveal class="chapter__contacts">
         <div v-for="c in chapter.contacts" :key="c.label" class="chapter__contact" :title="c.label">
-          <span class="chapter__contact-icon">{{ c.icon }}</span>
+          <span class="chapter__contact-icon">
+            <img :src="`${baseURL}icons/${c.icon}.svg`" :alt="c.label" />
+          </span>
           <span class="chapter__contact-value">{{ c.value }}</span>
         </div>
       </div>
@@ -328,11 +332,16 @@ function splitHighlight(text: string) {
 }
 
 .chapter__contact-icon {
-  font-family: 'JetBrains Mono Variable', monospace;
-  font-size: 1rem;
-  letter-spacing: 0.08em;
-  color: var(--c-ink);
+  display: grid;
+  place-items: center;
   transition: opacity var(--dur-fast) var(--ease-out-expo);
+}
+
+/* 图标图片：微信横向 logo 更高；simple-icons 方形 */
+.chapter__contact-icon img {
+  height: 1.9rem;
+  width: auto;
+  display: block;
 }
 
 /* 信息层：默认隐藏，hover 时替换图标 */
