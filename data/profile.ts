@@ -45,8 +45,12 @@ export const profile = {
 
   // ---- 板块二：教育背景与技能 ----
   education: [
-    // TODO: 替换为真实教育经历
-    { year: '2024—', school: '待填写', degree: '待填写', desc: '待补充专业方向与学习内容。' },
+    {
+      year: '2026—2030',
+      school: '燕山大学',
+      degree: '本科',
+      desc: '在读 · 电子科学与技术（国家级一流本科专业建设点），以电子学与光电子学技术结合为特色。',
+    },
   ] as EducationItem[],
 
   skills: [
