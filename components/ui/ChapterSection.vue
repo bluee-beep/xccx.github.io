@@ -60,16 +60,16 @@ defineProps<{ chapter: ChapterItem }>()
 /* Intro 变体：整章底色（用户选定）+ 动态 CRT 扫描线条纹，文字转深色 */
 .chapter--intro {
   background:
-    repeating-linear-gradient(to bottom, transparent 0 4px, rgba(0, 0, 0, 0.16) 4px 8px),
+    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
     #b8b8ba; /* 用户选定底色 */
   border-top-color: #a3a3a6;
-  /* 扫描线缓慢下移（8px = 一个条纹周期，无缝循环） */
-  animation: crt-scan 1.4s linear infinite;
+  /* 扫描线下移（4px = 一个条纹周期，无缝循环）——B 档：细 2px + 中速 0.8s */
+  animation: crt-scan 0.8s linear infinite;
 }
 
 @keyframes crt-scan {
   from { background-position: 0 0; }
-  to { background-position: 0 8px; }
+  to { background-position: 0 4px; }
 }
 
 .chapter--intro .chapter__title {
