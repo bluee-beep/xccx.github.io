@@ -26,12 +26,16 @@ function tick() {
   const el = root.value
   if (el) {
     const rect = el.getBoundingClientRect()
-    const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height * 0.5)))
-    // 错位基准：按 logo 实际高度 × 2.5（层间跨度 1.25 logo 高）
+    // 进度：区块刚进视口 = 0 → 页尾（底边滚至视口底之上 footer 高）恰好 = 1
+    const ftH = el.clientHeight
+    const footerH = (document.querySelector('.footer') as HTMLElement | null)?.offsetHeight || 0
+    const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (ftH + footerH)))
+    // 错位幅度：页尾时最快层（视觉最底下）底边刚好贴住区块底边 = 版权区上边界
     const logoH = trailRefs.value[0]?.offsetHeight || 280
+    const maxOffset = Math.max(0, ftH - logoH)
     trailRefs.value.forEach((layer, i) => {
       if (!layer) return
-      const offset = progress * layers[i].speed * logoH * 2.5
+      const offset = progress * (layers[i].speed / layers[0].speed) * maxOffset
       layer.style.transform = `translateY(${offset.toFixed(2)}px)`
     })
   }
