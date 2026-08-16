@@ -4,11 +4,15 @@
 
 ## v2.2.0 — 2026-08-16
 
-### 文字出现效果（pxpush 式）
+### 文字出现效果（pxpush 式，滚动 scrub 淡入）
 
-- **Nº001 行遮罩上滑**（`components/ui/IntroReveal.vue`）：段落放进 `overflow:hidden` 遮罩窗口，文字整段从下方升起——复刻 pxpush `.line > .line__inner` 结构 + `yPercent:100→0` expo-out 1s 段间错峰语义，零依赖实现（`translateY(110%)→0` transition + IO 一次性触发）
-- **段落滚动 scrub 淡入**（`components/ui/ChapterSection.vue`）：正文段落随滚动逐段淡入——复刻 pxpush `effect__textFade` scrub 语义，零 GSAP：scroll → 段落顶部过视口 95% 起显现、70% 完全显现 + lerp 0.2 平滑 + 统一 rAF 循环（resize/scroll 监听均命名函数，卸载全清理）
+- **正文段落滚动 scrub 淡入**（`components/ui/ChapterSection.vue`）：全部章节（含 Nº001 intro）段落随滚动逐段淡入——复刻 pxpush `effect__textFade` scrub 语义，零 GSAP：scroll → 段落顶部过视口 95% 起显现、70% 完全显现（视口底部 1/4，用户验收确认）+ lerp 0.2 平滑 + 统一 rAF 循环（resize/scroll 监听均命名函数，卸载全清理）
+- **Nº001「」重点词高亮**：intro 浅底上高亮用深绿 `#3d6b14`（与 Nº001 编号同色），荧光绿在浅底不可读
 - SSR 安全约定沿用 v-reveal：默认可见，仅 JS 挂载后进入隐藏/淡入管线；触屏 / reduced-motion 直接可见
+
+### 迭代记录
+
+- 初版 Nº001 行遮罩上滑（`IntroReveal.vue`，pxpush `.line/.line__inner` + yPercent 100→0 expo-out 1s 语义）经用户验收后替换为统一 scrub 淡入，组件已移除——「全部段落同一出场方式」的一致性优先
 
 ## v2.1.0 — 2026-08-16
 
