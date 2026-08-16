@@ -13,6 +13,9 @@ useLenis()
     </main>
 
     <AppFooter />
+
+    <!-- 全站网格反色光标（触屏/reduced-motion 自动不启用） -->
+    <CursorGrid />
   </div>
 </template>
 

@@ -2,6 +2,21 @@
 
 > 每完成一小步实现，在此追加记录，并同步提交 git（中文语义化 commit）。
 
+## v2.1.0 — 2026-08-16
+
+### 网格反色光标（pxpush 1:1 移植）
+
+- **CursorGrid**：全屏 20 列点阵 + `mix-blend-mode: difference` + gooey 粘连滤镜（`components/ui/CursorGrid.vue`）
+- 点亮时序复刻原版：瞬时亮 → ttl 0.2s 硬切熄灭（class 切换 + setTimeout，**零 GSAP 依赖**）
+- 排除区：header 链接 / logo / 微信胶囊；≤1300px 宽屏关闭（原版同款）；触屏 / reduced-motion 不启用
+- 层级 `--z-cursor: 1000`（盖过 CRT 扫描线罩 999）
+- dev 调参：`?cursor=columns:28,ttl:0.4,gooey:0`（生产构建 dead-code 剔除）
+
+### 移植踩坑记录（两个隐蔽根因）
+
+- **scoped CSS 匹配失效**：格子由 JS `innerHTML` 动态生成（不带 `data-v` 标记），scoped 选择器匹配失败 → 格子零尺寸。修复：`:deep()` 穿透
+- **gooey 滤镜容器尺寸归零**：SVG 设 `width:0/height:0` 导致 Chrome 中 filter 定义失效，`filter:url()` 引用失败 → 整层不可见（计算样式正常，极具迷惑性）。修复：SVG 改 `position:absolute` 保留默认尺寸（原版同款）+ 挂滤镜前 `getElementById` 验证
+
 ## v2.0.0 — 2026-08-16
 
 ### 完整版上线（tag v2.0.0）
