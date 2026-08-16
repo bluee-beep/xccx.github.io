@@ -59,7 +59,7 @@ let probeOn = false
 const diag = import.meta.dev
   ? reactive({
       cells: 0, lit: 0, moves: 0, excl: 0, mounted: false,
-      rect: '-', gtc: '-', size: '-', last: '-', layer: '-',
+      rect: '-', gtc: '-', size: '-', last: '-', layer: '-', win: 0,
     })
   : null
 
@@ -198,7 +198,10 @@ if (import.meta.dev) {
 onMounted(() => {
   // 触屏 / 减少动效：不建格子、不挂监听（同 usePanorama 模式）
   if (isTouchDevice() || prefersReducedMotion()) return
-  if (diag) diag.mounted = true
+  if (diag) {
+    diag.mounted = true
+    diag.win = window.innerWidth
+  }
 
   syncEnabled()
   window.addEventListener('pointermove', onMove, { passive: true })
@@ -227,6 +230,7 @@ onBeforeUnmount(() => {
       rect={{ diag.rect }} size={{ diag.size }}
       layer={{ diag.layer }}
       last={{ diag.last }}
+      win={{ diag.win }}
     </div>
 
     <!-- gooey 粘连滤镜：零尺寸占位，仅作 defs 引用 -->
