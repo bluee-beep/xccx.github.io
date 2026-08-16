@@ -19,6 +19,10 @@
 
 - scroll-spy 激活项的标题文字变荧光绿（`--c-accent`），与滑动横线同色呼应，颜色平滑过渡
 
+### 修复：线上视频 URL 双斜杠
+
+- `data/site.ts` heroVideo.src 去头斜杠（`/videos/...` → `videos/...`）：原与 baseURL 尾斜杠拼接成 `/xccx.github.io//videos/hero.mp4`，GitHub Pages 上该请求挂起 → 首访视频加载失败（线上实证：curl 双斜杠 URL 卡死、单斜杠 200）。另线上首访撞到 Pages CDN 旧版 HTML 缓存（无 Preloader 的 v2.2.0 产物）——部署完成后 CDN 自动一致
+
 ## v2.2.0 — 2026-08-16
 
 ### 文字出现效果（pxpush 式，滚动 scrub 淡入）
