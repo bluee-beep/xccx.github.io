@@ -92,7 +92,6 @@ watch(heroProgress, (p) => {
   display: flex;
   align-items: center;
   overflow: hidden; /* 视频取景：超出部分裁剪 */
-  border-bottom: 1px solid var(--c-line);
   background: var(--c-bg); /* 视频加载前/失败的底色 */
 }
 

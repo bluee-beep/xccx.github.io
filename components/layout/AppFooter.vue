@@ -16,7 +16,7 @@ const year = new Date().getFullYear()
 
 <style scoped>
 .footer {
-  border-top: 1px solid var(--c-line);
+  /* 边界横线已取消：页脚与拖尾区无缝衔接 */
 }
 
 .footer__inner {
