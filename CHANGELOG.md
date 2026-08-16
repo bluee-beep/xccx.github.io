@@ -2,6 +2,23 @@
 
 > 每完成一小步实现，在此追加记录，并同步提交 git（中文语义化 commit）。
 
+## v2.3.0 — 2026-08-16
+
+### 首屏加载页（背景视频就绪检测）
+
+- **Preloader**（`components/ui/Preloader.vue` 新建）：全屏黑底 + 裁切版 logo 呼吸 + 荧光细进度条；SSR 首帧即渲染（盖住未 hydration 的页面），JS 异常时 CSS 兜底动画 6.2s 自动淡出
+- **真实缓冲进度**：`<video>` progress 事件驱动（buffered / duration）；进度条保留到**完全加载（缓冲 100%）**才消失（用户拍板）；加载失败立即放行（海报/纯色兜底）；90s 超时仅防卡死
+- 加载期间锁定滚动；触屏 / reduced-motion 不显示；hydration 后同步真实状态（`readyState === 4`）——慢网络下 canplay 先于 JS 完成也能正确放行
+- 修复：Slow 3G 下 JS 未加载时视频露默认 300×150 小画面 → `.hero__video` 加 hydration 前兜底尺寸（120vw 居中 cover）
+
+### 手持拍摄摇晃（首页）
+
+- **useHandheld**（`composables/useHandheld.ts` 新建）：背景视频双正弦叠加漂移 + 微旋转，模拟真人持机拍摄；低频主导呼吸感，幅度克制（平移 ≤9px / 旋转 ≤0.53°）不晕；作用于视频取景外层包装，与鼠标取景分层独立；触屏 / reduced-motion 禁用、滚出首屏停 rAF
+
+### header 导航激活高亮
+
+- scroll-spy 激活项的标题文字变荧光绿（`--c-accent`），与滑动横线同色呼应，颜色平滑过渡
+
 ## v2.2.0 — 2026-08-16
 
 ### 文字出现效果（pxpush 式，滚动 scrub 淡入）

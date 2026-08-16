@@ -83,6 +83,7 @@ onBeforeUnmount(() => {
           :key="item.to"
           :to="item.to"
           class="header__link u-monolabel"
+          :class="{ 'header__link--active': activeId === item.to.slice(1) }"
         >
           {{ item.label }}
         </NuxtLink>
@@ -141,10 +142,17 @@ onBeforeUnmount(() => {
   position: relative;
   padding-block: 0.25rem;
   color: var(--c-muted);
+  transition: color var(--dur-base) ease;
 }
 
 .header__link:hover {
   color: var(--c-ink);
+}
+
+/* 滚动到对应章节：标题文字高亮荧光绿（与滑动横线同色呼应） */
+.header__link--active,
+.header__link--active:hover {
+  color: var(--c-accent);
 }
 
 /* 滑动荧光横线：果冻回弹曲线（过冲回摆） */

@@ -14,6 +14,9 @@ useLenis()
 
     <AppFooter />
 
+    <!-- 首屏加载页：背景视频就绪检测（canplay / 失败 / 超时后淡出） -->
+    <Preloader />
+
     <!-- 全站网格反色光标（触屏/reduced-motion 自动不启用） -->
     <CursorGrid />
   </div>
