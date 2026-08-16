@@ -6,7 +6,7 @@
 
 ### 文字出现效果（pxpush 式，滚动 scrub 淡入）
 
-- **正文段落滚动 scrub 淡入**（`components/ui/ChapterSection.vue`）：全部章节（含 Nº001 intro）段落随滚动逐段淡入——复刻 pxpush `effect__textFade` scrub 语义，零 GSAP：scroll → 段落顶部过视口 50%（中线）开始显现 → 25% 完全显现（用户验收选定的节奏）+ lerp 0.2 平滑 + 统一 rAF 循环（resize/scroll 监听均命名函数，卸载全清理）
+- **正文段落滚动 scrub 淡入**（`components/ui/ChapterSection.vue`）：全部章节（含 Nº001 intro）段落随滚动逐段淡入——复刻 pxpush `effect__textFade` scrub 语义，零 GSAP：scroll → 段落顶部一进视口（底边）就开始显现 → 视口 33% 处完全显现（用户验收选定的节奏）+ lerp 0.2 平滑 + 统一 rAF 循环（resize/scroll 监听均命名函数，卸载全清理）
 - **Nº001「」重点词高亮**：intro 浅底上高亮用深绿 `#3d6b14`（与 Nº001 编号同色），荧光绿在浅底不可读
 - SSR 安全约定沿用 v-reveal：默认可见，仅 JS 挂载后进入隐藏/淡入管线；触屏 / reduced-motion 直接可见
 
