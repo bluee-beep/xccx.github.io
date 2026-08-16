@@ -208,7 +208,9 @@ onBeforeUnmount(() => {
   grid-template-columns: repeat(var(--cg-columns), var(--cg-size));
 }
 
-.cursor__inner-box {
+/* 格子由 JS innerHTML 动态生成（不带 scoped 的 data-v 标记），
+   必须用 :deep() 穿透，否则样式匹配不到动态元素 */
+.cursor__inner :deep(.cursor__inner-box) {
   background: #fff;
   width: var(--cg-size);
   height: var(--cg-size);
@@ -216,7 +218,7 @@ onBeforeUnmount(() => {
 }
 
 /* 点亮：硬切（无 transition，对应原版 GSAP set 无 duration） */
-.cursor__inner-box.is-on {
+.cursor__inner :deep(.cursor__inner-box.is-on) {
   opacity: 1;
 }
 
