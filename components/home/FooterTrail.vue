@@ -30,9 +30,9 @@ function tick() {
     const ftH = el.clientHeight
     const footerH = (document.querySelector('.footer') as HTMLElement | null)?.offsetHeight || 0
     const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (ftH + footerH)))
-    // 错位幅度：页尾时最快层（视觉最底下）底边刚好贴住区块底边 = 版权区上边界
+    // 错位幅度：扣除初始下移 15%，页尾时最快层底边仍贴住区块底边 = 版权区上边界
     const logoH = trailRefs.value[0]?.offsetHeight || 280
-    const maxOffset = Math.max(0, ftH - logoH)
+    const maxOffset = Math.max(0, ftH - logoH - 0.15 * ftH)
     trailRefs.value.forEach((layer, i) => {
       if (!layer) return
       const offset = progress * (layers[i].speed / layers[0].speed) * maxOffset
@@ -92,6 +92,7 @@ onBeforeUnmount(() => {
 
 .ft__layer {
   position: absolute;
+  top: 15%; /* 初始位置下移：logo 整体往下靠（用户拍板） */
   width: min(88vw, 104rem); /* logo 放大一倍（原 52rem） */
   height: auto;
   display: block;
