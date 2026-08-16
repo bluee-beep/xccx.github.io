@@ -232,7 +232,7 @@ onBeforeUnmount(() => {
   transform: translateX(60px);
 }
 
-/* Nº003（works）：灰蓝底（与 Nº001 同色，用户选定）+ 上下喷漆渐变（灰蓝喷点 ↔ 黑） */
+/* Nº003（works）：灰蓝底（与 Nº001 同色，用户选定）+ 底部喷漆渐变（灰蓝喷点 ↔ 黑） */
 #works {
   background: #969da4;
   border-top-color: #82898f;
@@ -263,44 +263,7 @@ onBeforeUnmount(() => {
   color: var(--c-bg); /* Wait Me 水印：深色半透明 */
 }
 
-/* 顶部喷漆带：灰蓝喷溅点向黑过渡 */
-#works::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 7rem;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    radial-gradient(circle 14px at 8% 30%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 22px at 22% 58%, #969da4 55%, transparent 56%),
-    radial-gradient(circle 10px at 35% 22%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 18px at 48% 62%, #969da4 55%, transparent 56%),
-    radial-gradient(circle 12px at 61% 28%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 24px at 75% 60%, #969da4 55%, transparent 56%),
-    radial-gradient(circle 9px at 90% 32%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 5px at 83% 29%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 8px at 96% 50%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 6px at 30% 32%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 14px at 88% 26%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 5px at 56% 19%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 8px at 13% 42%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 13px at 66% 18%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 8px at 27% 68%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 5px at 59% 50%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 10px at 22% 69%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 8px at 37% 34%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 6px at 45% 28%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 10px at 50% 27%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 5px at 46% 48%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 13px at 95% 73%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 6px at 17% 63%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 14px at 72% 52%, #969da4 60%, transparent 61%),
-    radial-gradient(circle 6px at 48% 39%, #969da4 60%, transparent 61%),
-    linear-gradient(to bottom, #0a0a0a 0%, #0a0a0a 40%, transparent 100%);
-}
+/* 顶部喷漆带已取消（用户拍板：2→3 过渡圆弧直接衔接灰蓝底） */
 
 /* 底部喷漆带：灰蓝喷溅点向上过渡到黑 */
 #works::after {
