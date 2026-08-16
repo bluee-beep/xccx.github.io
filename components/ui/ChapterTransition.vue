@@ -29,9 +29,10 @@ function computeTarget() {
   const el = root.value
   if (!el) return
   const rect = el.getBoundingClientRect()
-  // 进度 0：区块顶部进入视口底部；进度 1：区块顶部到达视口 40%（覆盖完成）
-  const start = vh
-  const end = vh * 0.4
+  // 进度 0：区块顶部滚到视口 90% 处才触发（进视口后延迟，不一开始就模糊）
+  // 进度 1：区块顶部到达视口 25%（覆盖完成）；区间 65% vh，比原 60% 更缓
+  const start = vh * 0.9
+  const end = vh * 0.25
   targetProgress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)))
 }
 
