@@ -2,6 +2,14 @@
 
 > 每完成一小步实现，在此追加记录，并同步提交 git（中文语义化 commit）。
 
+## v2.2.0 — 2026-08-16
+
+### 文字出现效果（pxpush 式）
+
+- **Nº001 行遮罩上滑**（`components/ui/IntroReveal.vue`）：段落放进 `overflow:hidden` 遮罩窗口，文字整段从下方升起——复刻 pxpush `.line > .line__inner` 结构 + `yPercent:100→0` expo-out 1s 段间错峰语义，零依赖实现（`translateY(110%)→0` transition + IO 一次性触发）
+- **段落滚动 scrub 淡入**（`components/ui/ChapterSection.vue`）：正文段落随滚动逐段淡入——复刻 pxpush `effect__textFade` scrub 语义，零 GSAP：scroll → 段落顶部过视口 95% 起显现、70% 完全显现 + lerp 0.2 平滑 + 统一 rAF 循环（resize/scroll 监听均命名函数，卸载全清理）
+- SSR 安全约定沿用 v-reveal：默认可见，仅 JS 挂载后进入隐藏/淡入管线；触屏 / reduced-motion 直接可见
+
 ## v2.1.0 — 2026-08-16
 
 ### 网格反色光标（pxpush 1:1 移植）

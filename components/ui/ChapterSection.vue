@@ -1,8 +1,9 @@
 <script setup lang="ts">
 // ==================== 章节容器 ====================
 // 数据驱动渲染单条 ChapterItem：Nº 编号 + 眉题 + 大标题 + 段落 + stats
-// M4 将接入入场动效（此处先静态）
+// 段落入场 = 滚动 scrub 逐段淡入（pxpush effect__textFade 语义）
 import type { ChapterItem } from '~/data/chapters'
+import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
 
 defineProps<{ chapter: ChapterItem }>()
 
@@ -17,6 +18,68 @@ function splitHighlight(text: string) {
     return { text: part, hl: false }
   })
 }
+
+// ---- 段落 scrub 淡入：滚动进度 → opacity（统一 rAF 循环） ----
+const scrubEls = ref<HTMLElement[]>([])
+const targets = new Map<HTMLElement, number>()
+const currents = new Map<HTMLElement, number>()
+let vh = 0
+let rafId = 0
+let running = false
+
+function computeScrub() {
+  for (const el of scrubEls.value) {
+    if (!el) continue
+    const rect = el.getBoundingClientRect()
+    // 区间：段落顶部过视口 95% 开始显现 → 到 70% 完全显现
+    const start = vh * 0.95
+    const end = vh * 0.7
+    targets.set(el, Math.min(1, Math.max(0, (start - rect.top) / (start - end))))
+  }
+}
+
+function tickScrub() {
+  if (!running) return
+  for (const [el, t] of targets) {
+    const c = (currents.get(el) ?? t) + (t - (currents.get(el) ?? t)) * 0.2
+    currents.set(el, c)
+    el.style.opacity = String(c)
+  }
+  rafId = requestAnimationFrame(tickScrub)
+}
+
+function onScrollScrub() {
+  computeScrub()
+  if (!running && scrubEls.value.length) {
+    running = true
+    rafId = requestAnimationFrame(tickScrub)
+  }
+}
+
+function onResizeScrub() {
+  vh = window.innerHeight
+  computeScrub()
+}
+
+onMounted(() => {
+  // 触屏 / 减少动效：段落保持直接可见
+  if (isTouchDevice() || prefersReducedMotion()) return
+  vh = window.innerHeight
+  window.addEventListener('scroll', onScrollScrub, { passive: true })
+  window.addEventListener('resize', onResizeScrub)
+  computeScrub()
+  if (scrubEls.value.length) {
+    running = true
+    rafId = requestAnimationFrame(tickScrub)
+  }
+})
+
+onBeforeUnmount(() => {
+  running = false
+  cancelAnimationFrame(rafId)
+  window.removeEventListener('scroll', onScrollScrub)
+  window.removeEventListener('resize', onResizeScrub)
+})
 </script>
 
 <template>
@@ -60,10 +123,10 @@ function splitHighlight(text: string) {
       <!-- 联系方式胶囊：标题正下方 -->
       <ContactChips v-if="chapter.contacts" :contacts="chapter.contacts" />
 
-      <!-- 正文：intro 变体整章连续逐字显现；其余逐段错峰入场（「」标记重点词高亮） -->
+      <!-- 正文：intro 变体走行遮罩上滑；其余滚动 scrub 逐段淡入（「」标记重点词高亮） -->
       <IntroReveal v-if="chapter.variant === 'intro'" :paragraphs="chapter.paragraphs" />
       <template v-else>
-        <p v-for="(para, i) in chapter.paragraphs" :key="para" v-reveal="{ delay: i * 120 }" class="chapter__para">
+        <p v-for="para in chapter.paragraphs" :key="para" ref="scrubEls" class="chapter__para">
           <template v-for="(part, j) in splitHighlight(para)" :key="j">
             <span v-if="part.hl" class="chapter__hl">{{ part.text }}</span>
             <template v-else>{{ part.text }}</template>
