@@ -152,7 +152,7 @@ onBeforeUnmount(() => {
 .chapter {
   position: relative;
   padding-block: var(--space-8);
-  border-top: 1px solid var(--c-line);
+  /* 边界横线已取消：章节间透明无缝衔接（用户拍板） */
 }
 
 /* ---- 动画背景：交错荧光波浪线 ---- */
@@ -204,7 +204,6 @@ onBeforeUnmount(() => {
 /* feature 变体（capabilities）：深色背景，文字浅色（与 Nº001 区分） */
 .chapter--feature {
   background: var(--c-bg);
-  border-top-color: var(--c-line);
 }
 
 .chapter--feature .chapter__title {
@@ -235,7 +234,6 @@ onBeforeUnmount(() => {
 /* Nº003（works）：灰蓝底（与 Nº001 同色，用户选定）+ 底部喷漆渐变（灰蓝喷点 ↔ 黑） */
 #works {
   background: #969da4;
-  border-top-color: #82898f;
 }
 
 /* 灰蓝底适配：文字深色（同 Nº001 浅底约定） */
@@ -307,7 +305,6 @@ onBeforeUnmount(() => {
 /* Intro 变体：灰蓝底色（条纹由全站 CRT 罩统一提供），文字深色 */
 .chapter--intro {
   background: #969da4; /* 用户选定底色 */
-  border-top-color: #82898f;
   /* 多留空间：上下内边距加大 */
   padding-block: 12rem;
 }

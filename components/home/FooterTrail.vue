@@ -83,7 +83,6 @@ onBeforeUnmount(() => {
   place-items: start center; /* logo 贴区块顶部 */
   overflow: hidden;
   margin-top: -6rem; /* 上移吃掉 Nº004 底部留白，紧贴其下 */
-  border-top: 1px solid var(--c-line);
   pointer-events: none;
 }
 
