@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .ft {
   position: relative;
-  height: clamp(16rem, 30vw, 26rem); /* 大展示区 */
+  height: clamp(32rem, 60vw, 52rem); /* 展示区 2 倍：容纳放大 logo + 拖尾空间 */
   display: grid;
   place-items: start center; /* logo 贴区块顶部 */
   overflow: hidden;
@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
 
 .ft__layer {
   position: absolute;
-  width: min(88vw, 52rem); /* logo 大尺寸 */
+  width: min(88vw, 104rem); /* logo 放大一倍（原 52rem） */
   height: auto;
   display: block;
   will-change: transform;
