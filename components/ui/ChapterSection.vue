@@ -31,9 +31,9 @@ function computeScrub() {
   for (const el of scrubEls.value) {
     if (!el) continue
     const rect = el.getBoundingClientRect()
-    // 区间：段落顶部过视口 95% 开始显现 → 到 70% 完全显现
-    const start = vh * 0.95
-    const end = vh * 0.7
+    // 区间：段落顶部过视口 50%（中线）开始显现 → 到 25% 完全显现
+    const start = vh * 0.5
+    const end = vh * 0.25
     targets.set(el, Math.min(1, Math.max(0, (start - rect.top) / (start - end))))
   }
 }
