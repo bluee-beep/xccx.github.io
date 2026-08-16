@@ -54,6 +54,15 @@ let cellSize = 0
 let cachedCell: HTMLElement | null = null
 let resizeTimer = 0
 
+// dev 诊断计数：验证光标运行状态用（生产构建整段剔除）
+let probeOn = false
+const diag = import.meta.dev
+  ? reactive({
+      cells: 0, lit: 0, moves: 0, excl: 0, mounted: false,
+      rect: '-', gtc: '-', size: '-', last: '-', layer: '-',
+    })
+  : null
+
 // ---- 网格生成：原生 DOM 单次 innerHTML（数百格，不走 v-for 响应式） ----
 function buildGrid() {
   const root = rootEl.value
@@ -70,9 +79,29 @@ function buildGrid() {
   root.style.setProperty('--cg-size', `${cellSize}px`)
   inner.innerHTML = '<div class="cursor__inner-box"></div>'.repeat(rows * cols)
   cells = Array.from(inner.children) as HTMLElement[]
+  // probe 调试：全部格子常亮红色，区分「渲染管线」与「blend 混合」问题
+  if (diag && probeOn) {
+    cells.forEach((el) => {
+      el.style.background = '#f00'
+      el.style.opacity = '1'
+    })
+  }
+  if (diag) {
+    diag.cells = cells.length
+    // 计算样式取证：格子实际渲染尺寸 / grid 模板 / CSS 变量值
+    const first = cells[0]
+    const r = first?.getBoundingClientRect()
+    diag.rect = r ? `${Math.round(r.width)}x${Math.round(r.height)}` : 'none'
+    diag.gtc = getComputedStyle(inner).gridTemplateColumns.slice(0, 40)
+    diag.size = getComputedStyle(root).getPropertyValue('--cg-size').trim()
+    // .cursor 层自身计算样式：定位 / 层级 / 混合模式
+    const cs = getComputedStyle(root)
+    diag.layer = `${cs.position}/${cs.zIndex}/blend:${cs.mixBlendMode}`
+  }
 
   // gooey：非 Firefox 才挂（原版规避 Firefox SVG filter 兼容问题）
-  if (params.gooey && !/firefox/i.test(navigator.userAgent)) {
+  // 挂载前验证 filter 定义存在——失效引用会导致 Chrome 把整个层渲染为不可见
+  if (params.gooey && !/firefox/i.test(navigator.userAgent) && document.getElementById(filterId)) {
     inner.style.filter = `url(#${filterId})`
   } else {
     inner.style.filter = ''
@@ -94,13 +123,23 @@ function light(el: HTMLElement) {
   if (timer) clearTimeout(timer) // 淡出前再次进入：复位重新计时（等价 GSAP 覆盖旧 tween）
   el.classList.add('is-on')
   el.dataset.timer = String(window.setTimeout(() => el.classList.remove('is-on'), params.ttl * 1000))
+  if (diag) {
+    diag.lit++
+    // 点亮瞬间取证：格子的实际计算样式（opacity / 背景 / 尺寸）
+    const cs = getComputedStyle(el)
+    diag.last = `op:${cs.opacity} bg:${cs.backgroundColor}`
+  }
 }
 
 // ---- 鼠标：格子索引 O(1) 计算；cachedCell 幂等（原版同款防重复触发） ----
 function onMove(e: PointerEvent) {
+  if (diag) diag.moves++
   if (!cells) return
   const target = e.target
-  if (target instanceof Element && target.closest(props.excludeSelector)) return
+  if (target instanceof Element && target.closest(props.excludeSelector)) {
+    if (diag) diag.excl++
+    return
+  }
 
   const col = Math.floor(e.clientX / cellSize)
   const row = Math.floor(e.clientY / cellSize)
@@ -134,11 +173,16 @@ if (import.meta.dev) {
   watch(
     () => route.query.cursor,
     () => {
+      if (typeof window === 'undefined') return // SSR 阶段跳过（immediate 首轮）
       const q = route.query.cursor
       if (typeof q !== 'string' || !q) return
       for (const pair of q.split(',')) {
         const [key, raw] = pair.split(':')
         const value = Number(raw)
+        if (key === 'probe') {
+          probeOn = raw !== '0'
+          continue
+        }
         if (Number.isNaN(value)) continue
         if (key === 'columns') params.columns = value
         else if (key === 'ttl') params.ttl = value
@@ -147,12 +191,14 @@ if (import.meta.dev) {
       }
       syncEnabled()
     },
+    { immediate: true },
   )
 }
 
 onMounted(() => {
   // 触屏 / 减少动效：不建格子、不挂监听（同 usePanorama 模式）
   if (isTouchDevice() || prefersReducedMotion()) return
+  if (diag) diag.mounted = true
 
   syncEnabled()
   window.addEventListener('pointermove', onMove, { passive: true })
@@ -174,6 +220,14 @@ onBeforeUnmount(() => {
 <template>
   <div ref="rootEl" class="cursor">
     <div ref="innerEl" class="cursor__inner" />
+
+    <!-- dev 诊断徽章：验证运行状态（生产构建整段剔除） -->
+    <div v-if="diag" class="cursor__diag u-mono">
+      mounted={{ diag.mounted }} cells={{ diag.cells }} lit={{ diag.lit }}
+      rect={{ diag.rect }} size={{ diag.size }}
+      layer={{ diag.layer }}
+      last={{ diag.last }}
+    </div>
 
     <!-- gooey 粘连滤镜：零尺寸占位，仅作 defs 引用 -->
     <svg class="cursor__filters" aria-hidden="true">
@@ -222,10 +276,23 @@ onBeforeUnmount(() => {
   opacity: 1;
 }
 
-/* SVG 滤镜定义容器：不占布局 */
+/* SVG 滤镜定义容器：position:absolute 不占文档流，但保留默认渲染尺寸
+   （原版同款做法——0 尺寸 SVG 会让 Chrome 中 filter 定义失效，
+    进而 filter:url() 引用失败导致整个光标层不可见） */
 .cursor__filters {
   position: absolute;
-  width: 0;
-  height: 0;
+}
+
+/* dev 诊断徽章：左上角固定，荧光绿可读 */
+.cursor__diag {
+  position: fixed;
+  top: 6rem;
+  left: 1rem;
+  z-index: 2000;
+  font-size: 0.75rem;
+  color: var(--c-accent);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.25rem 0.5rem;
+  pointer-events: none;
 }
 </style>
