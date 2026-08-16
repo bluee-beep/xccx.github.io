@@ -114,6 +114,7 @@ onBeforeUnmount(() => {
 .header__logo {
   display: flex;
   align-items: center;
+  opacity: 0.7; /* 透明度降低（用户拍板）：淡入背景不抢导航 */
 }
 
 .header__logo-img {
