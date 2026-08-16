@@ -123,16 +123,13 @@ onBeforeUnmount(() => {
       <!-- 联系方式胶囊：标题正下方 -->
       <ContactChips v-if="chapter.contacts" :contacts="chapter.contacts" />
 
-      <!-- 正文：intro 变体走行遮罩上滑；其余滚动 scrub 逐段淡入（「」标记重点词高亮） -->
-      <IntroReveal v-if="chapter.variant === 'intro'" :paragraphs="chapter.paragraphs" />
-      <template v-else>
-        <p v-for="para in chapter.paragraphs" :key="para" ref="scrubEls" class="chapter__para">
-          <template v-for="(part, j) in splitHighlight(para)" :key="j">
-            <span v-if="part.hl" class="chapter__hl">{{ part.text }}</span>
-            <template v-else>{{ part.text }}</template>
-          </template>
-        </p>
-      </template>
+      <!-- 正文：滚动 scrub 逐段淡入（「」标记重点词高亮；intro 变体浅底深色文字） -->
+      <p v-for="para in chapter.paragraphs" :key="para" ref="scrubEls" class="chapter__para">
+        <template v-for="(part, j) in splitHighlight(para)" :key="j">
+          <span v-if="part.hl" class="chapter__hl">{{ part.text }}</span>
+          <template v-else>{{ part.text }}</template>
+        </template>
+      </p>
 
       <!-- 数字条目 -->
       <dl v-if="chapter.stats" v-reveal class="chapter__stats">
@@ -405,11 +402,24 @@ onBeforeUnmount(() => {
   margin-bottom: var(--space-3);
 }
 
-/* 引言变体：intro 段落加大字号 */
+/* 引言变体：intro 段落右栏左对齐，浅底上深色大字（原 IntroReveal 样式并入） */
 .chapter--intro .chapter__para {
-  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  max-width: 60vw;
+  margin-left: auto;
+  text-align: left;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
   line-height: 1.6;
-  color: var(--c-ink);
+  color: var(--c-bg);
+}
+
+/* 首段收紧与字幕的间距（原 IntroReveal 容器 -2rem 语义） */
+.chapter--intro .chapter__para:first-child {
+  margin-top: -2rem;
+}
+
+/* intro 浅底上高亮用深绿（与 Nº001 编号同色）；荧光绿在浅底不可读 */
+.chapter--intro .chapter__hl {
+  color: #3d6b14;
 }
 
 /* feature 变体（capabilities）：右栏左对齐 + 大一号；正文调淡衬托高亮 */
