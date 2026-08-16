@@ -12,12 +12,12 @@ const trailRefs = ref<HTMLElement[]>([])
 let rafId = 0
 let running = false
 
-// 5 层：按用户指定间隔反推速度；深层 blur 虚化 + 颜色渐变变暗
+// 5 层：速度等差（间隔均等且更紧凑）；深层 blur 虚化 + 颜色渐变变暗
 const layers = [
   { speed: 0.656, opacity: 1, blur: 0, dark: 1 }, // 顶层：实心清晰
-  { speed: 0.404, opacity: 0.6, blur: 1, dark: 0.8 },
-  { speed: 0.192, opacity: 0.35, blur: 2, dark: 0.6 },
-  { speed: 0.072, opacity: 0.2, blur: 3, dark: 0.45 },
+  { speed: 0.492, opacity: 0.6, blur: 1, dark: 0.8 },
+  { speed: 0.328, opacity: 0.35, blur: 2, dark: 0.6 },
+  { speed: 0.164, opacity: 0.2, blur: 3, dark: 0.45 },
   { speed: 0, opacity: 0.1, blur: 4, dark: 0.3 }, // 底层：静止最糊最暗
 ]
 
