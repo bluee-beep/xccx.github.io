@@ -13,8 +13,6 @@ const props = defineProps<{
   prevId: string
   /** 方向：up 圆弧从底部升起（默认）｜down 圆弧从顶部降下（反向） */
   direction?: 'up' | 'down'
-  /** 圆弧顶部描边色：深色底过渡（黑→蓝黑）时圆弧不可见，描边提供可见性锚点 */
-  edgeColor?: string
 }>()
 
 const root = ref<HTMLElement>()
@@ -121,10 +119,7 @@ onBeforeUnmount(() => {
         ref="cover"
         class="ct__cover"
         :class="{ 'ct__cover--down': props.direction === 'down' }"
-        :style="{
-          background: props.direction === 'down' ? props.fromColor : color,
-          borderTop: props.edgeColor ? `2px solid ${props.edgeColor}` : undefined,
-        }"
+        :style="{ background: props.direction === 'down' ? props.fromColor : color }"
       />
     </div>
   </div>

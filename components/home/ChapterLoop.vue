@@ -9,7 +9,7 @@ defineProps<{ chapters: ChapterItem[] }>()
 const waveColorOf = (c: ChapterItem) =>
   c.variant === 'intro' ? '#969da4'
   : c.variant === 'feature' ? '#0a0a0a'
-  : c.id === 'works' ? '#141c28'
+  : c.id === 'works' ? '#969da4'
   : '#0a0a0a'
 </script>
 
@@ -23,13 +23,12 @@ const waveColorOf = (c: ChapterItem) =>
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
     />
-    <!-- 简单过渡：Nº002 → Nº003 之间（蓝黑圆弧 + 荧光绿描边，深底过渡可见） -->
+    <!-- 简单过渡：Nº002 → Nº003 之间（灰蓝圆弧，与 1→2 黑圆弧镜像对称） -->
     <ChapterTransition
       v-if="chapter.id === 'capabilities' && i < chapters.length - 1"
-      color="#141c28"
+      color="#969da4"
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
-      edge-color="#d8ff3e"
     />
   </template>
 </template>
