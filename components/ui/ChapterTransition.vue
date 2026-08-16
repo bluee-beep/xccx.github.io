@@ -16,6 +16,7 @@ const props = defineProps<{
 }>()
 
 const root = ref<HTMLElement>()
+const stage = ref<HTMLElement>()
 const cover = ref<HTMLElement>()
 
 let progress = 0
@@ -46,9 +47,10 @@ function apply() {
       cover.value.style.transform = `translateY(${(100 - p * 110).toFixed(2)}%)`
     }
   }
-  // 过渡舞台：blur 同步 + 变黑程度 D 档（brightness 终点 0.45，仅舞台）
-  if (root.value) {
-    root.value.style.filter = `blur(${(p * 10).toFixed(1)}px) brightness(${(1 - p * 0.55).toFixed(2)})`
+  // 过渡舞台背景层：blur 同步 + 变黑（brightness 终点 0.45，仅背景）
+  // 圆弧（cover）不在 filter 作用域内——保持清晰，与下一章底色无缝融合
+  if (stage.value) {
+    stage.value.style.filter = `blur(${(p * 10).toFixed(1)}px) brightness(${(1 - p * 0.55).toFixed(2)})`
   }
   // 上一章模糊：blur 0 → 10px + 微暗（保持原样 0.75）
   const prev = document.getElementById(props.prevId)
@@ -100,7 +102,7 @@ onBeforeUnmount(() => {
   stop()
   window.removeEventListener('scroll', onScroll)
   // 清理滤镜
-  if (root.value) root.value.style.filter = ''
+  if (stage.value) stage.value.style.filter = ''
   const prev = document.getElementById(props.prevId)
   if (prev) prev.style.filter = ''
 })
@@ -113,6 +115,8 @@ onBeforeUnmount(() => {
     :style="{ '--ct-from': props.direction === 'down' ? props.color : props.fromColor }"
     aria-hidden="true"
   >
+    <!-- 舞台背景层：blur/变黑只作用于此，圆弧保持清晰 -->
+    <div ref="stage" class="ct__stage" />
     <div class="ct__sticky">
       <!-- down：椭圆为上一章颜色，向下撤走露出下一章 -->
       <div
@@ -130,7 +134,12 @@ onBeforeUnmount(() => {
   height: 25vh; /* 过渡区占位 25vh（用户设定） */
   position: relative;
   padding-top: 10vh; /* 过渡延迟（padding 区域被背景覆盖，不露黑底） */
-  /* 与 Nº001 同款：灰蓝底 + 动态扫描线条纹 */
+}
+
+/* 舞台背景层：灰蓝底 + 动态扫描线条纹；blur/变黑只作用于这一层 */
+.ct__stage {
+  position: absolute;
+  inset: 0;
   background:
     repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 4px),
     var(--ct-from, #969da4);
