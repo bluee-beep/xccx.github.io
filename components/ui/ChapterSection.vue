@@ -19,41 +19,43 @@ function splitHighlight(text: string) {
   })
 }
 
-// ---- 段落 scrub 淡入：滚动进度 → opacity（统一 rAF 循环） ----
+// 按标点切词，标点附着到前一个词（中文节奏：词连同标点一起显现）
+function splitWords(text: string): string[] {
+  const raw = text.match(/[^，。；、？：！,.!?;:\s]+|[，。；、？：！,.!?;:]/g) ?? []
+  const out: string[] = []
+  for (const w of raw) {
+    if (/^[，。；、？：！,.!?;:]$/.test(w) && out.length) out[out.length - 1] += w
+    else out.push(w)
+  }
+  return out
+}
+
+// ---- 段落 scrub 淡入：pxpush effect__textFade 1:1 移植 ----
+// 原版：fromTo(".word, .line__inner", {opacity:0}, {opacity:1, ease:"none",
+//   stagger:.05, scrollTrigger:{start:"top 80%", end:"bottom 80%", scrub:true}})
+// 语义：段落顶边到视口 80% 线 → 开始；段落底边到 80% 线 → 结束；
+//   词 i 的 opacity = clamp(进度×总时长 − i×0.05)，scrub 1:1 直接写值（无缓动迟滞）
 const scrubEls = ref<HTMLElement[]>([])
-const targets = new Map<HTMLElement, number>()
-const currents = new Map<HTMLElement, number>()
+const wordLists = new Map<HTMLElement, HTMLElement[]>()
 let vh = 0
-let rafId = 0
-let running = false
 
 function computeScrub() {
   for (const el of scrubEls.value) {
     if (!el) continue
+    const words = wordLists.get(el)
+    if (!words?.length) continue
     const rect = el.getBoundingClientRect()
-    // 区间：段落顶部一进视口（底边）就开始显现 → 到视口 33% 完全显现
-    const start = vh
-    const end = vh * 0.33
-    targets.set(el, Math.min(1, Math.max(0, (start - rect.top) / (start - end))))
+    // 区间由段落自身高度驱动：top 过 80% 线起，bottom 过 80% 线止
+    const p = rect.height > 0 ? (vh * 0.8 - rect.top) / rect.height : 1
+    const total = 1 + 0.05 * (words.length - 1)
+    words.forEach((w, i) => {
+      w.style.opacity = String(Math.min(1, Math.max(0, p * total - i * 0.05)))
+    })
   }
-}
-
-function tickScrub() {
-  if (!running) return
-  for (const [el, t] of targets) {
-    const c = (currents.get(el) ?? t) + (t - (currents.get(el) ?? t)) * 0.2
-    currents.set(el, c)
-    el.style.opacity = String(c)
-  }
-  rafId = requestAnimationFrame(tickScrub)
 }
 
 function onScrollScrub() {
   computeScrub()
-  if (!running && scrubEls.value.length) {
-    running = true
-    rafId = requestAnimationFrame(tickScrub)
-  }
 }
 
 function onResizeScrub() {
@@ -62,21 +64,18 @@ function onResizeScrub() {
 }
 
 onMounted(() => {
-  // 触屏 / 减少动效：段落保持直接可见
+  // 触屏 / 减少动效：词保持直接可见（SSR 默认态）
   if (isTouchDevice() || prefersReducedMotion()) return
   vh = window.innerHeight
+  for (const el of scrubEls.value) {
+    if (el) wordLists.set(el, Array.from(el.querySelectorAll('.word')))
+  }
   window.addEventListener('scroll', onScrollScrub, { passive: true })
   window.addEventListener('resize', onResizeScrub)
   computeScrub()
-  if (scrubEls.value.length) {
-    running = true
-    rafId = requestAnimationFrame(tickScrub)
-  }
 })
 
 onBeforeUnmount(() => {
-  running = false
-  cancelAnimationFrame(rafId)
   window.removeEventListener('scroll', onScrollScrub)
   window.removeEventListener('resize', onResizeScrub)
 })
@@ -123,11 +122,13 @@ onBeforeUnmount(() => {
       <!-- 联系方式胶囊：标题正下方 -->
       <ContactChips v-if="chapter.contacts" :contacts="chapter.contacts" />
 
-      <!-- 正文：滚动 scrub 逐段淡入（「」标记重点词高亮；intro 变体浅底深色文字） -->
+      <!-- 正文：滚动 scrub 逐词淡入（pxpush effect__textFade 1:1；「」重点词高亮） -->
       <p v-for="para in chapter.paragraphs" :key="para" ref="scrubEls" class="chapter__para">
         <template v-for="(part, j) in splitHighlight(para)" :key="j">
-          <span v-if="part.hl" class="chapter__hl">{{ part.text }}</span>
-          <template v-else>{{ part.text }}</template>
+          <span v-if="part.hl" class="word chapter__hl">{{ part.text }}</span>
+          <template v-else>
+            <span v-for="(w, k) in splitWords(part.text)" :key="k" class="word">{{ w }}</span>
+          </template>
         </template>
       </p>
 
@@ -430,6 +431,11 @@ onBeforeUnmount(() => {
   font-size: clamp(1.2rem, 1.8vw, 1.5rem); /* 大一号 */
   line-height: 1.6;
   color: var(--c-muted); /* 淡灰正文 */
+}
+
+/* 逐词显现（pxpush textFade：每词独立 opacity，scrub 1:1 驱动） */
+.chapter__para .word {
+  will-change: opacity;
 }
 
 /* 重点词高亮：荧光绿（深色底上清晰） */
