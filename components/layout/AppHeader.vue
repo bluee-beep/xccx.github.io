@@ -98,9 +98,8 @@ onBeforeUnmount(() => {
   position: sticky;
   top: 0;
   z-index: var(--z-header);
-  /* 恒透明：导航始终无底色（全站 CRT 罩透出） */
+  /* 恒透明：导航始终无底色（全站 CRT 罩透出）；底边横线已取消（用户拍板） */
   background: transparent;
-  border-bottom: 1px solid var(--c-line);
 }
 
 .header__inner {
