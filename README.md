@@ -1,6 +1,6 @@
-# Xccx 个人品牌网站
+# Xccx 个人网站
 
-> 个人品牌「包装」站：参考 pxpush.com 的高端营销落地页风格，Nuxt 3 SSG 静态输出，部署 GitHub Pages。
+> 个人站：参考 pxpush.com 的高端营销落地页风格，Nuxt 3 SSG 静态输出，部署 GitHub Pages。
 
 ## 技术栈
 
