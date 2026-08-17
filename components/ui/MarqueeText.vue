@@ -1,8 +1,8 @@
 <script setup lang="ts">
-// ==================== 大字横向滚动（pxpush MarqueeText 1:1 移植，无 3D） ====================
+// ==================== 大字横向滚动（原站 MarqueeText 1:1 移植，无 3D） ====================
 // 超大标题重复 8 组持续横移 + 词随机顺序淡入 + 离场模糊淡出 + 分隔线揭示
 // 零 GSAP：横移用 CSS animation（等价 xPercent 循环）；scrub 直写值 1:1 无 lerp
-// 两种入场模式：timeline（hero 首屏，加载后时间线播放）/ scrub（页尾，滚动驱动，pxpush 1:1 区间）
+// 两种入场模式：timeline（hero 首屏，加载后时间线播放）/ scrub（页尾，滚动驱动，原站 1:1 区间）
 import { prefersReducedMotion } from '~/composables/useDevice'
 
 const props = withDefaults(
@@ -19,7 +19,7 @@ const wordEls = ref<HTMLElement[]>()
 // 与 Preloader 联动：视频就绪（加载页淡出）后才播词点亮，避免被黑屏盖住
 const videoReady = useState('hero-video-ready', () => false)
 
-// 显示序列：● 符号 + 词交替（pxpush title = symbol + name 结构）
+// 显示序列：● 符号 + 词交替（原站 title = symbol + name 结构）
 const sequence = computed(() => {
   const seq: { type: 'symbol' | 'word'; text?: string }[] = []
   props.text.forEach((t, i) => {
@@ -29,7 +29,7 @@ const sequence = computed(() => {
   return seq
 })
 
-// 词随机 rank：动画顺序随机、DOM 顺序不变（pxpush stagger from:"random" 语义）
+// 词随机 rank：动画顺序随机、DOM 顺序不变（原站 stagger from:"random" 语义）
 let ranks: number[] = []
 
 function shuffle(n: number): number[] {
@@ -46,7 +46,7 @@ function power4Out(t: number) {
   return 1 - Math.pow(1 - t, 5)
 }
 
-// ---- scrub 版：词随机淡入（pxpush titleRandom 去 3D：top 90% → 0%，each 0.03 random） ----
+// ---- scrub 版：词随机淡入（原站 titleRandom 去 3D：top 90% → 0%，each 0.03 random） ----
 function computeWordsScrub() {
   const el = root.value
   if (!el || !wordEls.value.length) return
@@ -59,7 +59,7 @@ function computeWordsScrub() {
   })
 }
 
-// ---- scrub 版：上下线从右侧滑出（pxpush separatorIn 区间 top 90% → 70%；方向按用户要求从右向左） ----
+// ---- scrub 版：上下线从右侧滑出（原站 separatorIn 区间 top 90% → 70%；方向按用户要求从右向左） ----
 function computeLineScrub() {
   const el = root.value
   if (!el) return
@@ -68,7 +68,7 @@ function computeLineScrub() {
   el.style.setProperty('--line-p', p.toFixed(4))
 }
 
-// ---- 离场模糊淡出（pxpush fadeOut：top 5% → -30%，opacity 1→0 + blur 0→20px） ----
+// ---- 离场模糊淡出（原站 fadeOut：top 5% → -30%，opacity 1→0 + blur 0→20px） ----
 function computeFadeOut() {
   const el = root.value
   if (!el) return
@@ -89,9 +89,9 @@ function computeScrub() {
 function playTimeline() {
   const el = root.value
   if (!el) return
-  // 分隔线：--marquee-line-scale 0→1 expo.out 0.8s（pxpush 首页时间线同款）
+  // 分隔线：--marquee-line-scale 0→1 expo.out 0.8s（原站 首页时间线同款）
   el.style.setProperty('--marquee-line-scale', '1')
-  // 词随机顺序点亮：delay = rank×30ms、power4 近似缓动（pxpush stagger each 0.03 random 语义）
+  // 词随机顺序点亮：delay = rank×30ms、power4 近似缓动（原站 stagger each 0.03 random 语义）
   wordEls.value.forEach((w, i) => {
     w.style.opacity = '0'
     w.style.transition = `opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1) ${(ranks[i] * 0.03).toFixed(2)}s`
@@ -145,7 +145,7 @@ onBeforeUnmount(() => {
 <template>
   <div ref="root" class="marqueeText" :class="`marqueeText--${mode}`" aria-hidden="true">
     <div class="marqueeText__track">
-      <!-- 8 组相同标题：-100%/8 位移实现无缝循环（pxpush 同款 8 次重复） -->
+      <!-- 8 组相同标题：-100%/8 位移实现无缝循环（原站 同款 8 次重复） -->
       <h1 v-for="g in 8" :key="g" class="marqueeText__title">
         <span class="marqueeText__symbol">●</span>
         <template v-for="(s, i) in sequence" :key="i">
@@ -160,11 +160,11 @@ onBeforeUnmount(() => {
 <style scoped>
 .marqueeText {
   position: relative;
-  height: 14vw; /* pxpush 原版 17vw；本站缩小（用户拍板） */
+  height: 14vw; /* 原站 原版 17vw；本站缩小（用户拍板） */
   overflow: hidden;
   white-space: nowrap;
   pointer-events: none;
-  /* 上下 2px 分隔线（pxpush ::before/::after border 同款），scaleX 由 --marquee-line-scale 驱动 */
+  /* 上下 2px 分隔线（原站 ::before/::after border 同款），scaleX 由 --marquee-line-scale 驱动 */
 }
 
 .marqueeText::before,
@@ -177,7 +177,7 @@ onBeforeUnmount(() => {
   background: var(--c-line);
   transform: scaleX(var(--marquee-line-scale, 1));
   transform-origin: left;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* expo.out 0.8s（pxpush 首页时间线同款） */
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* expo.out 0.8s（原站 首页时间线同款） */
   z-index: 1;
 }
 
@@ -199,7 +199,7 @@ onBeforeUnmount(() => {
   transition: none; /* scrub 直写，无过渡 */
 }
 
-/* hero 版：absolute 于 hero 顶部（pxpush fixed top 3.5vw 的流内等价）；字号调小（用户拍板） */
+/* hero 版：absolute 于 hero 顶部（原站 fixed top 3.5vw 的流内等价）；字号调小（用户拍板） */
 .marqueeText--hero {
   position: absolute;
   top: 10vh;
@@ -250,13 +250,13 @@ onBeforeUnmount(() => {
   display: inline-flex;
   align-items: center;
   flex: 0 0 auto;
-  padding: 0 2vw; /* pxpush symbol padding 0 2vw：间距含在组宽内，保证 -12.5% 精确无缝 */
+  padding: 0 2vw; /* 原站 symbol padding 0 2vw：间距含在组宽内，保证 -12.5% 精确无缝 */
   white-space: nowrap;
 }
 
 .marqueeText__word {
   font-family: 'Inter Variable', sans-serif;
-  font-size: 12vw; /* 填充容器（pxpush 观感同款大字，本站缩小：用户拍板） */
+  font-size: 12vw; /* 填充容器（原站 观感同款大字，本站缩小：用户拍板） */
   font-weight: 600;
   line-height: 1.05;
   letter-spacing: 0;
@@ -270,7 +270,7 @@ onBeforeUnmount(() => {
   font-size: 6vw;
   line-height: 1;
   color: var(--c-ink);
-  padding: 0 2vw; /* pxpush 同款：符号两侧间距 */
+  padding: 0 2vw; /* 原站 同款：符号两侧间距 */
   flex-shrink: 0;
 }
 </style>

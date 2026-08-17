@@ -2,18 +2,25 @@
 
 > 每完成一小步实现，在此追加记录，并同步提交 git（中文语义化 commit）。
 
+## v2.5.1 — 2026-08-17
+
+### 文档：来源署名归拢单处
+
+- 动效来源说明统一收至 README「参考」一节；组件注释与历史日志中的站点名一律改为「原站」中性指代
+- `skills/` 动效知识库定位为本地开发工具：移出版本控制（.gitignore），目录更名 `skills/motion/`
+
 ## v2.5.0 — 2026-08-17
 
-### 新增 pxpush-motion Skill（动效复刻知识库）
+### 新增动效复刻知识库 Skill
 
-- **`skills/pxpush-motion/`**：把 pxpush.com 逆向并零 GSAP 复刻的动效整理为可复用 Skill——`SKILL.md`（触发词/边界 + 9 个原生 JS Quick Reference 函数 + 3 端到端示例）、`references/`（params.md 全参数速查 / gsap-to-vanilla.md 还原公式推导 / reverse-engineering.md 逆向方法与教训）、`scripts/demo.html`（自包含演示页：条带刷色/词淡入/大字横滚/随机淡入/离场模糊/线揭示/网格光标，浏览器直接打开）
+- **`skills/motion/`**（本地知识库）：将原站动效逆向并零 GSAP 复刻的参数整理为可复用 Skill——`SKILL.md`（触发词/边界 + 9 个原生 JS Quick Reference 函数 + 3 端到端示例）、`references/`（params.md 全参数速查 / gsap-to-vanilla.md 还原公式推导 / reverse-engineering.md 逆向方法与教训）、`scripts/demo.html`（自包含演示页：条带刷色/词淡入/大字横滚/随机淡入/离场模糊/线揭示/网格光标，浏览器直接打开）
 - 全部参数逆向实录（非目测）：overlayIn / textFade / MarqueeText / titleRandom(去3D) / fadeOut / separatorIn / CursorGrid，GSAP 时间模型（0.5s 单 tween + stagger 跨度）与 scrub 1:1 直写语义完整保留
 
 ## v2.4.0 — 2026-08-17
 
-### Hero→Nº001 pxpush 条带刷色过渡（1:1 移植）
+### Hero→Nº001 条带刷色过渡（1:1 移植）
 
-- **ChapterOverlay**（`components/ui/ChapterOverlay.vue` 新建）：pxpush `effect__overlayIn` 1:1 照搬——锚定出站章节底部（absolute bottom:0 覆盖 hero 末尾 100svh，挂 `HeroSection` 内），JS 生成 10 行（触屏 15）水平条带，滚动 scrub 驱动从底部逐排升起（底行先、40ms 间隔、power4.out、scaleY 0→1.01、origin 50% 100%、区间 top 0%→-80%）；零 GSAP（手动还原 GSAP 时间模型，scroll/resize 直写值 1:1 无 lerp）；z-index 10（原版级联终值）；reduced-motion 保持无条带（hero 全程可见）
+- **ChapterOverlay**（`components/ui/ChapterOverlay.vue` 新建）：原站 `effect__overlayIn` 1:1 移植——锚定出站章节底部（absolute bottom:0 覆盖 hero 末尾 100svh，挂 `HeroSection` 内），JS 生成 10 行（触屏 15）水平条带，滚动 scrub 驱动从底部逐排升起（底行先、40ms 间隔、power4.out、scaleY 0→1.01、origin 50% 100%、区间 top 0%→-80%）；零 GSAP（手动还原 GSAP 时间模型，scroll/resize 直写值 1:1 无 lerp）；z-index 10（原版级联终值）；reduced-motion 保持无条带（hero 全程可见）
 - 色值 = Nº001 灰蓝 `#969da4`（与章节底同色，边界无缝）；条带 JS 生成规避 SSR/触屏行数 hydration 不一致，scoped 需 `:deep` 穿透
 
 ### header Index 回首页修复
@@ -25,9 +32,9 @@
 
 - `.chapter--intro` `padding-block: 12rem` → `0 12rem`：内容头与章节上边界平齐（用户拍板），下留白保留
 
-### pxpush 大字 marquee 全套移植（无 3D，用户拍板）
+### 大字 marquee 全套移植（无 3D，用户拍板）
 
-- **MarqueeText**（`components/ui/MarqueeText.vue` 新建）：pxpush MarqueeText 1:1 移植（去除 3D 翻入）——8 组超大标题持续横移（CSS animation translateX(-12.5%) 无缝循环，等价 GSAP xPercent 循环）、词**随机顺序**淡入（timeline / scrub 双模式：timeline 与 Preloader 视频就绪联动，scrub 区间 top 90%→0% each 0.03 random）、离场模糊淡出（fadeOut：top 5%→-30%，blur 0→20px）、上下分隔线（hero 时间线版 expo.out 0.8s scaleX；scrub 版 4px 加粗、**从右侧滑出** top 90%→70%）
+- **MarqueeText**（`components/ui/MarqueeText.vue` 新建）：原站 MarqueeText 1:1 移植（去除 3D 翻入）——8 组超大标题持续横移（CSS animation translateX(-12.5%) 无缝循环，等价 GSAP xPercent 循环）、词**随机顺序**淡入（timeline / scrub 双模式：timeline 与 Preloader 视频就绪联动，scrub 区间 top 90%→0% each 0.03 random）、离场模糊淡出（fadeOut：top 5%→-30%，blur 0→20px）、上下分隔线（hero 时间线版 expo.out 0.8s scaleX；scrub 版 4px 加粗、**从右侧滑出** top 90%→70%）
 - **Hero 大字**（timeline 版）：替换原滚动字幕（「Xccx Design ● WavePeak Elite Member」，字号 10vw/容器 11.5vw，用户拍板缩小），词点亮在加载页淡出后播放
 - **Nº001 大字**（scrub 版）：替换原 LogoMarquee xccx 字幕（「XCCX ●」，字号 12vw/容器 14vw，用户拍板；LogoMarquee 组件已删除）
 - **章节眉题线 separatorIn**：kicker 右侧横线随滚动 clip 揭示（top 90%→70%，--klp 变量驱动）
@@ -56,15 +63,15 @@
 
 ## v2.2.0 — 2026-08-16
 
-### 文字出现效果（pxpush 式，滚动 scrub 淡入）
+### 文字出现效果（滚动 scrub 逐词淡入）
 
-- **正文段落逐词 scrub 淡入**（`components/ui/ChapterSection.vue`）：全部章节（含 Nº001 intro）段落**逐词**随滚动依次点亮——pxpush `effect__textFade` 1:1 移植（用户要求照搬源码）：每词独立 opacity 0→1、ease none、词间 stagger 0.05、scrub 1:1 直接写值（无 lerp 迟滞）、区间由段落自身高度驱动（top 过视口 80% 线开始 → bottom 过 80% 线完成）；中文按标点分词（标点附着前词），「」高亮块整体作为一个词
+- **正文段落逐词 scrub 淡入**（`components/ui/ChapterSection.vue`）：全部章节（含 Nº001 intro）段落**逐词**随滚动依次点亮——原站 `effect__textFade` 1:1 移植：每词独立 opacity 0→1、ease none、词间 stagger 0.05、scrub 1:1 直接写值（无 lerp 迟滞）、区间由段落自身高度驱动（top 过视口 80% 线开始 → bottom 过 80% 线完成）；中文按标点分词（标点附着前词），「」高亮块整体作为一个词
 - **Nº001「」重点词高亮**：intro 浅底上高亮用深绿 `#3d6b14`（与 Nº001 编号同色），荧光绿在浅底不可读
 - SSR 安全约定沿用 v-reveal：默认可见，仅 JS 挂载后进入隐藏/淡入管线；触屏 / reduced-motion 直接可见
 
 ### 迭代记录
 
-- 初版 Nº001 行遮罩上滑（`IntroReveal.vue`，pxpush `.line/.line__inner` + yPercent 100→0 expo-out 1s 语义）经用户验收后替换为统一 scrub 淡入，组件已移除——「全部段落同一出场方式」的一致性优先
+- 初版 Nº001 行遮罩上滑（`IntroReveal.vue`，原站 `.line/.line__inner` + yPercent 100→0 expo-out 1s 语义）经用户验收后替换为统一 scrub 淡入，组件已移除——「全部段落同一出场方式」的一致性优先
 - **过渡模糊调参**：Nº001→Nº002 衔接过渡的模糊/圆弧触发从「进视口即开始（100%→40%）」改为「区块顶部到视口 90% 才触发、25% 完成」（触发放低 + 区间加长，模糊推进更缓）
 - **Nº003 改为 Nº001 同款灰蓝底**（用户 DevTools 选定后拍板）：`#works` 背景 `#141c28` → `#969da4`，底部喷漆带改为「灰蓝喷点 ↔ 黑」（顶部喷漆带取消——过渡圆弧直接衔接灰蓝底）；文字全套改深色（标题/眉题/段落用 `--c-bg`，编号与「」高亮用深绿 `#3d6b14`，Wait Me 水印深色半透明）——首尾章节灰蓝 CRT 对称
 - **Nº002→Nº003 过渡镜像对称**：圆弧色改为 `#969da4`（灰蓝圆弧从黑舞台升起，与 1→2 黑圆弧从灰蓝舞台升起互为镜像）；荧光绿描边方案废弃（对比已足够），`edgeColor` prop 移除
@@ -82,7 +89,7 @@
 
 ## v2.1.0 — 2026-08-16
 
-### 网格反色光标（pxpush 1:1 移植）
+### 网格反色光标（1:1 移植）
 
 - **CursorGrid**：全屏 20 列点阵 + `mix-blend-mode: difference` + gooey 粘连滤镜（`components/ui/CursorGrid.vue`）
 - 点亮时序复刻原版：瞬时亮 → ttl 0.2s 硬切熄灭（class 切换 + setTimeout，**零 GSAP 依赖**）

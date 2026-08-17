@@ -1,6 +1,6 @@
 # Xccx — 个人品牌网站
 
-> 单页叙事站点：CRT 复古美学 × pxpush 式滚动动效，Nuxt 3 SSG 静态输出，部署 GitHub Pages。
+> 单页叙事站点：CRT 复古美学 × 滚动叙事动效，Nuxt 3 SSG 静态输出，部署 GitHub Pages。
 >
 > **线上**：[bluee-beep.github.io/xccx.github.io](https://bluee-beep.github.io/xccx.github.io/) · **文档**：完整迭代记录见 [CHANGELOG.md](CHANGELOG.md)
 
@@ -8,7 +8,7 @@
 
 ```
 Hero 视频取景（太空漂浮 + 手持摇晃 + 鼠标取景）
-  └─ 条带刷色过渡（pxpush overlayIn）
+  └─ 条带刷色过渡（overlayIn）
 Nº001 宣言（灰蓝 CRT + 「XCCX ●」大字横滚）
   └─ 圆弧覆盖过渡
 Nº002 电子 × AI × 工程（彗尾荧光波浪）
@@ -23,16 +23,16 @@ Nº004 联系（胶囊 + 微信二维码）
 | 层 | 方案 |
 |---|---|
 | 框架 | Nuxt 3.21（SSG / prerender） |
-| 动效 | **零 GSAP**：pxpush 效果 1:1 手写还原（滚动 scrub 直写） |
+| 动效 | **零 GSAP**：滚动动效 1:1 手写还原（scrub 直写） |
 | 平滑滚动 | Lenis（手写 composable） |
 | 文字拆分 | Splitting.js（章节标题）+ 自研中文分词（段落 scrub） |
 | 样式 | 手写 CSS 设计系统（token 化，无框架） |
 | 字体 | Space Grotesk / JetBrains Mono / Inter 自托管 |
 | 部署 | GitHub Pages + GitHub Actions |
 
-## pxpush 效果移植清单
+## 动效复刻清单
 
-原站 [pxpush.com](https://pxpush.com) 的效果经逆向后零依赖复刻：
+以下效果经逆向后零依赖复刻（来源见文末「参考」）：
 
 | 效果 | 说明 | 组件 |
 |---|---|---|
@@ -92,5 +92,5 @@ xccx.github.io/
 
 ## 参考
 
-- [pxpush.com](https://pxpush.com) — 设计与动效参考（效果已零依赖复刻，见上方移植清单）
+- [pxpush.com](https://pxpush.com) — 站内页面设计与滚动动效的来源参考（学习项目；上方清单中的效果均为对其的零依赖复刻）
 - [Lenis](https://github.com/darkroomengineering/lenis) / [Splitting.js](https://splitting.js.org/)

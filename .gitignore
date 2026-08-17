@@ -24,3 +24,6 @@ desktop.ini
 .idea
 *.local
 coverage
+
+# ==================== 本地开发工具 ====================
+skills/

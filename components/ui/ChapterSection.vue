@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // ==================== 章节容器 ====================
 // 数据驱动渲染单条 ChapterItem：Nº 编号 + 眉题 + 大标题 + 段落 + stats
-// 段落入场 = 滚动 scrub 逐段淡入（pxpush effect__textFade 语义）
+// 段落入场 = 滚动 scrub 逐段淡入（原站 effect__textFade 语义）
 import type { ChapterItem } from '~/data/chapters'
 import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
 
@@ -30,7 +30,7 @@ function splitWords(text: string): string[] {
   return out
 }
 
-// ---- 段落 scrub 淡入：pxpush effect__textFade 1:1 移植 ----
+// ---- 段落 scrub 淡入：原站 effect__textFade 1:1 移植 ----
 // 原版：fromTo(".word, .line__inner", {opacity:0}, {opacity:1, ease:"none",
 //   stagger:.05, scrollTrigger:{start:"top 80%", end:"bottom 80%", scrub:true}})
 // 语义：段落顶边到视口 80% 线 → 开始；段落底边到 80% 线 → 结束；
@@ -53,7 +53,7 @@ function computeScrub() {
       w.style.opacity = String(Math.min(1, Math.max(0, p * total - i * 0.05)))
     })
   }
-  // 眉题线 clip 揭示（pxpush separatorIn：top 90% → 70%）
+  // 眉题线 clip 揭示（原站 separatorIn：top 90% → 70%）
   const head = headEl.value
   if (head) {
     const hp = Math.min(1, Math.max(0, (vh * 0.9 - head.getBoundingClientRect().top) / (vh * 0.2)))
@@ -124,13 +124,13 @@ onBeforeUnmount(() => {
           {{ line }}
         </RevealText>
       </h2>
-      <!-- Nº001：pxpush 大字 marquee（scrub 版，自页尾剪移而来——用户拍板替换原 xccx 字幕） -->
+      <!-- Nº001：原站 大字 marquee（scrub 版，自页尾剪移而来——用户拍板替换原 xccx 字幕） -->
       <MarqueeText v-else-if="chapter.variant === 'intro'" intro="scrub" :text="['XCCX']" />
 
       <!-- 联系方式胶囊：标题正下方 -->
       <ContactChips v-if="chapter.contacts" :contacts="chapter.contacts" />
 
-      <!-- 正文：滚动 scrub 逐词淡入（pxpush effect__textFade 1:1；「」重点词高亮） -->
+      <!-- 正文：滚动 scrub 逐词淡入（原站 effect__textFade 1:1；「」重点词高亮） -->
       <p v-for="para in chapter.paragraphs" :key="para" ref="scrubEls" class="chapter__para">
         <template v-for="(part, j) in splitHighlight(para)" :key="j">
           <span v-if="part.hl" class="word chapter__hl">{{ part.text }}</span>
@@ -154,7 +154,7 @@ onBeforeUnmount(() => {
       <!-- 联系方式胶囊已移至章节下方（ContactChips，ChapterLoop 渲染） -->
     </div>
 
-    <!-- 出站章节底部：pxpush 条带刷色过渡（2→3 用，颜色 = 下一章节底色） -->
+    <!-- 出站章节底部：原站 条带刷色过渡（2→3 用，颜色 = 下一章节底色） -->
     <ChapterOverlay v-if="overlayColor" :color="overlayColor" />
   </section>
 </template>
@@ -358,7 +358,7 @@ onBeforeUnmount(() => {
   color: var(--c-muted);
 }
 
-/* 眉题行右侧延伸的分隔线：clip 揭示（pxpush separatorIn：scrub top 90%→70%，从左向右展开） */
+/* 眉题行右侧延伸的分隔线：clip 揭示（原站 separatorIn：scrub top 90%→70%，从左向右展开） */
 .chapter__kicker::after {
   content: '';
   display: inline-block;
@@ -428,7 +428,7 @@ onBeforeUnmount(() => {
   color: var(--c-muted); /* 淡灰正文 */
 }
 
-/* 逐词显现（pxpush textFade：每词独立 opacity，scrub 1:1 驱动） */
+/* 逐词显现（原站 textFade：每词独立 opacity，scrub 1:1 驱动） */
 .chapter__para .word {
   will-change: opacity;
 }
