@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// ==================== 章节条带刷色过渡（pxpush effect__overlayIn 1:1 移植） ====================
+// ==================== 章节条带刷色过渡（原站 effect__overlayIn 1:1 移植） ====================
 // 锚定出站章节底部（bottom:0 absolute，覆盖其末尾 100svh）：滚动 scrub 驱动条带波自底部升起
 // （底行先、40ms 间隔、power4 缓动）刷成入站章节色，与入站章节背景在边界无缝衔接
 // 零 GSAP：手动还原 GSAP 时间模型；scroll/resize 直接写值（1:1 scrub，无 rAF 无 lerp）
@@ -64,7 +64,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .co {
   position: absolute;
-  bottom: 0; /* pxpush：锚定出站章节底部 */
+  bottom: 0; /* 原站：锚定出站章节底部 */
   left: 0;
   width: 100vw;
   height: 100vh;
