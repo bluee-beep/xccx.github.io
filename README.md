@@ -23,7 +23,7 @@ Nº004 联系（胶囊 + 微信二维码）
 | 层 | 方案 |
 |---|---|
 | 框架 | Nuxt 3.21（SSG / prerender） |
-| 动效 | **零 GSAP**：滚动动效 1:1 手写还原（scrub 直写） |
+| 动效 | **零 GSAP**：滚动动效原生手写实现（scrub 直写） |
 | 平滑滚动 | Lenis（手写 composable） |
 | 文字拆分 | Splitting.js（章节标题）+ 自研中文分词（段落 scrub） |
 | 样式 | 手写 CSS 设计系统（token 化，无框架） |
@@ -37,7 +37,7 @@ Nº004 联系（胶囊 + 微信二维码）
 | 效果 | 说明 | 组件 |
 |---|---|---|
 | overlayIn | 章节间条带刷色（10 行水平色带从底部逐排升起，40ms 间隔、power4、scrub top 0%→-80%） | `ChapterOverlay.vue` |
-| textFade | 段落逐词淡入（stagger 0.05、scrub 1:1、中文标点分词） | `ChapterSection.vue` |
+| textFade | 段落逐词淡入（stagger 0.05、scrub 直写、中文标点分词） | `ChapterSection.vue` |
 | MarqueeText | 17vw 大字横滚（8 组无缝循环）+ 词随机淡入 + 离场模糊 + 线从右滑出 | `MarqueeText.vue` |
 | separatorIn | 分隔线 clip 揭示（top 90%→70%） | `ChapterSection.vue` |
 | 网格光标 | 全屏 20 列反色点阵 + gooey 滤镜（ttl 0.2s 硬切） | `CursorGrid.vue` |

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // ==================== 网格反色光标（CursorGrid） ====================
-// 1:1 移植自 原站.com 的全屏网格光标：
+// 复刻自原站的全屏网格光标：
 //   全屏 20 列点阵 + mix-blend-mode: difference，鼠标滑过时所在格子
 //   白色方块点亮 0.2s 后硬切熄灭，gooey 滤镜让相邻格子融合成胶体光斑。
 // 与原版差异（有意为之）：
@@ -152,7 +152,7 @@ function onMove(e: PointerEvent) {
 }
 
 // ---- resize：150ms 防抖后重建（桌面端尺寸变化即重建，原版 resize → layout 语义） ----
-// 原版的移动端假 resize 守卫无需移植：本站触屏设备根本不挂载光标
+// 原版的移动端假 resize 守卫本站无需：触屏设备根本不挂载光标
 function onResize() {
   clearTimeout(resizeTimer)
   resizeTimer = window.setTimeout(syncEnabled, 150)

@@ -81,7 +81,7 @@ onMounted(() => {
     <!-- 可读性遮罩 -->
     <div class="hero__shade" aria-hidden="true" />
 
-    <!-- 大字横向滚动：原站 MarqueeText 1:1（17vw 大字、8 组循环、词随机点亮、线展开、离场模糊） -->
+    <!-- 大字横向滚动：原站 MarqueeText（17vw 大字、8 组循环、词随机点亮、线展开、离场模糊） -->
     <MarqueeText intro="timeline" mode="hero" :text="['Xccx Design', 'WavePeak Elite Member']" />
 
     <!-- 大 Logo（滚动归位至 header） -->
@@ -95,7 +95,7 @@ onMounted(() => {
       <span class="hero__scroll-arrow">↓</span>
     </div>
 
-    <!-- 原站 刷色过渡：锚定 hero 底部，Nº001 灰蓝条带波自底部升起（1:1 移植） -->
+    <!-- 原站 刷色过渡：锚定 hero 底部，Nº001 灰蓝条带波自底部升起 -->
     <ChapterOverlay color="#969da4" />
   </section>
 </template>
@@ -141,7 +141,7 @@ onMounted(() => {
     linear-gradient(to bottom, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.15) 40%, rgba(10, 10, 10, 0.35) 75%, rgba(10, 10, 10, 0.82) 100%);
 }
 
-/* ---- 大字 marquee 已迁移至 MarqueeText 组件（原站 1:1） ---- */
+/* ---- 大字 marquee 已迁移至 MarqueeText 组件 ---- */
 
 /* ---- 大 Logo：fixed 居中，transform 由 useHeroLogo 驱动 ---- */
 .hero__logo {

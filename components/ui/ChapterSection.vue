@@ -30,11 +30,11 @@ function splitWords(text: string): string[] {
   return out
 }
 
-// ---- 段落 scrub 淡入：原站 effect__textFade 1:1 移植 ----
+// ---- 段落 scrub 淡入：原站 effect__textFade 复刻 ----
 // 原版：fromTo(".word, .line__inner", {opacity:0}, {opacity:1, ease:"none",
 //   stagger:.05, scrollTrigger:{start:"top 80%", end:"bottom 80%", scrub:true}})
 // 语义：段落顶边到视口 80% 线 → 开始；段落底边到 80% 线 → 结束；
-//   词 i 的 opacity = clamp(进度×总时长 − i×0.05)，scrub 1:1 直接写值（无缓动迟滞）
+//   词 i 的 opacity = clamp(进度×总时长 − i×0.05)，scrub 直接写值（无缓动迟滞）
 const scrubEls = ref<HTMLElement[]>([])
 const wordLists = new Map<HTMLElement, HTMLElement[]>()
 const headEl = ref<HTMLElement>() // 眉题行：驱动 kicker 线 clip 揭示
@@ -130,7 +130,7 @@ onBeforeUnmount(() => {
       <!-- 联系方式胶囊：标题正下方 -->
       <ContactChips v-if="chapter.contacts" :contacts="chapter.contacts" />
 
-      <!-- 正文：滚动 scrub 逐词淡入（原站 effect__textFade 1:1；「」重点词高亮） -->
+      <!-- 正文：滚动 scrub 逐词淡入（原站 effect__textFade；「」重点词高亮） -->
       <p v-for="para in chapter.paragraphs" :key="para" ref="scrubEls" class="chapter__para">
         <template v-for="(part, j) in splitHighlight(para)" :key="j">
           <span v-if="part.hl" class="word chapter__hl">{{ part.text }}</span>
@@ -428,7 +428,7 @@ onBeforeUnmount(() => {
   color: var(--c-muted); /* 淡灰正文 */
 }
 
-/* 逐词显现（原站 textFade：每词独立 opacity，scrub 1:1 驱动） */
+/* 逐词显现（原站 textFade：每词独立 opacity，scrub 驱动） */
 .chapter__para .word {
   will-change: opacity;
 }

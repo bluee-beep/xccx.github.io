@@ -1,8 +1,8 @@
 <script setup lang="ts">
-// ==================== 大字横向滚动（原站 MarqueeText 1:1 移植，无 3D） ====================
+// ==================== 大字横向滚动（原站 MarqueeText 复刻，无 3D） ====================
 // 超大标题重复 8 组持续横移 + 词随机顺序淡入 + 离场模糊淡出 + 分隔线揭示
-// 零 GSAP：横移用 CSS animation（等价 xPercent 循环）；scrub 直写值 1:1 无 lerp
-// 两种入场模式：timeline（hero 首屏，加载后时间线播放）/ scrub（页尾，滚动驱动，原站 1:1 区间）
+// 零 GSAP：横移用 CSS animation（等价 xPercent 循环）；scrub 直写值、无 lerp
+// 两种入场模式：timeline（hero 首屏，加载后时间线播放）/ scrub（页尾，滚动驱动，原站区间）
 import { prefersReducedMotion } from '~/composables/useDevice'
 
 const props = withDefaults(
