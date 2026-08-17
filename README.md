@@ -1,23 +1,53 @@
-# Xccx 个人网站
+# Xccx — 个人品牌网站
 
-> 个人站：参考 pxpush.com 的高端营销落地页风格，Nuxt 3 SSG 静态输出，部署 GitHub Pages。
+> 单页叙事站点：CRT 复古美学 × pxpush 式滚动动效，Nuxt 3 SSG 静态输出，部署 GitHub Pages。
+>
+> **线上**：[bluee-beep.github.io/xccx.github.io](https://bluee-beep.github.io/xccx.github.io/) · **文档**：完整迭代记录见 [CHANGELOG.md](CHANGELOG.md)
+
+## 页面一览
+
+```
+Hero 视频取景（太空漂浮 + 手持摇晃 + 鼠标取景）
+  └─ 条带刷色过渡（pxpush overlayIn）
+Nº001 宣言（灰蓝 CRT + 「XCCX ●」大字横滚）
+  └─ 圆弧覆盖过渡
+Nº002 电子 × AI × 工程（彗尾荧光波浪）
+  └─ 条带刷色过渡
+Nº003 作品在路上（灰蓝 + 喷漆 + Wait Me 水印）
+Nº004 联系（胶囊 + 微信二维码）
+页脚（5 层 logo 拖尾 + 版权）
+```
 
 ## 技术栈
 
-| 层 | 技术 |
+| 层 | 方案 |
 |---|---|
-| 框架 | Nuxt 3（SSG / prerender） |
-| 平滑滚动 | Lenis（手写 composable 封装） |
-| 文字动画 | Splitting.js（逐字拆解 + stagger） |
-| 入场动画 | 自研 IntersectionObserver 指令（v-reveal） |
+| 框架 | Nuxt 3.21（SSG / prerender） |
+| 动效 | **零 GSAP**：pxpush 效果 1:1 手写还原（滚动 scrub 直写） |
+| 平滑滚动 | Lenis（手写 composable） |
+| 文字拆分 | Splitting.js（章节标题）+ 自研中文分词（段落 scrub） |
 | 样式 | 手写 CSS 设计系统（token 化，无框架） |
-| 字体 | Space Grotesk / JetBrains Mono 自托管 |
+| 字体 | Space Grotesk / JetBrains Mono / Inter 自托管 |
 | 部署 | GitHub Pages + GitHub Actions |
+
+## pxpush 效果移植清单
+
+原站 [pxpush.com](https://pxpush.com) 的效果经逆向后零依赖复刻：
+
+| 效果 | 说明 | 组件 |
+|---|---|---|
+| overlayIn | 章节间条带刷色（10 行水平色带从底部逐排升起，40ms 间隔、power4、scrub top 0%→-80%） | `ChapterOverlay.vue` |
+| textFade | 段落逐词淡入（stagger 0.05、scrub 1:1、中文标点分词） | `ChapterSection.vue` |
+| MarqueeText | 17vw 大字横滚（8 组无缝循环）+ 词随机淡入 + 离场模糊 + 线从右滑出 | `MarqueeText.vue` |
+| separatorIn | 分隔线 clip 揭示（top 90%→70%） | `ChapterSection.vue` |
+| 网格光标 | 全屏 20 列反色点阵 + gooey 滤镜（ttl 0.2s 硬切） | `CursorGrid.vue` |
+| 视频加载页 | 黑底 logo 呼吸 + 真实缓冲进度条（100% 才淡出） | `Preloader.vue` |
+| 手持摇晃 | 背景视频双正弦漂移 ≤9px/0.53°（真人持机感） | `useHandheld.ts` |
 
 ## 常用命令
 
 ```bash
-npm run dev       # 开发（localhost:3000）
+npm run dev       # 开发（localhost:3000/xccx.github.io/）
 npm run generate  # SSG 构建（含 fix-404 覆盖脚本）→ .output/public
 npm run preview   # 静态预览
 ```
@@ -30,43 +60,37 @@ xccx.github.io/
 ├── assets/css/                    # 设计系统：tokens / base / utilities / main
 ├── components/
 │   ├── layout/                    # AppHeader / AppFooter
-│   ├── ui/                        # ChapterSection / RevealText（通用组件）
-│   └── home/                      # HeroSection / ChapterLoop / ContactCta
-├── composables/                   # useLenis / useReveal / useSeo
+│   ├── ui/                        # 通用：ChapterSection / ChapterOverlay / MarqueeText /
+│   │                              #   CursorGrid / Preloader / ContactChips / RevealText
+│   └── home/                      # 首页：HeroSection / ChapterLoop / FooterTrail
+├── composables/                   # useLenis / useReveal / useHeroLogo / usePanorama /
+│                                  #   useHandheld / useDevice / useSeo
 ├── data/                          # 单一数据源：site / chapters / profile
 ├── layouts/                       # default（全局壳层）/ blank（404 蓝屏）
-├── pages/                         # index / about / 404
+├── pages/                         # index / 404
 ├── plugins/                       # reveal.directive（v-reveal 指令）
 ├── scripts/fix-404.mjs            # 构建后 404.html 覆盖（见「已知设计行为」）
-└── public/                        # favicon.svg / og-image.svg
+└── public/                        # logo.svg / logo-cropped.svg / videos/hero.mp4
 ```
 
 ## 核心设计：章节是数据，不是组件
 
-首页叙事由 `data/chapters.ts` 驱动——新增模块（作品集、博客章节等）只需向数组追加条目，不动组件结构。`ChapterSection.vue` 负责渲染，`ChapterLoop.vue` 只做循环。
+首页叙事由 `data/chapters.ts` 驱动——新增模块（作品集、博客章节等）只需向数组追加条目，不动组件结构。`ChapterSection.vue` 负责渲染，`ChapterLoop.vue` 只做循环与过渡装配。
 
-## 已知设计行为（重要）
+## 已知设计行为
 
-- **404.html 的 SPA 陷阱**：Nuxt prerender 对 `/404.html` 走 SPA 模板输出（`@nuxt/nitro-server` 硬编码 `PRERENDER_NO_SSR_ROUTES`），产物 body 为空。本仓库用 `scripts/fix-404.mjs` 在构建后把 `/404` 的 SSR 完整渲染（`.output/public/404/index.html`）覆盖为 `404.html`——无 JS 也显示完整蓝屏，水合后交互正常。
-- **组件自动导入**：`components` 配置了 `pathPrefix: false`，组件按文件名注册（`AppHeader` 而非 `LayoutAppHeader`）。新增组件须保证文件名全站唯一。
+- **404.html 的 SPA 陷阱**：Nuxt prerender 对 `/404.html` 走 SPA 模板输出，产物 body 为空。`scripts/fix-404.mjs` 在构建后把 `/404` 的 SSR 完整渲染覆盖为 `404.html`——无 JS 也显示完整蓝屏彩蛋。
+- **组件自动导入**：`pathPrefix: false`，组件按文件名注册（`AppHeader` 而非 `LayoutAppHeader`）。新增组件须保证文件名全站唯一。
+- **资源路径**：baseURL 为 `/xccx.github.io/`，public 资源须手动拼接前缀且**不带头斜杠**（`videos/hero.mp4`——双斜杠在 Pages 上请求挂起，v2.3.0 踩坑）。
 
-## Roadmap（预留模块）
+## Roadmap
 
-- [x] M0-M6：脚手架 → 设计系统 → 首页叙事 → 动效 → 关于页/404 → 构建验证
-- [ ] Journal 博客：新建 `pages/journal/` + `@nuxt/content`（数据位已预留 `data/chapters.ts` 扩展点）
-- [ ] 作品集独立路由：`pages/works/`（占位目录已建）
+- [ ] Journal 博客：`pages/journal/` + `@nuxt/content`
+- [ ] 坦克大战小游戏接入 Nº003
 - [ ] 汉堡菜单（移动端导航）
-- [ ] 替换 OG 图为 PNG（当前 SVG 占位）
-- [ ] 头像/真实作品图
-
-## TODO（待用户填写真实内容）
-
-- `data/site.ts`：社交链接、邮箱
-- `data/chapters.ts`：四章节真实文案与数字
-- `data/profile.ts`：bio、时间线、技能
-- `public/og-image.svg`：品牌化
+- [ ] OG 图品牌化（PNG）/ 头像
 
 ## 参考
 
-- [pxpush.com](https://pxpush.com) — 设计参考（Nuxt 3 + Lenis + Splitting + 手写 CSS）
+- [pxpush.com](https://pxpush.com) — 设计与动效参考（效果已零依赖复刻，见上方移植清单）
 - [Lenis](https://github.com/darkroomengineering/lenis) / [Splitting.js](https://splitting.js.org/)
