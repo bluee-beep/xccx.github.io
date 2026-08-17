@@ -92,5 +92,5 @@ xccx.github.io/
 
 ## 参考
 
-- [pxpush.com](https://pxpush.com) — 站内页面设计与滚动动效的来源参考（学习项目；上方清单中的效果均为对其的零依赖复刻）
+- [pxpush.com](https://pxpush.com) — 站内页面设计与滚动动效的来源参考
 - [Lenis](https://github.com/darkroomengineering/lenis) / [Splitting.js](https://splitting.js.org/)
