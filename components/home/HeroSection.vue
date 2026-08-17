@@ -104,6 +104,9 @@ onMounted(() => {
       Scroll to enter
       <span class="hero__scroll-arrow">↓</span>
     </div>
+
+    <!-- pxpush 刷色过渡：锚定 hero 底部，Nº001 灰蓝条带波自底部升起（1:1 移植） -->
+    <ChapterOverlay color="#969da4" />
   </section>
 </template>
 

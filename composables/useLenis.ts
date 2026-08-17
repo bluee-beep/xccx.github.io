@@ -30,3 +30,18 @@ export function useLenis() {
     lenis = null
   })
 }
+
+// ==================== 滚动回顶（header Index / logo 用） ====================
+// lenis 存在走平滑滚动（onComplete 结束才 resolve）；否则原生瞬时回退（reduced-motion / 未挂载场景）
+export function scrollToTop(duration?: number): Promise<void> {
+  if (!lenis) {
+    window.scrollTo(0, 0)
+    return Promise.resolve()
+  }
+  return new Promise((resolve) => {
+    lenis!.scrollTo(0, {
+      ...(duration ? { duration } : {}),
+      onComplete: () => resolve(),
+    })
+  })
+}
