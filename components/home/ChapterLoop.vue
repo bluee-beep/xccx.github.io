@@ -15,18 +15,15 @@ const waveColorOf = (c: ChapterItem) =>
 
 <template>
   <template v-for="(chapter, i) in chapters" :key="chapter.id">
-    <ChapterSection :chapter="chapter" />
-    <!-- 衔接过渡：Nº001(Intro) → Nº002 之间 -->
+    <!-- 2→3 过渡已改为条带刷色：挂在 Nº002 章节内部底部（overlayColor，见 ChapterSection） -->
+    <ChapterSection
+      :chapter="chapter"
+      :overlay-color="chapter.id === 'capabilities' ? '#969da4' : undefined"
+    />
+    <!-- 衔接过渡：Nº001(Intro) → Nº002 之间（圆弧覆盖 + 模糊） -->
     <ChapterTransition
       v-if="chapter.variant === 'intro' && i < chapters.length - 1"
       :color="waveColorOf(chapters[i + 1])"
-      :from-color="waveColorOf(chapter)"
-      :prev-id="chapter.id"
-    />
-    <!-- 简单过渡：Nº002 → Nº003 之间（灰蓝圆弧，与 1→2 黑圆弧镜像对称） -->
-    <ChapterTransition
-      v-if="chapter.id === 'capabilities' && i < chapters.length - 1"
-      color="#969da4"
       :from-color="waveColorOf(chapter)"
       :prev-id="chapter.id"
     />
