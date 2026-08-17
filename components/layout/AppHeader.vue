@@ -4,6 +4,7 @@
 // TODO: M4 后接入滚动进度条 / 汉堡菜单
 import { site } from '~/data/site'
 import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
+import { scrollToTop } from '~/composables/useLenis'
 
 // public 静态资源需手动拼接 baseURL（Nuxt 不会自动加前缀）
 const baseURL = useRuntimeConfig().app.baseURL
@@ -43,6 +44,26 @@ watch(activeId, (id) => {
   }
 })
 
+// 回首页：已在首页时点 Index / logo 是重复导航（无滚动动作）→ 手动平滑回顶
+// capture 阶段拦截（RouterLink 内部 onClick 在冒泡，晚于 capture）→ preventDefault 阻断其 push
+const route = useRoute()
+const router = useRouter()
+
+function isPlainClick(e: MouseEvent) {
+  return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey
+}
+
+async function onHomeClick(e: MouseEvent) {
+  if (e.defaultPrevented || !isPlainClick(e)) return
+  if (route.path !== '/') return // 非首页路由：交给 NuxtLink 正常导航
+  e.preventDefault() // 阻断 push（含 /#hash → / 的 scrollBehavior 瞬时回顶，会杀死 Lenis 动画）
+  await scrollToTop()
+  if (route.hash) {
+    // 平滑到顶后再同步 URL：replace 触发 scrollBehavior {top:0} 时已在顶部，无感
+    await router.replace({ path: '/', hash: '' })
+  }
+}
+
 function onScroll() {
   isScrolled.value = window.scrollY > 16
   // 当前章节：章节顶部越过视口中线即激活
@@ -73,7 +94,7 @@ onBeforeUnmount(() => {
   <header class="header" :class="{ 'header--scrolled': isScrolled }">
     <div class="u-container header__inner">
       <!-- 小 logo 左上：滚动中隐藏，Hero 大 logo 归位到位后显现（合体） -->
-      <NuxtLink to="/" class="header__logo" aria-label="回到首页">
+      <NuxtLink to="/" class="header__logo" aria-label="回到首页" @click.capture="onHomeClick">
         <img :src="logoSrc" alt="XCCX" class="header__logo-img" :style="{ opacity: logoOpacity }" />
       </NuxtLink>
 
@@ -84,6 +105,7 @@ onBeforeUnmount(() => {
           :to="item.to"
           class="header__link u-monolabel"
           :class="{ 'header__link--active': activeId === item.to.slice(1) }"
+          @click.capture="item.to === '/' && onHomeClick($event)"
         >
           {{ item.label }}
         </NuxtLink>

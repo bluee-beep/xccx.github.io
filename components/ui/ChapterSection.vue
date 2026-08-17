@@ -305,8 +305,8 @@ onBeforeUnmount(() => {
 /* Intro 变体：灰蓝底色（条纹由全站 CRT 罩统一提供），文字深色 */
 .chapter--intro {
   background: #969da4; /* 用户选定底色 */
-  /* 多留空间：上下内边距加大 */
-  padding-block: 12rem;
+  /* 上内边距归零：内容头与章节上边界平齐（用户拍板）；下留白保留 */
+  padding-block: 0 12rem;
 }
 
 /* 眉题行：加大加粗 + 深色高对比；无上线；下 margin 归零让字幕紧贴 */

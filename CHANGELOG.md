@@ -2,6 +2,22 @@
 
 > 每完成一小步实现，在此追加记录，并同步提交 git（中文语义化 commit）。
 
+## v2.4.0 — 2026-08-17（开发中，未发布）
+
+### Hero→Nº001 pxpush 条带刷色过渡（1:1 移植）
+
+- **ChapterOverlay**（`components/ui/ChapterOverlay.vue` 新建）：pxpush `effect__overlayIn` 1:1 照搬——锚定出站章节底部（absolute bottom:0 覆盖 hero 末尾 100svh，挂 `HeroSection` 内），JS 生成 10 行（触屏 15）水平条带，滚动 scrub 驱动从底部逐排升起（底行先、40ms 间隔、power4.out、scaleY 0→1.01、origin 50% 100%、区间 top 0%→-80%）；零 GSAP（手动还原 GSAP 时间模型，scroll/resize 直写值 1:1 无 lerp）；z-index 10（原版级联终值）；reduced-motion 保持无条带（hero 全程可见）
+- 色值 = Nº001 灰蓝 `#969da4`（与章节底同色，边界无缝）；条带 JS 生成规避 SSR/触屏行数 hydration 不一致，scoped 需 `:deep` 穿透
+
+### header Index 回首页修复
+
+- 根因：单页站点 Index/logo（`to="/"`）在首页时是重复导航（无滚动动作）+ `scrollRestoration=manual` → 点击无响应
+- **修复**：`useLenis.ts` 导出 `scrollToTop()`（Lenis 平滑 + onComplete resolve；reduced-motion 原生回退）；AppHeader 对 logo 与 Index 项挂 `@click.capture`（先于 RouterLink 内部 onClick）+ preventDefault 阻断 push（防 `/#hash → /` 的 scrollBehavior 瞬时回顶杀死平滑动画），平滑到顶后 `router.replace` 清 hash 同步 URL
+
+### Nº001 顶部留白归零
+
+- `.chapter--intro` `padding-block: 12rem` → `0 12rem`：内容头与章节上边界平齐（用户拍板），下留白保留
+
 ## v2.3.0 — 2026-08-16
 
 ### 首屏加载页（背景视频就绪检测）
