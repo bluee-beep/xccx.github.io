@@ -2,6 +2,13 @@
 
 > 每完成一小步实现，在此追加记录，并同步提交 git（中文语义化 commit）。
 
+## v2.5.0 — 2026-08-17（开发中，未发布）
+
+### 新增 pxpush-motion Skill（动效复刻知识库）
+
+- **`skills/pxpush-motion/`**：把 pxpush.com 逆向并零 GSAP 复刻的动效整理为可复用 Skill——`SKILL.md`（触发词/边界 + 9 个原生 JS Quick Reference 函数 + 3 端到端示例）、`references/`（params.md 全参数速查 / gsap-to-vanilla.md 还原公式推导 / reverse-engineering.md 逆向方法与教训）、`scripts/demo.html`（自包含演示页：条带刷色/词淡入/大字横滚/随机淡入/离场模糊/线揭示/网格光标，浏览器直接打开）
+- 全部参数逆向实录（非目测）：overlayIn / textFade / MarqueeText / titleRandom(去3D) / fadeOut / separatorIn / CursorGrid，GSAP 时间模型（0.5s 单 tween + stagger 跨度）与 scrub 1:1 直写语义完整保留
+
 ## v2.4.0 — 2026-08-17（开发中，未发布）
 
 ### Hero→Nº001 pxpush 条带刷色过渡（1:1 移植）
