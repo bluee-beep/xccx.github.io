@@ -18,6 +18,14 @@
 
 - `.chapter--intro` `padding-block: 12rem` → `0 12rem`：内容头与章节上边界平齐（用户拍板），下留白保留
 
+### pxpush 大字 marquee 全套移植（无 3D，用户拍板）
+
+- **MarqueeText**（`components/ui/MarqueeText.vue` 新建）：pxpush MarqueeText 1:1 移植（去除 3D 翻入）——8 组超大标题持续横移（CSS animation translateX(-12.5%) 无缝循环，等价 GSAP xPercent 循环）、词**随机顺序**淡入（timeline / scrub 双模式：timeline 与 Preloader 视频就绪联动，scrub 区间 top 90%→0% each 0.03 random）、离场模糊淡出（fadeOut：top 5%→-30%，blur 0→20px）、上下分隔线（hero 时间线版 expo.out 0.8s scaleX；scrub 版 4px 加粗、**从右侧滑出** top 90%→70%）
+- **Hero 大字**（timeline 版）：替换原滚动字幕（「Xccx Design ● WavePeak Elite Member」，字号 10vw/容器 11.5vw，用户拍板缩小），词点亮在加载页淡出后播放
+- **Nº001 大字**（scrub 版）：替换原 LogoMarquee xccx 字幕（「XCCX ●」，字号 12vw/容器 14vw，用户拍板；LogoMarquee 组件已删除）
+- **章节眉题线 separatorIn**：kicker 右侧横线随滚动 clip 揭示（top 90%→70%，--klp 变量驱动）
+- **2→3 过渡换为条带刷色**（用户拍板）：Nº002 底部挂 ChapterOverlay（灰蓝 #969da4，overlayColor prop），原圆弧+模糊 ChapterTransition 移除（现仅服务 1→2）；Nº002 底部延伸 30svh 腾出刷色空间（60svh 太下减半）；Nº004 底部内边距减半收紧拖尾上方留白
+
 ## v2.3.0 — 2026-08-16
 
 ### 首屏加载页（背景视频就绪检测）

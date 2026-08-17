@@ -5,7 +5,7 @@
 import type { ChapterItem } from '~/data/chapters'
 import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
 
-defineProps<{ chapter: ChapterItem }>()
+defineProps<{ chapter: ChapterItem; overlayColor?: string }>() // overlayColor：出站章节底部挂条带刷色过渡（2→3 用）
 
 const baseURL = useRuntimeConfig().app.baseURL
 
@@ -37,6 +37,7 @@ function splitWords(text: string): string[] {
 //   词 i 的 opacity = clamp(进度×总时长 − i×0.05)，scrub 1:1 直接写值（无缓动迟滞）
 const scrubEls = ref<HTMLElement[]>([])
 const wordLists = new Map<HTMLElement, HTMLElement[]>()
+const headEl = ref<HTMLElement>() // 眉题行：驱动 kicker 线 clip 揭示
 let vh = 0
 
 function computeScrub() {
@@ -51,6 +52,12 @@ function computeScrub() {
     words.forEach((w, i) => {
       w.style.opacity = String(Math.min(1, Math.max(0, p * total - i * 0.05)))
     })
+  }
+  // 眉题线 clip 揭示（pxpush separatorIn：top 90% → 70%）
+  const head = headEl.value
+  if (head) {
+    const hp = Math.min(1, Math.max(0, (vh * 0.9 - head.getBoundingClientRect().top) / (vh * 0.2)))
+    head.style.setProperty('--klp', hp.toFixed(4))
   }
 }
 
@@ -102,7 +109,7 @@ onBeforeUnmount(() => {
 
     <div class="u-container">
       <!-- 章节眉题行 -->
-      <header v-reveal class="chapter__head">
+      <header v-reveal ref="headEl" class="chapter__head">
         <span class="chapter__no u-monolabel">{{ chapter.no }}</span>
         <span class="chapter__kicker u-monolabel">{{ chapter.kicker }}</span>
       </header>
@@ -117,7 +124,8 @@ onBeforeUnmount(() => {
           {{ line }}
         </RevealText>
       </h2>
-      <LogoMarquee v-else-if="chapter.variant === 'intro'" class="chapter__logo-marquee" />
+      <!-- Nº001：pxpush 大字 marquee（scrub 版，自页尾剪移而来——用户拍板替换原 xccx 字幕） -->
+      <MarqueeText v-else-if="chapter.variant === 'intro'" intro="scrub" :text="['XCCX']" />
 
       <!-- 联系方式胶囊：标题正下方 -->
       <ContactChips v-if="chapter.contacts" :contacts="chapter.contacts" />
@@ -145,6 +153,9 @@ onBeforeUnmount(() => {
 
       <!-- 联系方式胶囊已移至章节下方（ContactChips，ChapterLoop 渲染） -->
     </div>
+
+    <!-- 出站章节底部：pxpush 条带刷色过渡（2→3 用，颜色 = 下一章节底色） -->
+    <ChapterOverlay v-if="overlayColor" :color="overlayColor" />
   </section>
 </template>
 
@@ -204,6 +215,8 @@ onBeforeUnmount(() => {
 /* feature 变体（capabilities）：深色背景，文字浅色（与 Nº001 区分） */
 .chapter--feature {
   background: var(--c-bg);
+  /* 底部延伸：给 2→3 条带刷色过渡腾出刷色空间（用户拍板：60svh 太下，减半） */
+  padding-bottom: 30svh;
 }
 
 .chapter--feature .chapter__title {
@@ -345,7 +358,7 @@ onBeforeUnmount(() => {
   color: var(--c-muted);
 }
 
-/* 眉题行右侧延伸的分隔线 */
+/* 眉题行右侧延伸的分隔线：clip 揭示（pxpush separatorIn：scrub top 90%→70%，从左向右展开） */
 .chapter__kicker::after {
   content: '';
   display: inline-block;
@@ -354,6 +367,7 @@ onBeforeUnmount(() => {
   margin-left: var(--space-3);
   background: var(--c-line);
   vertical-align: middle;
+  clip-path: inset(0 calc((1 - var(--klp, 1)) * 100%) 0 0); /* --klp 由 scrub 驱动；默认 1（SSR/触屏全显） */
 }
 
 .chapter__title {
@@ -366,18 +380,14 @@ onBeforeUnmount(() => {
 }
 
 /* Nº004 标题左对齐 + 下边距归零（让胶囊真正紧贴） */
+/* 拖尾上方留白收紧（用户拍板「拖尾上面太长」）：Nº004 底部内边距减半 */
+#contact {
+  padding-bottom: var(--space-4);
+}
+
 #contact .chapter__title {
   align-items: flex-start;
   margin-bottom: 0.5rem;
-}
-
-/* intro 章节：logo 字幕全宽贴边，只保留下边线（第二条线） */
-.chapter__logo-marquee {
-  margin-inline: calc(-1 * var(--gutter));
-  margin-top: 0; /* 紧贴眉题行 */
-  margin-bottom: var(--space-6);
-  border-bottom: 1px solid var(--c-ink);
-  padding-block: var(--space-2);
 }
 
 .chapter__para {
