@@ -189,7 +189,7 @@ function flipQr(e: MouseEvent) {
   }
 
   .cc__contact--qr {
-    grid-column: 1 / -1;
+    grid-template-rows: 1fr;
   }
 
   .cc__icon {
@@ -209,6 +209,9 @@ function flipQr(e: MouseEvent) {
   .cc__contact--qr .cc__qr {
     top: calc(100% + var(--space-1));
     bottom: auto;
+    left: auto;
+    right: 0;
+    transform: none;
   }
 }
 </style>

@@ -13,13 +13,13 @@ const trailRefs = ref<HTMLElement[]>([])
 let rafId = 0
 let motionEnabled = false
 
-// 5 层：s = 速度系数（等差 0.1，层间更密）；滚动中重影铺开 → 面积越多，颜色越淡
+// 5 层：速度差 0.18，拉开残影间距；亮度递减但仍保留清晰轮廓。
 const layers = [
   { s: 1, opacity: 1, blur: 0, dark: 1 }, // 主层：实心清晰
-  { s: 0.9, opacity: 0.6, blur: 1, dark: 0.8 },
-  { s: 0.8, opacity: 0.35, blur: 2, dark: 0.6 },
-  { s: 0.7, opacity: 0.2, blur: 3, dark: 0.45 },
-  { s: 0.6, opacity: 0.1, blur: 4, dark: 0.3 }, // 底层：最糊最暗
+  { s: 0.82, opacity: 0.75, blur: 0.5, dark: 0.95 },
+  { s: 0.64, opacity: 0.55, blur: 1, dark: 0.9 },
+  { s: 0.46, opacity: 0.38, blur: 1.5, dark: 0.85 },
+  { s: 0.28, opacity: 0.24, blur: 2, dark: 0.8 }, // 底层仍可辨认，避免被黑底吞没
 ]
 
 function tick() {
@@ -40,7 +40,7 @@ function tick() {
       // 残影按速度差逐渐散开：越往下重影铺开面积越多；页尾主层贴底
       const offset = progress * l.s * maxOffset
       // 重影随滚动渐淡：越往下颜色越淡（主层保持实心）
-      const fade = i === 0 ? 1 : 1 - progress * 0.5
+      const fade = i === 0 ? 1 : 1 - progress * 0.15
       layer.style.transform = `translateY(${offset.toFixed(2)}px)`
       layer.style.opacity = String(l.opacity * fade)
     })

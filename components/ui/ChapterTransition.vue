@@ -2,7 +2,7 @@
 // ==================== 章节衔接过渡：圆弧覆盖 + 上一章模糊 ====================
 // C+D 组合（用户选定）：下一章圆弧顶部随滚动从底部滑上覆盖（太阳升起）
 // 同时上一章（prevId）随进度模糊淡出
-import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
+import { prefersReducedMotion } from '~/composables/useDevice'
 
 const props = defineProps<{
   /** 下一章颜色（覆盖块颜色） */
@@ -19,7 +19,7 @@ const root = ref<HTMLElement>()
 const stage = ref<HTMLElement>()
 const cover = ref<HTMLElement>()
 
-let progress = 0
+let compact = false
 let targetProgress = 0
 let smoothProgress = 0
 let rafId = 0
@@ -37,23 +37,27 @@ function computeTarget() {
   targetProgress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)))
 }
 
+function applyCover(p: number) {
+  const el = cover.value
+  if (!el) return
+  const travel = compact ? 100 : 110
+  const offset = props.direction === 'down' ? p * travel : 100 - p * travel
+  el.style.transform = `translateY(${offset.toFixed(2)}%)`
+  // 紧凑舞台内升起圆弧，完成时拉平边缘，与下一章无缝相接。
+  const radius = ((1 - p) * 80).toFixed(2)
+  el.style.borderRadius = compact ? `50% 50% 0 0 / ${radius}% ${radius}% 0 0` : ''
+}
+
 function apply() {
   const p = smoothProgress
-  // 覆盖块：up 从底部升起 / down 向下撤走（露出下一章）
-  if (cover.value) {
-    if (props.direction === 'down') {
-      cover.value.style.transform = `translateY(${(p * 110).toFixed(2)}%)`
-    } else {
-      cover.value.style.transform = `translateY(${(100 - p * 110).toFixed(2)}%)`
-    }
-  }
+  applyCover(p)
   // 过渡舞台背景层：blur 同步 + 变黑（brightness 终点 0.45，仅背景）
   // 圆弧（cover）不在 filter 作用域内——保持清晰，与下一章底色无缝融合
   if (stage.value) {
     stage.value.style.filter = `blur(${(p * 10).toFixed(1)}px) brightness(${(1 - p * 0.55).toFixed(2)})`
   }
   // 上一章模糊：blur 0 → 10px + 微暗（保持原样 0.75）
-  const prev = document.getElementById(props.prevId)
+  const prev = document.getElementById(props.prevId)?.querySelector<HTMLElement>('.u-container')
   if (prev) {
     prev.style.filter = `blur(${(p * 10).toFixed(1)}px) brightness(${(1 - p * 0.25).toFixed(2)})`
   }
@@ -62,8 +66,11 @@ function apply() {
 function tick() {
   if (!running) return
   smoothProgress += (targetProgress - smoothProgress) * 0.12
+  const settled = Math.abs(targetProgress - smoothProgress) < 0.001
+  if (settled) smoothProgress = targetProgress
   apply()
-  rafId = requestAnimationFrame(tick)
+  if (settled) running = false
+  else rafId = requestAnimationFrame(tick)
 }
 
 function start() {
@@ -82,28 +89,27 @@ function onScroll() {
   if (!running) start()
 }
 
-onMounted(() => {
-  // 触屏 / 减少动效：直接静态完成态（覆盖块隐藏，无模糊）
-  if (isTouchDevice() || prefersReducedMotion()) {
-    apply()
-    return
-  }
+function onResize() {
   vh = window.innerHeight
+  compact = window.matchMedia('(max-width: 48rem), (hover: none)').matches
+  onScroll()
+}
+
+onMounted(() => {
+  // 触屏正常播放；仅尊重系统减少动态效果偏好。
+  if (prefersReducedMotion()) return
   window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('resize', () => {
-    vh = window.innerHeight
-    computeTarget()
-  })
-  computeTarget()
-  start()
+  window.addEventListener('resize', onResize, { passive: true })
+  onResize()
 })
 
 onBeforeUnmount(() => {
   stop()
   window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', onResize)
   // 清理滤镜
   if (stage.value) stage.value.style.filter = ''
-  const prev = document.getElementById(props.prevId)
+  const prev = document.getElementById(props.prevId)?.querySelector<HTMLElement>('.u-container')
   if (prev) prev.style.filter = ''
 })
 </script>
@@ -182,25 +188,37 @@ onBeforeUnmount(() => {
   transform: translateY(0); /* 初始覆盖 */
 }
 
-/* 触屏窄屏使用静态渐变，避免 100vh 粘滞舞台制造大块空白。 */
+/* 紧凑舞台：保留滚动圆弧，不使用超出父级高度的粘滞层。 */
 @media (max-width: 48rem), (hover: none) {
   .ct {
-    height: clamp(5rem, 18svh, 8rem);
+    height: clamp(8rem, 24svh, 14rem);
     padding-top: 0;
+    overflow: hidden;
+    background: var(--ct-from, #969da4);
   }
 
   .ct__stage {
-    background: linear-gradient(
-      to bottom,
-      var(--ct-from, #969da4),
-      var(--ct-to, #0a0a0a)
-    );
+    background: var(--ct-from, #969da4);
     animation: none;
     filter: none !important;
   }
 
   .ct__sticky {
-    display: none;
+    position: absolute;
+    inset: 0;
+    height: 100%;
   }
+
+  .ct__cover {
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct { height: 4rem; padding: 0; }
+  .ct__stage { background: linear-gradient(var(--ct-from), var(--ct-to)); animation: none; }
+  .ct__sticky { display: none; }
 }
 </style>
