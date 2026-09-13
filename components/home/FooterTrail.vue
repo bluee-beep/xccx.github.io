@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // ==================== 大 logo 拖尾区块（Nº004 之后，独立展示） ====================
-// 三层 logo 手绘图重叠，滚动时不同速度错位（拖尾残影）
-import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
+// 五层 logo 重叠，桌面与触屏共享滚动错位效果。
+import { prefersReducedMotion } from '~/composables/useDevice'
 
 const baseURL = useRuntimeConfig().app.baseURL
 // 裁切版：viewBox 贴合图形真实边界（浏览器 getBBox 权威验证）——拖尾「贴底」= 白字贴底，无透明留白干扰
@@ -11,7 +11,7 @@ const root = ref<HTMLElement>()
 const trailRefs = ref<HTMLElement[]>([])
 
 let rafId = 0
-let running = false
+let motionEnabled = false
 
 // 5 层：s = 速度系数（等差 0.1，层间更密）；滚动中重影铺开 → 面积越多，颜色越淡
 const layers = [
@@ -23,7 +23,7 @@ const layers = [
 ]
 
 function tick() {
-  if (!running) return
+  rafId = 0
   const el = root.value
   if (el) {
     const rect = el.getBoundingClientRect()
@@ -45,29 +45,30 @@ function tick() {
       layer.style.opacity = String(l.opacity * fade)
     })
   }
-  rafId = requestAnimationFrame(tick)
 }
 
 function onScroll() {
-  if (!running) {
-    running = true
+  if (motionEnabled && !rafId) {
     rafId = requestAnimationFrame(tick)
   }
 }
 
 onMounted(() => {
-  if (isTouchDevice() || prefersReducedMotion()) {
+  if (prefersReducedMotion()) {
     trailRefs.value.forEach((l) => l && (l.style.transform = ''))
     return
   }
+  motionEnabled = true
   window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', onScroll, { passive: true })
   onScroll()
 })
 
 onBeforeUnmount(() => {
-  running = false
+  motionEnabled = false
   cancelAnimationFrame(rafId)
   window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', onScroll)
 })
 </script>
 
@@ -80,6 +81,7 @@ onBeforeUnmount(() => {
       :src="logoSrc"
       alt=""
       class="ft__layer"
+      @load="onScroll"
       :style="{ opacity: l.opacity, filter: `blur(${l.blur}px) brightness(${l.dark})`, zIndex: 5 - i }"
     />
   </div>
@@ -116,8 +118,10 @@ onBeforeUnmount(() => {
     will-change: auto;
   }
 
-  .ft__layer:not(:first-child) {
-    display: none;
-  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ft__layer { will-change: auto; }
+  .ft__layer:not(:first-child) { display: none; }
 }
 </style>

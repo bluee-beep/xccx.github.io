@@ -241,7 +241,8 @@ onBeforeUnmount(() => {
 
 /* 滑动入场：feature 内容从右滑入（替换上移淡入） */
 .chapter--feature .v-reveal--hidden {
-  transform: translateX(60px);
+  /* 位移不超过容器边距，横屏和桌面也不会撑宽文档。 */
+  transform: translateX(min(60px, var(--gutter)));
 }
 
 /* Nº003（works）：灰蓝底（与 Nº001 同色，用户选定）+ 底部喷漆渐变（灰蓝喷点 ↔ 黑） */
@@ -491,6 +492,11 @@ onBeforeUnmount(() => {
 
   .chapter--feature {
     padding-bottom: clamp(8rem, 28svh, 14rem);
+  }
+
+  /* 手机端纵向入场，避免横向位移撑宽布局视口。 */
+  .chapter--feature .v-reveal--hidden {
+    transform: translateY(24px);
   }
 
   .chapter__waves {

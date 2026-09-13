@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  min-width: 20rem;
+  min-width: 0;
   background: var(--c-bg);
   color: var(--c-ink);
   font-family: 'Space Grotesk Variable', 'PingFang SC', 'Microsoft YaHei', sans-serif;

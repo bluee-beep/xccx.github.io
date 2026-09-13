@@ -82,7 +82,7 @@ onMounted(() => {
     <div class="hero__shade" aria-hidden="true" />
 
     <!-- 大字横向滚动：原站 MarqueeText（17vw 大字、8 组循环、词随机点亮、线展开、离场模糊） -->
-    <MarqueeText intro="timeline" mode="hero" :text="['Xccx Design', 'WavePeak Elite Member']" />
+    <MarqueeText intro="timeline" mode="hero" :text="['Xccx Design']" />
 
     <!-- 大 Logo（滚动归位至 header） -->
     <div ref="heroLogo" class="hero__logo" :class="{ 'hero__logo--static': logoStatic }" aria-hidden="true">
