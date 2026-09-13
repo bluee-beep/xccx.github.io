@@ -104,9 +104,9 @@ onMounted(() => {
 .hero {
   position: relative;
   /* 上移 header 高度：视频从页面最顶端开始（header 区域也显示画面） */
-  margin-top: calc(-1 * var(--header-h));
-  min-height: calc(100svh + var(--header-h));
-  padding-top: var(--header-h);
+  margin-top: calc(0px - var(--header-offset));
+  min-height: calc(100svh + var(--header-offset));
+  padding-top: var(--header-offset);
   display: flex;
   align-items: center;
   overflow: hidden; /* 视频取景：超出部分裁剪 */
@@ -165,9 +165,31 @@ onMounted(() => {
   height: 120px;
 }
 
-@media (max-width: 640px) {
+/* 触屏设备不做“归位”动效时，Logo 必须随 Hero 滚走，不能固定穿透全页。 */
+.hero__logo--static {
+  position: absolute;
+  top: calc(50% - 2.5rem);
+}
+
+@media (max-width: 48rem) {
+  .hero {
+    margin-top: 0;
+    min-height: 100svh;
+    padding-top: var(--header-offset);
+  }
+
+  .hero__logo {
+    position: absolute;
+    top: 50%;
+  }
+
   .hero__logo-img {
-    height: 120px;
+    width: min(68vw, 20rem);
+    height: auto;
+  }
+
+  .hero__scroll {
+    bottom: calc(var(--space-6) + var(--safe-bottom));
   }
 }
 

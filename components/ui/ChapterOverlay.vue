@@ -66,7 +66,8 @@ onBeforeUnmount(() => {
   position: absolute;
   bottom: 0; /* 原站：锚定出站章节底部 */
   left: 0;
-  width: 100vw;
+  right: 0;
+  width: auto;
   height: 100vh;
   height: 100svh; /* 与 .hero 的 svh 度量一致：移动端地址栏伸缩不产生底行预生长伪影 */
   display: grid;

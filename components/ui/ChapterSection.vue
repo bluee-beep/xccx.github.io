@@ -479,4 +479,88 @@ onBeforeUnmount(() => {
   opacity: 0.25; /* 半透明背景字 */
   margin: 0;
 }
+
+@media (max-width: 48rem) {
+  .chapter {
+    padding-block: clamp(4.5rem, 18vw, 6rem);
+  }
+
+  .chapter--intro {
+    padding-block: 0 clamp(6rem, 28vw, 8rem);
+  }
+
+  .chapter--feature {
+    padding-bottom: clamp(8rem, 28svh, 14rem);
+  }
+
+  .chapter__waves {
+    opacity: 0.55;
+  }
+
+  .chapter__wave-line {
+    width: 72px;
+  }
+
+  .chapter__head,
+  .chapter--intro .chapter__head {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    font-size: 0.9rem;
+  }
+
+  .chapter__kicker::after {
+    width: clamp(1.5rem, 14vw, 4rem);
+    margin-left: var(--space-2);
+  }
+
+  .chapter__title,
+  #contact .chapter__title {
+    align-items: flex-start;
+    margin-bottom: var(--space-5);
+  }
+
+  .chapter__para,
+  .chapter--intro .chapter__para,
+  .chapter--feature .chapter__para {
+    max-width: 100%;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .chapter--intro .chapter__para {
+    font-size: clamp(1.15rem, 5.4vw, 1.4rem);
+  }
+
+  .chapter--intro .chapter__para:first-child {
+    margin-top: var(--space-4);
+  }
+
+  .chapter--feature .chapter__para {
+    font-size: clamp(1.05rem, 4.8vw, 1.25rem);
+  }
+
+  .chapter__para .word {
+    will-change: auto;
+  }
+
+  .chapter__stats {
+    justify-content: flex-start;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .chapter__footer {
+    font-size: clamp(4rem, 22vw, 6rem);
+    white-space: nowrap;
+  }
+
+  #works::after {
+    height: 5rem;
+  }
+
+  #contact {
+    padding-bottom: var(--space-5);
+  }
+}
 </style>

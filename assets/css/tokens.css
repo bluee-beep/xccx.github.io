@@ -36,6 +36,9 @@
   --container: 1440px;
   --gutter: clamp(1.25rem, 4vw, 4rem);
   --header-h: 5rem;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --header-offset: calc(var(--header-h) + var(--safe-top));
 
   /* ---- 动效：expo-out 招牌曲线 ---- */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -48,4 +51,13 @@
   --z-overlay: 200;
   --z-cursor: 1000; /* 网格光标：盖过 CRT 扫描线罩（999） */
   --z-preloader: 1001; /* 首屏加载页：盖过一切 */
+}
+
+@media (max-width: 48rem) {
+  :root {
+    --gutter: clamp(1rem, 5vw, 1.5rem);
+    --header-h: 6rem;
+    --fs-display: clamp(2.5rem, 13vw, 4.25rem);
+    --fs-body: clamp(1rem, 4.4vw, 1.125rem);
+  }
 }

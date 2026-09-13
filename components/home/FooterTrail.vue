@@ -104,4 +104,20 @@ onBeforeUnmount(() => {
   display: block;
   will-change: transform;
 }
+
+@media (max-width: 48rem), (hover: none) {
+  .ft {
+    height: clamp(14rem, 64vw, 20rem);
+    margin-top: 0;
+  }
+
+  .ft__layer {
+    width: min(90vw, 32rem);
+    will-change: auto;
+  }
+
+  .ft__layer:not(:first-child) {
+    display: none;
+  }
+}
 </style>

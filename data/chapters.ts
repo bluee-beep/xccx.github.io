@@ -2,6 +2,14 @@
 // 「章节是数据，不是组件」——新增模块只需在数组中追加条目
 // 定位：竞赛人员选拔展示（评委视角）
 
+export interface ContactItem {
+  icon: string
+  label: string
+  value: string
+  href?: string
+  qr?: string
+}
+
 export interface ChapterItem {
   /** 锚点 id，同时驱动 Header 导航 */
   id: string
@@ -20,7 +28,7 @@ export interface ChapterItem {
   /** 章节底部斜体大字（如 Wait Me） */
   footer?: string
   /** 联系方式图标胶囊（hover 显示信息；qr 字段为二维码图片名） */
-  contacts?: { icon: string; label: string; value: string; qr?: string }[]
+  contacts?: ContactItem[]
 }
 
 export const chapters: ChapterItem[] = [
@@ -71,8 +79,18 @@ export const chapters: ChapterItem[] = [
       '竞赛组队、项目合作或任何想法，欢迎联系。',
     ],
     contacts: [
-      { icon: 'github', label: 'GitHub', value: 'github.com/bluee-beep' },
-      { icon: 'gmail', label: '邮箱', value: 'coldbluee@163.com' },
+      {
+        icon: 'github',
+        label: 'GitHub',
+        value: 'github.com/bluee-beep',
+        href: 'https://github.com/bluee-beep',
+      },
+      {
+        icon: 'gmail',
+        label: '邮箱',
+        value: 'coldbluee@163.com',
+        href: 'mailto:coldbluee@163.com',
+      },
       { icon: 'tencentqq', label: 'QQ', value: '2032212286' },
       { icon: 'wechat', label: '微信', value: 'WeChat', qr: 'wechat-qr' },
     ],

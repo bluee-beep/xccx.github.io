@@ -273,4 +273,31 @@ onBeforeUnmount(() => {
   padding: 0 2vw; /* 原站 同款：符号两侧间距 */
   flex-shrink: 0;
 }
+
+@media (max-width: 48rem) {
+  .marqueeText {
+    height: clamp(4rem, 20vw, 6rem);
+  }
+
+  .marqueeText--hero {
+    top: calc(var(--header-offset) + var(--space-2));
+    height: clamp(3.5rem, 16vw, 5rem);
+  }
+
+  .marqueeText--hero .marqueeText__word {
+    font-size: clamp(2.75rem, 13vw, 4.5rem);
+  }
+
+  .marqueeText--hero .marqueeText__symbol {
+    font-size: clamp(1.5rem, 6vw, 2.25rem);
+  }
+
+  .marqueeText__word {
+    font-size: clamp(3.5rem, 17vw, 6rem);
+  }
+
+  .marqueeText__symbol {
+    font-size: clamp(1.75rem, 8vw, 3rem);
+  }
+}
 </style>

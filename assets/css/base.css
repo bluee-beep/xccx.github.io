@@ -11,9 +11,11 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scroll-padding-top: var(--header-offset);
 }
 
 body {
+  min-width: 20rem;
   background: var(--c-bg);
   color: var(--c-ink);
   font-family: 'Space Grotesk Variable', 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -22,6 +24,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ---- 排版要素 ---- */
@@ -49,6 +52,11 @@ a:hover {
 img, svg {
   display: block;
   max-width: 100%;
+}
+
+button {
+  color: inherit;
+  font: inherit;
 }
 
 /* ---- 交互焦点（无障碍） ---- */

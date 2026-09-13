@@ -27,6 +27,7 @@ useLenis()
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .layout__main {

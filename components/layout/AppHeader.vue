@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // ==================== 顶部导航 ====================
 // 固定顶部 + 毛玻璃；导航项来自 data/site.ts
-// TODO: M4 后接入滚动进度条 / 汉堡菜单
+// 移动端使用双行横滑导航，保留所有章节入口
 import { site } from '~/data/site'
 import { isTouchDevice, prefersReducedMotion } from '~/composables/useDevice'
 import { scrollToTop } from '~/composables/useLenis'
@@ -27,7 +27,7 @@ const activeId = ref('')
 const navEl = ref<HTMLElement>()
 const lineStyle = reactive({ left: '0px', width: '0px', opacity: 0 })
 
-watch(activeId, (id) => {
+function syncActiveLine(id = activeId.value) {
   const nav = navEl.value
   if (!nav) return
   const idx = site.nav.findIndex((n) => n.to.slice(1) === id)
@@ -42,6 +42,29 @@ watch(activeId, (id) => {
   } else {
     lineStyle.opacity = 0
   }
+}
+
+function centerActiveLink(id: string) {
+  const nav = navEl.value
+  if (!nav || window.innerWidth > 768) return
+  const idx = site.nav.findIndex((n) => n.to.slice(1) === id)
+  const el = nav.querySelectorAll<HTMLElement>('.header__link')[idx]
+  if (!el) return
+  const left = el.offsetLeft - (nav.clientWidth - el.offsetWidth) / 2
+  nav.scrollTo({
+    left: Math.max(0, left),
+    behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+  })
+}
+
+function onNavGeometryChange() {
+  syncActiveLine()
+}
+
+watch(activeId, async (id) => {
+  await nextTick()
+  syncActiveLine(id)
+  centerActiveLink(id)
 })
 
 // 回首页：已在首页时点 Index / logo 是重复导航（无滚动动作）→ 手动平滑回顶
@@ -83,10 +106,15 @@ onMounted(() => {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
   onScroll()
   window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', onNavGeometryChange)
+  navEl.value?.addEventListener('scroll', onNavGeometryChange, { passive: true })
+  nextTick(() => syncActiveLine())
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('resize', onNavGeometryChange)
+  navEl.value?.removeEventListener('scroll', onNavGeometryChange)
 })
 </script>
 
@@ -105,6 +133,7 @@ onBeforeUnmount(() => {
           :to="item.to"
           class="header__link u-monolabel"
           :class="{ 'header__link--active': activeId === item.to.slice(1) }"
+          :aria-current="activeId === item.to.slice(1) ? 'location' : undefined"
           @click.capture="item.to === '/' && onHomeClick($event)"
         >
           {{ item.label }}
@@ -121,6 +150,7 @@ onBeforeUnmount(() => {
   position: sticky;
   top: 0;
   z-index: var(--z-header);
+  padding-top: var(--safe-top);
   /* 恒透明：导航始终无底色（全站 CRT 罩透出）；底边横线已取消（用户拍板） */
   background: transparent;
 }
@@ -190,10 +220,56 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
-/* ---- 移动端：隐藏导航（汉堡菜单后续迭代） ---- */
-@media (max-width: 640px) {
+/* ---- 移动端：两行头部，导航横向滚动且保留全部锚点 ---- */
+@media (max-width: 48rem) {
+  .header {
+    position: fixed;
+    right: 0;
+    left: 0;
+    background: rgba(10, 10, 10, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .header__inner {
+    display: grid;
+    grid-template-rows: 2.75rem 2.75rem;
+    align-content: center;
+    height: var(--header-h);
+    padding: 0.25rem var(--gutter);
+  }
+
+  .header__logo {
+    justify-self: start;
+  }
+
+  .header__logo-img {
+    height: 2rem;
+  }
+
   .header__nav {
+    width: 100%;
+    gap: clamp(0.9rem, 5vw, 1.5rem);
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .header__nav::-webkit-scrollbar {
     display: none;
+  }
+
+  .header__link {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-block: 0;
+  }
+
+  .header__active-line {
+    bottom: 0;
   }
 }
 </style>

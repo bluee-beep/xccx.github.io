@@ -112,7 +112,10 @@ onBeforeUnmount(() => {
   <div
     ref="root"
     class="ct"
-    :style="{ '--ct-from': props.direction === 'down' ? props.color : props.fromColor }"
+    :style="{
+      '--ct-from': props.direction === 'down' ? props.color : props.fromColor,
+      '--ct-to': props.direction === 'down' ? props.fromColor : props.color,
+    }"
     aria-hidden="true"
   >
     <!-- 舞台背景层：blur/变黑只作用于此，圆弧保持清晰 -->
@@ -177,5 +180,27 @@ onBeforeUnmount(() => {
   top: 0;
   border-radius: 0 0 50% 50% / 0 0 92% 92%;
   transform: translateY(0); /* 初始覆盖 */
+}
+
+/* 触屏窄屏使用静态渐变，避免 100vh 粘滞舞台制造大块空白。 */
+@media (max-width: 48rem), (hover: none) {
+  .ct {
+    height: clamp(5rem, 18svh, 8rem);
+    padding-top: 0;
+  }
+
+  .ct__stage {
+    background: linear-gradient(
+      to bottom,
+      var(--ct-from, #969da4),
+      var(--ct-to, #0a0a0a)
+    );
+    animation: none;
+    filter: none !important;
+  }
+
+  .ct__sticky {
+    display: none;
+  }
 }
 </style>

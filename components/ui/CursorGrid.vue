@@ -38,6 +38,7 @@ const props = withDefaults(
 const rootEl = ref<HTMLElement | null>(null)
 const innerEl = ref<HTMLElement | null>(null)
 const filterId = useId()
+const showDiag = ref(false)
 
 // 运行时参数：dev 下可被 ?cursor=columns:28,ttl:0.4 覆盖（生产剔除）
 const params = reactive({
@@ -175,7 +176,8 @@ if (import.meta.dev) {
     () => {
       if (typeof window === 'undefined') return // SSR 阶段跳过（immediate 首轮）
       const q = route.query.cursor
-      if (typeof q !== 'string' || !q) return
+      showDiag.value = typeof q === 'string' && q.length > 0
+      if (!showDiag.value) return
       for (const pair of q.split(',')) {
         const [key, raw] = pair.split(':')
         const value = Number(raw)
@@ -225,7 +227,7 @@ onBeforeUnmount(() => {
     <div ref="innerEl" class="cursor__inner" />
 
     <!-- dev 诊断徽章：验证运行状态（生产构建整段剔除） -->
-    <div v-if="diag" class="cursor__diag u-mono">
+    <div v-if="diag && showDiag" class="cursor__diag u-mono">
       mounted={{ diag.mounted }} cells={{ diag.cells }} lit={{ diag.lit }}
       rect={{ diag.rect }} size={{ diag.size }}
       layer={{ diag.layer }}
