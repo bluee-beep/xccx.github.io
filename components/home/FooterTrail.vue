@@ -13,13 +13,13 @@ const trailRefs = ref<HTMLElement[]>([])
 let rafId = 0
 let motionEnabled = false
 
-// 5 层：速度差 0.18，拉开残影间距；亮度递减但仍保留清晰轮廓。
+// 5 层：位置逐层错开，模糊半径递增，形成由清晰到散开的拖影。
 const layers = [
   { s: 1, opacity: 1, blur: 0, dark: 1 }, // 主层：实心清晰
-  { s: 0.82, opacity: 0.75, blur: 0.5, dark: 0.95 },
-  { s: 0.64, opacity: 0.55, blur: 1, dark: 0.9 },
-  { s: 0.46, opacity: 0.38, blur: 1.5, dark: 0.85 },
-  { s: 0.28, opacity: 0.24, blur: 2, dark: 0.8 }, // 底层仍可辨认，避免被黑底吞没
+  { s: 0.82, opacity: 0.8, blur: 1.5, dark: 0.98 },
+  { s: 0.64, opacity: 0.66, blur: 3.5, dark: 0.94 },
+  { s: 0.46, opacity: 0.52, blur: 6, dark: 0.9 },
+  { s: 0.28, opacity: 0.38, blur: 9, dark: 0.86 }, // 底层边缘扩散，仍保留轮廓
 ]
 
 function tick() {
